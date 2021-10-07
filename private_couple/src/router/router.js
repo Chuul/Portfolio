@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import DateView from '../Views/DateView.vue'
+import DateView from '../Views/DateCourse/DateView.vue'
 import TravelView from '../Views/TravelView.vue'
 import CalendarView from '../Views/CalendarView.vue'
 
