@@ -31,7 +31,8 @@ export const store = new Vuex.Store({
       const obj = {
         completed : false, 
         category : option.category,
-        item : option.item
+        item : option.item,
+        urlCheck : false
       }
       localStorage.setItem(obj.item, JSON.stringify(obj));
       state.dateCourses.push(obj);
@@ -44,6 +45,13 @@ export const store = new Vuex.Store({
       course.completed = !course.completed;
       localStorage.removeItem(course.item);
       localStorage.setItem(course.item, JSON.stringify(course))
+    },
+    addOneURL(state, course) {
+      course.urlCheck = !course.urlCheck;
+    },
+    attachOneURL(state, course) {
+      course.urlCheck = !course.urlCheck;
+      console.log(course.item)
     }
   }
 })
