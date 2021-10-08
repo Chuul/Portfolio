@@ -27,9 +27,13 @@ export const store = new Vuex.Store({
     }
   },
   mutations : {
-    addOneCourse(state, newDateCourse) {
-      const obj = {completed : false, item : newDateCourse}
-      localStorage.setItem(newDateCourse, JSON.stringify(obj));
+    addOneCourse(state, option) {
+      const obj = {
+        completed : false, 
+        category : option.category,
+        item : option.item
+      }
+      localStorage.setItem(obj.item, JSON.stringify(obj));
       state.dateCourses.push(obj);
     },
     removeOneCourse(state, payload) {

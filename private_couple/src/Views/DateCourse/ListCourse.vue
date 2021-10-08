@@ -1,14 +1,14 @@
 <template>
   <div>
     <li v-for="(course, index) in getDateCourse" v-bind:key="course.item">
-      <span>
-        <button v-on:click="checkCourse(course, index)">Check</button>
+      <span v-on:click="checkCourse(course)">
+        <i class="pickBtn fab fa-font-awesome-flag"></i>
       </span>
-      <span v-bind:class="{textCompleted : course.completed}">
+      <span v-bind:class="{itemPick : course.completed}">
         {{ course.item }}
       </span>
-      <span>
-        <button v-on:click="removeCourse(course, index)">REMOVE</button>
+      <span v-on:click="removeCourse(course, index)">
+        <i class="removeBtn far fa-trash-alt"></i>
       </span>
     </li>
   </div>
@@ -34,8 +34,28 @@ export default {
 </script>
 
 <style>
-.textCompleted {
-  color : red;
-  font-weight: bold;
+li {
+  list-style: none;
+  min-height: 50px;
+  height: 50px;
+  line-height: 50px;
+  margin: 0.5rem 0;
+  padding: 0 0.9rem;
+  background: white;
+  border-radius: 5px;
+}
+.pickBtn {
+  line-height: 45px;
+  color : #62acde;
+  margin-right: 5px;
+}
+.itemPick {
+  font-weight: bolder;
+  color : #3273e4;
+}
+.removeBtn {
+  line-height: 45px;
+  color : #62acde;
+  margin-left: 5px;
 }
 </style>

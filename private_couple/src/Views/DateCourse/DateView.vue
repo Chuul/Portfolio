@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>데이트 코스</h1>
+    <h2>Go on a Date</h2>
     <AddCourse></AddCourse>
     <ListCourse></ListCourse>
   </div>
@@ -19,5 +19,7 @@ export default {
 </script>
 
 <style>
-
+h2 {
+  font-family: 'Noto Sans Mono', monospace;
+}
 </style>

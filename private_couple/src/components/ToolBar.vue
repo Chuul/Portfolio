@@ -1,8 +1,8 @@
 <template>
   <div>
-    <router-link to="/date">Date</router-link> |
-    <router-link to="/travel">Travel</router-link> |
-    <router-link to="/calendar">Calendar</router-link> |
+    <router-link to="/date">Date</router-link>  | 
+    <router-link to="/travel">Travel</router-link>  | 
+    <router-link to="/calendar">Calendar</router-link>  | 
   </div>
 </template>
 
@@ -13,5 +13,7 @@ export default {
 </script>
 
 <style>
-
+a {
+  margin : auto 1rem;
+}
 </style>

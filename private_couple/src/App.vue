@@ -16,5 +16,16 @@ export default {
 </script>
 
 <style>
-
+body {
+  margin: 1rem;
+  padding: 0;
+  text-align: center;
+}
+a {
+  color : black;
+  text-decoration: none;
+}
+a:hover {
+  color : rgb(112, 112, 241);
+}
 </style>
