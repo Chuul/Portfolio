@@ -29,10 +29,11 @@ export const store = new Vuex.Store({
   mutations : {
     addOneCourse(state, option) {
       const obj = {
-        completed : false, 
         category : option.category,
         item : option.item,
-        urlCheck : false
+        completed : false, 
+        url : '',
+        urlCheck : false,
       }
       localStorage.setItem(obj.item, JSON.stringify(obj));
       state.dateCourses.push(obj);
@@ -46,12 +47,15 @@ export const store = new Vuex.Store({
       localStorage.removeItem(course.item);
       localStorage.setItem(course.item, JSON.stringify(course))
     },
-    addOneURL(state, course) {
+    openURLText(state, course) {
       course.urlCheck = !course.urlCheck;
     },
-    attachOneURL(state, course) {
-      course.urlCheck = !course.urlCheck;
-      console.log(course.item)
+    attachOneURL(state, attachInfo) {
+      attachInfo.course.urlCheck = !attachInfo.course.urlCheck;
+      attachInfo.course.url = attachInfo.url;
+      localStorage.removeItem(attachInfo.course.item);
+      localStorage.setItem(attachInfo.course.item, JSON.stringify(attachInfo.course))
+      
     }
   }
 })

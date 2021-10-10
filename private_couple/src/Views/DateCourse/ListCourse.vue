@@ -1,24 +1,34 @@
 <template>
   <div>
     <li v-for="(course, index) in getDateCourse" v-bind:key="course.item">
-      <span v-on:click="checkCourse(course)">
-        <i class="pickBtn fab fa-font-awesome-flag"></i>
+      <span v-on:click="checkCourse(course)"> 
+        <template v-if="course.completed !== false">
+          <i class="notpickBtn fas fa-check-circle"></i>
+        </template>
+        <template v-else>
+          <i class="notpickBtn far fa-check-circle"></i>
+        </template>
       </span>
-      <span v-bind:class="{itemPick : course.completed}">
-        {{ course.item }}
+      <span>
+        <template v-if="course.url !== ''">
+          <a class="linkText" v-bind:href="course.url">{{course.item}}</a>
+        </template>
+        <template v-else>
+          {{ course.item }} 
+        </template>
       </span>
       <!-- URL로직 -->
       <span>
         <!-- URL실행 -->
-        <span v-on:click="openInput(course)">
+        <span v-on:click="openURL(course)">
           <i v-bind:class="{existURL : course.urlCheck}" class="shareBtn fas fa-share-square"></i>
         </span>
         <!-- URL양식 -->
         <span class="url-container" v-bind:class="{existURL : !course.urlCheck}">
-          <span v-on:click="openInput(course)">
+          <span v-on:click="openURL(course)">
             <i class="fas fa-undo"></i>
           </span>
-          <input type="text" class="inputURL">
+          <input type="text" class="inputURL" v-model="urlText" v-on:keyup.enter="attachURL(course)">
           <span v-on:click="attachURL(course)">
             <i class="fas fa-plus"></i>
           </span>
@@ -36,6 +46,11 @@
 import { mapGetters } from 'vuex';
 
 export default {
+  data() {
+    return {
+      urlText : ""
+    }
+  },
   methods : {
     removeCourse(course, index) {
       this.$store.commit('removeOneCourse', {course, index})
@@ -43,11 +58,13 @@ export default {
     checkCourse(course) {
       this.$store.commit('checkOneCourse', course)
     },
-    openInput(course) {
-      this.$store.commit('addOneURL', course);
+    openURL(course) {
+      this.$store.commit('openURLText', course);
     },
     attachURL(course) {
-      this.$store.commit('attachOneURL', course);
+      const url = this.urlText
+      this.$store.commit('attachOneURL', {course, url});
+      this.urlText = "";
     }
   },
   computed : {
@@ -68,9 +85,9 @@ li {
   background: white;
   border-radius: 5px;
 }
-.pickBtn {
+.notpickBtn {
   line-height: 45px;
-  color : #62acde;
+  color : #3273e4;
   margin-right: 5px;
 }
 .itemPick {
@@ -91,6 +108,10 @@ li {
 }
 .existURL {
   display : none;
+}
+.linkText {
+  color : #c627ee;
+  font-weight: bold;
 }
 /* --url입력 양식-- */
 .removeBtn {

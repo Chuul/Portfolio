@@ -36,9 +36,6 @@ export default {
     },
     clearInput() {
       this.newDateCourse = ""
-    },
-    selectChange() {
-      console.log('송공')
     }
   }
 }
