@@ -19,7 +19,9 @@ const storage = {
 
 export const store = new Vuex.Store({
   state : {
-    dateCourses : storage.fetch()
+    dateCourses : storage.fetch(),
+    filterDateCourses : [...storage.fetch()],
+    newList : []
   },
   getters : {
     getDateCourse(state) {
@@ -43,19 +45,38 @@ export const store = new Vuex.Store({
       state.dateCourses.splice(payload.index, 1);
     },
     checkOneCourse(state, course) {
+      console.log(course.category.category)
       course.completed = !course.completed;
       localStorage.removeItem(course.item);
       localStorage.setItem(course.item, JSON.stringify(course))
     },
     openURLText(state, course) {
       course.urlCheck = !course.urlCheck;
+      localStorage.removeItem(course.item);
+      localStorage.setItem(course.item, JSON.stringify(course))
     },
     attachOneURL(state, attachInfo) {
       attachInfo.course.urlCheck = !attachInfo.course.urlCheck;
       attachInfo.course.url = attachInfo.url;
       localStorage.removeItem(attachInfo.course.item);
       localStorage.setItem(attachInfo.course.item, JSON.stringify(attachInfo.course))
-      
+    },
+    filterListItem(state, name) {
+      if(name == '전체') {
+        state.newList = state.dateCourses
+      } else if(name == '음식점') {
+        state.newList = state.filterDateCourses.filter(function(item){
+          return item.category == '음식점'
+        })
+      } else if(name == '카페') {
+        state.newList = state.filterDateCourses.filter(function(item){
+          return item.category == '카페'
+        })
+      } else if(name == '즐길거리') {
+        state.newList = state.filterDateCourses.filter(function(item){
+          return item.category == '즐길거리'
+        })
+      }
     }
-  }
+  } 
 })

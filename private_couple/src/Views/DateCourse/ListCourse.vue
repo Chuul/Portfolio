@@ -1,49 +1,55 @@
 <template>
   <div>
-    <li v-for="(course, index) in getDateCourse" v-bind:key="course.item">
-      <span v-on:click="checkCourse(course)"> 
-        <template v-if="course.completed !== false">
-          <i class="notpickBtn fas fa-check-circle"></i>
-        </template>
-        <template v-else>
-          <i class="notpickBtn far fa-check-circle"></i>
-        </template>
-      </span>
-      <span>
-        <template v-if="course.url !== ''">
-          <a class="linkText" v-bind:href="course.url">{{course.item}}</a>
-        </template>
-        <template v-else>
-          {{ course.item }} 
-        </template>
-      </span>
-      <!-- URL로직 -->
-      <span>
-        <!-- URL실행 -->
-        <span v-on:click="openURL(course)">
-          <i v-bind:class="{existURL : course.urlCheck}" class="shareBtn fas fa-share-square"></i>
+    <div>
+      <SortList></SortList>
+      <li v-for="(course, index) in this.$store.state.newList" v-bind:key="course.item">
+        <!-- 체크 버튼 -->
+        <span v-on:click="checkCourse(course)"> 
+          <template v-if="course.completed !== false">
+            <i class="notpickBtn fas fa-check-circle"></i>
+          </template>
+          <template v-else>
+            <i class="notpickBtn far fa-check-circle"></i>
+          </template>
         </span>
-        <!-- URL양식 -->
-        <span class="url-container" v-bind:class="{existURL : !course.urlCheck}">
+        
+        <span>
+          <template v-if="course.url !== ''">
+            <a class="linkText" v-bind:href="course.url">{{course.item}}</a>
+          </template>
+          <template v-else>
+            {{ course.item }} 
+          </template>
+        </span>
+        <!-- URL로직 -->
+        <span>
+          <!-- URL실행 -->
           <span v-on:click="openURL(course)">
-            <i class="fas fa-undo"></i>
+            <i v-bind:class="{existURL : course.urlCheck}" class="shareBtn fas fa-share-square"></i>
           </span>
-          <input type="text" class="inputURL" v-model="urlText" v-on:keyup.enter="attachURL(course)">
-          <span v-on:click="attachURL(course)">
-            <i class="fas fa-plus"></i>
+          <!-- URL양식 -->
+          <span class="url-container" v-bind:class="{existURL : !course.urlCheck}">
+            <span v-on:click="openURL(course)">
+              <i class="fas fa-undo"></i>
+            </span>
+            <input type="text" class="inputURL" v-model="urlText" v-on:keyup.enter="attachURL(course)" placeholder="URL을 입력하세요.">
+            <span v-on:click="attachURL(course)">
+              <i class="fas fa-plus"></i>
+            </span>
           </span>
         </span>
-      </span>
-      <!-- /URL로직 -->
-      <span v-on:click="removeCourse(course, index)">
-        <i class="removeBtn far fa-trash-alt"></i>
-      </span>
-    </li>
+        <!-- 삭제 버튼 -->
+        <span v-on:click="removeCourse(course, index)">
+          <i class="removeBtn far fa-trash-alt"></i>
+        </span>
+      </li>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import SortList from './SortList.vue'
 
 export default {
   data() {
@@ -53,10 +59,10 @@ export default {
   },
   methods : {
     removeCourse(course, index) {
-      this.$store.commit('removeOneCourse', {course, index})
+      this.$store.commit('removeOneCourse', {course, index});
     },
     checkCourse(course) {
-      this.$store.commit('checkOneCourse', course)
+      this.$store.commit('checkOneCourse', course);
     },
     openURL(course) {
       this.$store.commit('openURLText', course);
@@ -65,10 +71,13 @@ export default {
       const url = this.urlText
       this.$store.commit('attachOneURL', {course, url});
       this.urlText = "";
-    }
+    },
   },
   computed : {
-    ...mapGetters(['getDateCourse'])
+    ...mapGetters(['getDateCourse']),
+  },
+  components : {
+    SortList
   }
   
 }

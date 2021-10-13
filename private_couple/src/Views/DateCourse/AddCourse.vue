@@ -2,10 +2,10 @@
   <div>
     <div class="inputBox">
       <select v-model="selected" class="selectCategory">
-        <option value="">--카테고리--</option>
-        <option :value="{category : 'restaurant'}">음식점</option>
-        <option :value="{category : 'cafe'}">카페</option>
-        <option :value="{category : 'enjoying'}">즐길거리</option>
+        <option disabled value="">--카테고리--</option>
+        <option v-for="option in options" v-bind:key="option.text">
+          {{ option.text}}
+        </option>
       </select>
       <input type="text" v-model="newDateCourse" v-on:keyup.enter="addCourse">
       <span class="addBtnContainer" v-on:click="addCourse">
@@ -19,6 +19,11 @@
 export default {
   data() {
     return {
+      options : [
+        {text : '음식점'},
+        {text : '카페'},
+        {text : '즐길거리'},
+      ],
       selected : "",
       newDateCourse : "",
     }
