@@ -2,7 +2,7 @@
   <div>
     <div>
       <SortList></SortList>
-      <li v-for="(course, index) in this.$store.state.newList" v-bind:key="course.item">
+      <li v-for="(course, index) in getDateCourse" v-bind:key="course.item" v-bind:class="{filterItem : !course.display}">
         <!-- 체크 버튼 -->
         <span v-on:click="checkCourse(course)"> 
           <template v-if="course.completed !== false">
@@ -12,7 +12,6 @@
             <i class="notpickBtn far fa-check-circle"></i>
           </template>
         </span>
-        
         <span>
           <template v-if="course.url !== ''">
             <a class="linkText" v-bind:href="course.url">{{course.item}}</a>
@@ -78,12 +77,11 @@ export default {
   },
   components : {
     SortList
-  }
-  
+  },
 }
 </script>
 
-<style>
+<style scoped>
 li {
   list-style: none;
   min-height: 50px;
@@ -93,6 +91,9 @@ li {
   padding: 0 0.9rem;
   background: white;
   border-radius: 5px;
+}
+.filterItem {
+  display : none;
 }
 .notpickBtn {
   line-height: 45px;

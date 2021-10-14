@@ -20,7 +20,7 @@ const storage = {
 export const store = new Vuex.Store({
   state : {
     dateCourses : storage.fetch(),
-    filterDateCourses : [...storage.fetch()],
+    // filterDateCourses : [...storage.fetch()],
     newList : []
   },
   getters : {
@@ -36,6 +36,7 @@ export const store = new Vuex.Store({
         completed : false, 
         url : '',
         urlCheck : false,
+        display : true
       }
       localStorage.setItem(obj.item, JSON.stringify(obj));
       state.dateCourses.push(obj);
@@ -45,10 +46,9 @@ export const store = new Vuex.Store({
       state.dateCourses.splice(payload.index, 1);
     },
     checkOneCourse(state, course) {
-      console.log(course.category.category)
       course.completed = !course.completed;
-      localStorage.removeItem(course.item);
-      localStorage.setItem(course.item, JSON.stringify(course))
+      // localStorage.removeItem(course.item);
+      // localStorage.setItem(course.item, JSON.stringify(course))
     },
     openURLText(state, course) {
       course.urlCheck = !course.urlCheck;
@@ -62,21 +62,46 @@ export const store = new Vuex.Store({
       localStorage.setItem(attachInfo.course.item, JSON.stringify(attachInfo.course))
     },
     filterListItem(state, name) {
-      if(name == '전체') {
-        state.newList = state.dateCourses
-      } else if(name == '음식점') {
-        state.newList = state.filterDateCourses.filter(function(item){
-          return item.category == '음식점'
-        })
-      } else if(name == '카페') {
-        state.newList = state.filterDateCourses.filter(function(item){
-          return item.category == '카페'
-        })
-      } else if(name == '즐길거리') {
-        state.newList = state.filterDateCourses.filter(function(item){
-          return item.category == '즐길거리'
-        })
+      function displayItem(x) {
+        x.display = true;
+        localStorage.removeItem(x.item);
+        localStorage.setItem(x.item, JSON.stringify(x))
       }
+      function blockItem(x) {
+        x.display = false;
+        localStorage.removeItem(x.item);
+        localStorage.setItem(x.item, JSON.stringify(x))
+      }
+      if(name == '전체') {
+        for(let x of state.dateCourses) {
+          displayItem(x)
+        }
+      } else if(name == '음식점') {
+        for(let x of state.dateCourses) {
+          if(x.category !== '음식점') {
+            blockItem(x)
+          } else {
+            displayItem(x)
+          }
+        }
+      } else if(name == '카페') {
+        for(let x of state.dateCourses) {
+          if(x.category !== '카페') {
+            blockItem(x)
+          } else {
+            displayItem(x)
+          }
+        }
+      } else if(name == '즐길거리') {
+        for(let x of state.dateCourses) {
+          if(x.category !== '즐길거리') {
+            blockItem(x)
+          } else {
+            displayItem(x)
+          }
+        }
+      }
+      
     }
   } 
 })
