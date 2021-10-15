@@ -47,8 +47,8 @@ export const store = new Vuex.Store({
     },
     checkOneCourse(state, course) {
       course.completed = !course.completed;
-      // localStorage.removeItem(course.item);
-      // localStorage.setItem(course.item, JSON.stringify(course))
+      localStorage.removeItem(course.item);
+      localStorage.setItem(course.item, JSON.stringify(course))
     },
     openURLText(state, course) {
       course.urlCheck = !course.urlCheck;
@@ -62,46 +62,23 @@ export const store = new Vuex.Store({
       localStorage.setItem(attachInfo.course.item, JSON.stringify(attachInfo.course))
     },
     filterListItem(state, name) {
-      function displayItem(x) {
-        x.display = true;
-        localStorage.removeItem(x.item);
-        localStorage.setItem(x.item, JSON.stringify(x))
-      }
-      function blockItem(x) {
-        x.display = false;
-        localStorage.removeItem(x.item);
-        localStorage.setItem(x.item, JSON.stringify(x))
-      }
       if(name == '전체') {
         for(let x of state.dateCourses) {
-          displayItem(x)
+          x.display = true;
+          localStorage.removeItem(x.item);
+          localStorage.setItem(x.item, JSON.stringify(x))
         }
-      } else if(name == '음식점') {
+      } else {
         for(let x of state.dateCourses) {
-          if(x.category !== '음식점') {
-            blockItem(x)
+          if(x.category !== name) {
+            x.display = false;
           } else {
-            displayItem(x)
+            x.display = true;
           }
-        }
-      } else if(name == '카페') {
-        for(let x of state.dateCourses) {
-          if(x.category !== '카페') {
-            blockItem(x)
-          } else {
-            displayItem(x)
-          }
-        }
-      } else if(name == '즐길거리') {
-        for(let x of state.dateCourses) {
-          if(x.category !== '즐길거리') {
-            blockItem(x)
-          } else {
-            displayItem(x)
-          }
+          localStorage.removeItem(x.item);
+          localStorage.setItem(x.item, JSON.stringify(x))
         }
       }
-      
     }
   } 
 })

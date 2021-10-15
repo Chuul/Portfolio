@@ -46,19 +46,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 input {
   border-style: groove;
   width: 300px;
   height: 30px;
   border-radius: 5px;
 }
-.selectCategory {
-   float : left;
-   height: 30px;
-}
 .inputBox {
-  background: rgb(194, 221, 243);
+  background: rgb(124, 198, 255);
   height: 50px;
   line-height: 50px;
   border-radius: 5px;
@@ -66,6 +62,10 @@ input {
 .inputBox input {
   border-style: none;
   font-size: 0.9rem;
+}
+.selectCategory {
+  float : left;
+  height: 30px;
 }
 .addBtnContainer {
   float : right;

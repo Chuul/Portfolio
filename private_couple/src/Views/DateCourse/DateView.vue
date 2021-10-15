@@ -1,19 +1,22 @@
 <template>
   <div>
     <h2>Go on a Date</h2>
-    <AddCourse></AddCourse>
-    <ListCourse></ListCourse>
+    <AddItem></AddItem>
+    <ListingItem></ListingItem>
+    <CreateCourse></CreateCourse>
   </div>
 </template>
 
 <script>
-import AddCourse from './AddCourse.vue'
-import ListCourse from './ListCourse.vue'
+import AddItem from './AddItem.vue'
+import ListingItem from './ListingItem.vue'
+import CreateCourse from './CreateCourse.vue'
 
 export default {  
   components : {
-    AddCourse,
-    ListCourse
+    AddItem,
+    ListingItem,
+    CreateCourse
   },
 }
 </script>

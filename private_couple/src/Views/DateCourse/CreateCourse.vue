@@ -1,6 +1,6 @@
 <template>
   <div>
-    start
+    <button>Create</button>
   </div>
 </template>
 

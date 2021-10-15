@@ -12,6 +12,7 @@
             <i class="notpickBtn far fa-check-circle"></i>
           </template>
         </span>
+        <!-- 아이템표시 -->
         <span>
           <template v-if="course.url !== ''">
             <a class="linkText" v-bind:href="course.url">{{course.item}}</a>
@@ -56,10 +57,10 @@ export default {
       urlText : ""
     }
   },
+  components : {
+    SortList,
+  },
   methods : {
-    removeCourse(course, index) {
-      this.$store.commit('removeOneCourse', {course, index});
-    },
     checkCourse(course) {
       this.$store.commit('checkOneCourse', course);
     },
@@ -71,12 +72,13 @@ export default {
       this.$store.commit('attachOneURL', {course, url});
       this.urlText = "";
     },
+    removeCourse(course, index) {
+      this.$store.commit('removeOneCourse', {course, index});
+    },
+    
   },
   computed : {
     ...mapGetters(['getDateCourse']),
-  },
-  components : {
-    SortList
   },
 }
 </script>
@@ -100,22 +102,6 @@ li {
   color : #3273e4;
   margin-right: 5px;
 }
-.itemPick {
-  font-weight: bolder;
-  color : #3273e4;
-}
-.shareBtn {
-  line-height: 45px;
-  color : #62acde;
-  margin-right: 5px;
-}
-/* url입력 양식 */
-.url-container {
-  border : dashed red;
-}
-.inputURL {
-  height: 1rem;
-}
 .existURL {
   display : none;
 }
@@ -123,7 +109,17 @@ li {
   color : #c627ee;
   font-weight: bold;
 }
-/* --url입력 양식-- */
+.shareBtn {
+  line-height: 45px;
+  color : #62acde;
+  margin-right: 5px;
+}
+.url-container {
+  border : dashed red;
+}
+.inputURL {
+  height: 1rem;
+}
 .removeBtn {
   line-height: 45px;
   color : #62acde;
