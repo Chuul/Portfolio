@@ -5,7 +5,7 @@
       <li v-for="(course, index) in getDateCourse" v-bind:key="course.item" v-bind:class="{filterItem : !course.display}">
         <!-- 체크 버튼 -->
         <span v-on:click="checkCourse(course)"> 
-          <template v-if="course.completed !== false">
+          <template v-if="course.checked !== false">
             <i class="notpickBtn fas fa-check-circle"></i>
           </template>
           <template v-else>

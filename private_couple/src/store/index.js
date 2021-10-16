@@ -33,7 +33,7 @@ export const store = new Vuex.Store({
       const obj = {
         category : option.category,
         item : option.item,
-        completed : false, 
+        checked : false, 
         url : '',
         urlCheck : false,
         display : true
@@ -46,7 +46,7 @@ export const store = new Vuex.Store({
       state.dateCourses.splice(payload.index, 1);
     },
     checkOneCourse(state, course) {
-      course.completed = !course.completed;
+      course.checked = !course.checked;
       localStorage.removeItem(course.item);
       localStorage.setItem(course.item, JSON.stringify(course))
     },
@@ -79,6 +79,20 @@ export const store = new Vuex.Store({
           localStorage.setItem(x.item, JSON.stringify(x))
         }
       }
+    },
+    createOneCourse(){
+      let arr = [];
+      for(let i = 0 ; i < localStorage.length ; i++) {
+        if(localStorage.key(i) !== 'loglevel:webpack-dev-server') {
+          let itemString = JSON.parse(localStorage.getItem(localStorage.key(i)))
+          if(itemString.checked == true){
+            // console.log(itemString);
+            arr.push(itemString)
+          }
+        }
+      }
+      console.log(arr);
+      return arr;
     }
   } 
 })

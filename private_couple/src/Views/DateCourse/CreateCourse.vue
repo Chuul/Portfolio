@@ -1,15 +1,19 @@
 <template>
   <div>
-    <button>Create</button>
+    <button v-on:click="createCourse()">Create Course</button>
   </div>
 </template>
 
 <script>
 export default {
-
+  methods : {
+    createCourse() {
+      this.$store.commit('createOneCourse')
+    }
+  }
 }
 </script>
 
-<style>
+<styles scoped>
 
-</style>
+</styles>
