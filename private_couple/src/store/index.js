@@ -16,12 +16,11 @@ const storage = {
     return arr;
   }
 }
-
+// d8f74dc81a66dea76dd630c540c728ee
 export const store = new Vuex.Store({
   state : {
     dateCourses : storage.fetch(),
-    // filterDateCourses : [...storage.fetch()],
-    newList : []
+    selectedCourse : []
   },
   getters : {
     getDateCourse(state) {
@@ -80,19 +79,15 @@ export const store = new Vuex.Store({
         }
       }
     },
-    createOneCourse(){
-      let arr = [];
+    createOneCourse(state) {
       for(let i = 0 ; i < localStorage.length ; i++) {
         if(localStorage.key(i) !== 'loglevel:webpack-dev-server') {
           let itemString = JSON.parse(localStorage.getItem(localStorage.key(i)))
           if(itemString.checked == true){
-            // console.log(itemString);
-            arr.push(itemString)
+            state.selectedCourse.push(itemString);
           }
         }
       }
-      console.log(arr);
-      return arr;
     }
   } 
 })
