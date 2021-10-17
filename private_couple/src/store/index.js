@@ -35,6 +35,8 @@ export const store = new Vuex.Store({
         checked : false, 
         url : '',
         urlCheck : false,
+        pos : '',
+        posCheck : false,
         display : true
       }
       localStorage.setItem(obj.item, JSON.stringify(obj));
@@ -57,6 +59,17 @@ export const store = new Vuex.Store({
     attachOneURL(state, attachInfo) {
       attachInfo.course.urlCheck = !attachInfo.course.urlCheck;
       attachInfo.course.url = attachInfo.url;
+      localStorage.removeItem(attachInfo.course.item);
+      localStorage.setItem(attachInfo.course.item, JSON.stringify(attachInfo.course))
+    },
+    openPosTxt(state, course) {
+      course.posCheck = !course.posCheck;
+      localStorage.removeItem(course.item);
+      localStorage.setItem(course.item, JSON.stringify(course))
+    },
+    attachOnePOS(state, attachInfo) {
+      attachInfo.course.posCheck = !attachInfo.course.posCheck;
+      attachInfo.course.pos = attachInfo.pos;
       localStorage.removeItem(attachInfo.course.item);
       localStorage.setItem(attachInfo.course.item, JSON.stringify(attachInfo.course))
     },

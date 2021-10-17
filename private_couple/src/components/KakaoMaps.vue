@@ -4,7 +4,7 @@
     <div class="button-group">
       <button @click="changeSize(0)">Hide</button>
       <button @click="changeSize(80)">show</button>
-      <button @click="searchPlace()">search</button>
+      <button @click="createPlace()">create</button>
       <button @click="displayMarker(markerPositions2)">marker set 2</button>
       <button @click="displayMarker([])">Empty</button>
       <button @click="displayInfoWindow">infowindow</button>
@@ -18,11 +18,6 @@ export default {
   data() {
     return {
       map: null,
-      // markerPositions1: [
-      //   [33.452278, 126.567803],
-      //   [33.452671, 126.574792],
-      //   [33.451744, 126.572441],
-      // ],
       markerPositions2: [
         [37.499590490909185, 127.0263723554437],
         [37.499427948430814, 127.02794423197847],
@@ -112,7 +107,19 @@ export default {
 
       this.map.setCenter(iwPosition);
     },
-    searchPlace() {
+    createPlace() {
+      // 마커 이미지
+      var heart = new kakao.maps.MarkerImage(
+        'https://localimg.daum-img.net/localimages/07/2009/map/icon/blog_icon01_on.png',
+        new kakao.maps.Size(31, 35),
+        {
+            offset: new kakao.maps.Point(16, 34),
+            alt: "아이템 마커",
+            shape: "poly",
+            coords: "1,20,1,9,5,2,10,0,21,0,27,3,30,9,30,20,17,33,14,33"
+        }
+      );
+      // 마커 생성 로직
       var geocoder = new kakao.maps.services.Geocoder();
       var vm = this;
       // 주소로 좌표를 검색합니다
@@ -124,7 +131,8 @@ export default {
             // 결과값으로 받은 위치를 마커로 표시합니다
             var marker = new kakao.maps.Marker({
                 map: vm.map,
-                position: coords
+                position: coords,
+                image: heart
             });
 
             // 인포윈도우로 장소에 대한 설명을 표시합니다

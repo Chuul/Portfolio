@@ -38,6 +38,23 @@
             </span>
           </span>
         </span>
+        <!-- 주소 추가 버튼 -->
+        <span>
+          <!-- 주소 실행 -->
+          <span v-on:click="openPos(course)">
+            <i v-bind:class="{existPOS : course.posCheck}" class="shareBtn fas fa-share-square"></i>
+          </span>
+          <!-- 주소양식 -->
+          <span class="url-container" v-bind:class="{existPOS : !course.posCheck}">
+            <span v-on:click="openPos(course)">
+              <i class="fas fa-undo"></i>
+            </span>
+            <input type="text" class="inputURL" v-model="posText" v-on:keyup.enter="attachPos(course)" placeholder="주소를 입력하세요.">
+            <span v-on:click="attachPos(course)">
+              <i class="fas fa-plus"></i>
+            </span>
+          </span>
+        </span>
         <!-- 삭제 버튼 -->
         <span v-on:click="removeCourse(course, index)">
           <i class="removeBtn far fa-trash-alt"></i>
@@ -54,7 +71,8 @@ import SortList from './SortList.vue'
 export default {
   data() {
     return {
-      urlText : ""
+      urlText : "",
+      posText : ""
     }
   },
   components : {
@@ -68,9 +86,17 @@ export default {
       this.$store.commit('openURLText', course);
     },
     attachURL(course) {
-      const url = this.urlText
+      const url = this.urlText;
       this.$store.commit('attachOneURL', {course, url});
       this.urlText = "";
+    },
+    openPos(course) {
+      this.$store.commit('openPosTxt', course);
+    },
+    attachPos(course) {
+      const pos = this.posText;
+      this.$store.commit('attachOnePOS', {course, pos});
+      this.posText = "";
     },
     removeCourse(course, index) {
       this.$store.commit('removeOneCourse', {course, index});
@@ -104,6 +130,9 @@ li {
 }
 .existURL {
   display : none;
+}
+.existPOS {
+  display: none;
 }
 .linkText {
   color : #c627ee;
