@@ -93,6 +93,7 @@ export const store = new Vuex.Store({
       }
     },
     createOneCourse(state) {
+      state.selectedCourse = [];
       for(let i = 0 ; i < localStorage.length ; i++) {
         if(localStorage.key(i) !== 'loglevel:webpack-dev-server') {
           let itemString = JSON.parse(localStorage.getItem(localStorage.key(i)))

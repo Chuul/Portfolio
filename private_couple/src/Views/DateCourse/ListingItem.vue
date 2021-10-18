@@ -42,7 +42,7 @@
         <span>
           <!-- 주소 실행 -->
           <span v-on:click="openPos(course)">
-            <i v-bind:class="{existPOS : course.posCheck}" class="shareBtn fas fa-share-square"></i>
+            <i v-bind:class="{existPOS : course.posCheck}" class="shareBtn fas fa-map-marker-alt"></i>
           </span>
           <!-- 주소양식 -->
           <span class="url-container" v-bind:class="{existPOS : !course.posCheck}">
