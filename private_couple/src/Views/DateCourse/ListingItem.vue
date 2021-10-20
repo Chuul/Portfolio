@@ -1,9 +1,8 @@
 <template>
   <div>
-    <div>
-      <SortList></SortList>
+    <SortList></SortList>
       <li v-for="(course, index) in getDateCourse" v-bind:key="course.item" v-bind:class="{filterItem : !course.display}">
-        <!-- 체크 버튼 -->
+        <!-- 체크버튼 -->
         <span v-on:click="checkCourse(course)"> 
           <template v-if="course.checked !== false">
             <i class="notpickBtn fas fa-check-circle"></i>
@@ -13,22 +12,20 @@
           </template>
         </span>
         <!-- 아이템표시 -->
-        <span>
-          <template v-if="course.url !== ''">
-            <a class="linkText" v-bind:href="course.url">{{course.item}}</a>
-          </template>
-          <template v-else>
-            {{ course.item }} 
-          </template>
-        </span>
-        <!-- URL로직 -->
-        <span>
-          <!-- URL실행 -->
+        <a v-bind:href="course.url" target="_blank">{{course.item}}</a>
+        <!-- URL -->
+        <span class="UrlContainer">
+          <!-- URL실행버튼 -->
           <span v-on:click="openURL(course)">
-            <i v-bind:class="{existURL : course.urlCheck}" class="shareBtn fas fa-share-square"></i>
+            <span v-if="course.url == ''">
+              <i v-bind:class="{checkURL : course.urlCheck}" class="shareBtn fas fa-share-square"></i>
+            </span>
+            <span v-else>
+              <i v-bind:class="{checkURL : course.urlCheck}" class="existBtn fas fa-share-square"></i>
+            </span>
           </span>
           <!-- URL양식 -->
-          <span class="url-container" v-bind:class="{existURL : !course.urlCheck}">
+          <span v-bind:class="{checkURL : !course.urlCheck}">
             <span v-on:click="openURL(course)">
               <i class="fas fa-undo"></i>
             </span>
@@ -38,11 +35,16 @@
             </span>
           </span>
         </span>
-        <!-- 주소 추가 버튼 -->
-        <span>
+        <!-- 주소추가버튼 -->
+        <span class="posContainer">
           <!-- 주소 실행 -->
           <span v-on:click="openPos(course)">
-            <i v-bind:class="{existPOS : course.posCheck}" class="shareBtn fas fa-map-marker-alt"></i>
+            <span v-if="course.pos == ''">
+              <i v-bind:class="{existPOS : course.posCheck}" class="shareBtn fas fa-map-marker-alt"></i>
+            </span>
+            <span v-else>
+              <i v-bind:class="{existPOS : course.posCheck}" class="existBtn fas fa-map-marker-alt"></i>
+            </span>
           </span>
           <!-- 주소양식 -->
           <span class="url-container" v-bind:class="{existPOS : !course.posCheck}">
@@ -55,28 +57,30 @@
             </span>
           </span>
         </span>
-        <!-- 삭제 버튼 -->
+        <!-- 삭제버튼 -->
         <span v-on:click="removeCourse(course, index)">
           <i class="removeBtn far fa-trash-alt"></i>
         </span>
       </li>
-    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import SortList from './SortList.vue'
+import SortList from './SortList.vue';
 
 export default {
+  components : {
+    SortList,
+  },
   data() {
     return {
       urlText : "",
       posText : ""
     }
   },
-  components : {
-    SortList,
+  computed : {
+    ...mapGetters(['getDateCourse']),
   },
   methods : {
     checkCourse(course) {
@@ -103,9 +107,7 @@ export default {
     },
     
   },
-  computed : {
-    ...mapGetters(['getDateCourse']),
-  },
+  
 }
 </script>
 
@@ -128,23 +130,21 @@ li {
   color : #3273e4;
   margin-right: 5px;
 }
-.existURL {
+.checkURL {
   display : none;
+}
+.shareBtn {
+  color :  #62acde;
+  line-height: 45px;
+  margin-right: 5px;
+}
+.existBtn {
+  color :  #f83dc0;
+  line-height: 45px;
+  margin-right: 5px;
 }
 .existPOS {
   display: none;
-}
-.linkText {
-  color : #c627ee;
-  font-weight: bold;
-}
-.shareBtn {
-  line-height: 45px;
-  color : #62acde;
-  margin-right: 5px;
-}
-.url-container {
-  border : dashed red;
 }
 .inputURL {
   height: 1rem;

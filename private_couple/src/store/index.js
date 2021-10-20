@@ -16,7 +16,6 @@ const storage = {
     return arr;
   }
 }
-// d8f74dc81a66dea76dd630c540c728ee
 export const store = new Vuex.Store({
   state : {
     dateCourses : storage.fetch(),
@@ -25,6 +24,9 @@ export const store = new Vuex.Store({
   getters : {
     getDateCourse(state) {
       return state.dateCourses;
+    },
+    getSelectedCourse(state) {
+      return state.selectedCourse;
     }
   },
   mutations : {
@@ -102,6 +104,6 @@ export const store = new Vuex.Store({
           }
         }
       }
-    }
+    },
   } 
 })
