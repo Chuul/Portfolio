@@ -1,18 +1,18 @@
 <template>
-  <div>
-    <div class="inputBox">
-      <select v-model="selected" class="selectCategory">
+  <section class="inputBox">
+    <div class="selectCategory">
+      <select v-model="selected">
         <option disabled value="">--카테고리--</option>
         <option v-for="option in options" v-bind:key="option.text">
           {{ option.text}}
         </option>
       </select>
-      <input type="text" v-model="newDateCourse" v-on:keyup.enter="addCourse">
-      <span class="addBtnContainer" v-on:click="addCourse">
-        <i class="addBtn fas fa-plus"></i>
-      </span>
     </div>
-  </div>
+    <input type="text" v-model="newDateCourse" v-on:keyup.enter="addCourse">
+    <div class="addBtnContainer" v-on:click="addCourse">
+      <i class="addBtn fas fa-plus"></i>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -47,25 +47,22 @@ export default {
 </script>
 
 <style scoped>
-input {
-  border-style: groove;
-  width: 300px;
-  height: 30px;
-  border-radius: 5px;
-}
 .inputBox {
-  background: rgb(124, 198, 255);
+  background: rgba(124, 198, 255, 0.247);
   height: 50px;
   line-height: 50px;
   border-radius: 5px;
 }
+.selectCategory {
+  float : left;
+  margin-left : 10px;
+}
 .inputBox input {
   border-style: none;
   font-size: 0.9rem;
-}
-.selectCategory {
-  float : left;
-  height: 30px;
+  width: 60%;
+  height: 50%;
+  border-radius: 5px;
 }
 .addBtnContainer {
   float : right;

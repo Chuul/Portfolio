@@ -1,12 +1,11 @@
 <template>
-  <div>
-    <button v-on:click="createCourse()">Create Course</button>
+  <section>
+    <button class="createBtn" v-on:click="createCourse()">코스생성</button>
     <!-- <template v-if="this.$store.state.selectedCourse !== []"> -->
       <KakaoMap></KakaoMap>
       <draggable>
-        <li class="itemList" v-for="(item, index) in getSelectedCourse" v-bind:key="item.item">
+        <li class="itemList" v-for="item in getSelectedCourse" v-bind:key="item.item">
           <!-- 아이템표시 -->
-          <div>
             <template v-if="item.url !== ''">
               <a class="linkText" :href="item.url" target="_blank">
                 {{item.item}}
@@ -15,15 +14,17 @@
             <template v-else>
               {{ item.item }} 
             </template>
-            <div class="arrowContainer" v-bind:class="{displayArrow : index == getSelectedCourse.length-1}">
+            <span class="moveList">
+              <i class="far fa-line-height"></i>
+            </span>
+            <div class="arrowContainer">
               <a :href="`https://map.kakao.com/link/to/${item},${37.402056,127.108212}`">
                 <i class="fas fa-arrow-down"></i>
               </a>
             </div>
-          </div>
         </li>
       </draggable>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -63,6 +64,16 @@ li {
   background: white;
   border-radius: 5px;
 }
+.createBtn {
+  margin: 10px 3px;
+  background: rgba(124, 198, 255, 0.247);
+  border-style : none;
+  border-radius: 5px;
+  padding : 10px 20px;
+  font-size : 20px;
+  color : rgb(86, 153, 253);
+  cursor : pointer;
+}
 .linkText {
   color : #ee27bc;
   font-weight: bold;
@@ -70,10 +81,19 @@ li {
 .itemList {
   margin-bottom: 3rem;
 }
+.moveList {
+  float : right;
+}
+.moveList i {
+  color: #e1e1fd;
+}
+.moveList i:hover {
+  cursor: pointer;
+}
 .arrowContainer {
   margin-top: 0rem;
 }
-.displayArrow {
+li:last-child .arrowContainer {
   display: none;
 }
 </style>

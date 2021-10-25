@@ -2,9 +2,9 @@
   <div>
     <div id="map"></div>
     <div class="button-group">
-      <button @click="changeSize(0)">Hide</button>
-      <button @click="changeSize(80)">show</button>
-      <button @click="createMarker()">create</button>
+      <button class="button-hide" @click="changeSize(0)">숨기기</button>
+      <button class="button-show" @click="changeSize(80)">지도표시</button>
+      <button class="button-create" @click="createMarker()">위치표시</button>
     </div>
   </div>
 </template>
@@ -121,9 +121,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #map {
-  margin-top: 10px;
+  margin: 15px auto;
   width: 80%;
   height: 320px;
+  border-radius: 10px;
 }
 
 .button-group {
@@ -132,5 +133,11 @@ export default {
 
 button {
   margin: 0 3px;
+  background: rgba(124, 198, 255, 0.247);
+  border-style : none;
+  border-radius: 5px;
+  padding : 5px 10px;
+  color : rgb(86, 153, 253);
+  cursor : pointer;
 }
 </style>

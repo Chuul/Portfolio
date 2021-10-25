@@ -21,7 +21,7 @@ body {
   margin: 1rem;
   padding: 0;
   text-align: center;
-  background:  #ccccff;
+  background:  #e1e1fd;
 }
 a {
   color : black;
