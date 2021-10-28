@@ -24,6 +24,7 @@
             </div>
         </li>
       </draggable>
+      <button>코스 저장</button>
   </section>
 </template>
 

@@ -1,24 +1,24 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import DateView from '../Views/DateCourse/DateView.vue'
-import TravelView from '../Views/TravelView.vue'
-import CalendarView from '../Views/CalendarView.vue'
+import CourseListView from '../Views/CourseListView.vue'
+import LastCourseView from '../Views/LastCourseView.vue'
 
 Vue.use(VueRouter);
 
 export const router = new VueRouter({
   routes : [
     {
-      path : '/date',
+      path : '/createCourse',
       component : DateView
     },
     {
-      path : '/travel',
-      component : TravelView
+      path : '/courseList',
+      component : CourseListView
     },
     {
-      path : '/calendar',
-      component : CalendarView
+      path : '/lastCourse',
+      component : LastCourseView
     }
   ]
 })

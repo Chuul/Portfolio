@@ -1,8 +1,8 @@
 <template>
   <div>
-    <router-link to="/date">Date</router-link>  
-    <router-link to="/travel">Travel</router-link>   
-    <router-link to="/calendar">Calendar</router-link>  
+    <router-link to="/createCourse">코스생성</router-link>  
+    <router-link to="/courseList">코스목록</router-link>   
+    <router-link to="/lastCourse">이전코스</router-link>  
   </div>
 </template>
 

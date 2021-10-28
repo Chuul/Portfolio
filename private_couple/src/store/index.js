@@ -19,7 +19,7 @@ const storage = {
 export const store = new Vuex.Store({
   state : {
     dateCourses : storage.fetch(),
-    selectedCourse : []
+    selectedCourse : [],
   },
   getters : {
     getDateCourse(state) {
@@ -105,5 +105,8 @@ export const store = new Vuex.Store({
         }
       }
     },
+    storeOneCourse(state) {
+      console.log(state.selectedCourse);
+    }
   } 
 })

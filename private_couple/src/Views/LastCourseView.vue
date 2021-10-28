@@ -1,6 +1,6 @@
 <template>
   <div>
-    calendar
+    이전코스입니다.
   </div>
 </template>
 
