@@ -8,7 +8,9 @@ const storage = {
     const arr = [];
     if(localStorage.length > 0) {
       for(let i = 0 ; i < localStorage.length ; i++) {
+        // let itemString = JSON.parse(localStorage.getItem(localStorage.key(i)))
         if(localStorage.key(i) !== 'loglevel:webpack-dev-server') {
+          // JSON.parse(localStorage.getItem(localStorage.key(i))).stored !== true
           arr.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
         }
       }
@@ -20,6 +22,7 @@ export const store = new Vuex.Store({
   state : {
     dateCourses : storage.fetch(),
     selectedCourse : [],
+    storedCourse : []
   },
   getters : {
     getDateCourse(state) {
@@ -27,6 +30,9 @@ export const store = new Vuex.Store({
     },
     getSelectedCourse(state) {
       return state.selectedCourse;
+    },
+    getStoredCourse(state) {
+      return state.storedCourse;
     }
   },
   mutations : {
@@ -39,7 +45,8 @@ export const store = new Vuex.Store({
         urlCheck : false,
         pos : '',
         posCheck : false,
-        display : true
+        display : true,
+        stored : false
       }
       localStorage.setItem(obj.item, JSON.stringify(obj));
       state.dateCourses.push(obj);
@@ -106,7 +113,13 @@ export const store = new Vuex.Store({
       }
     },
     storeOneCourse(state) {
-      console.log(state.selectedCourse);
+      for(let i = 0 ; i < state.selectedCourse.length ; i++) {
+        state.selectedCourse[i].stored = !state.selectedCourse[i].stored;
+        localStorage.removeItem(state.selectedCourse[i].item);
+        localStorage.setItem(state.selectedCourse[i].item, JSON.stringify(state.selectedCourse[i]));
+      }
+      state.storedCourse.push(state.selectedCourse);
+      console.log(state.storedCourse)
     }
   } 
 })

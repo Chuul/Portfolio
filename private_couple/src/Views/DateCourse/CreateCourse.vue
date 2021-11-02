@@ -2,29 +2,29 @@
   <section>
     <button class="createBtn" v-on:click="createCourse()">코스생성</button>
     <!-- <template v-if="this.$store.state.selectedCourse !== []"> -->
-      <KakaoMap></KakaoMap>
-      <draggable>
-        <li class="itemList" v-for="item in getSelectedCourse" v-bind:key="item.item">
-          <!-- 아이템표시 -->
-            <template v-if="item.url !== ''">
-              <a class="linkText" :href="item.url" target="_blank">
-                {{item.item}}
-              </a>
-            </template>
-            <template v-else>
-              {{ item.item }} 
-            </template>
-            <span class="moveList">
-              <i class="far fa-line-height"></i>
-            </span>
-            <div class="arrowContainer">
-              <a :href="`https://map.kakao.com/link/to/${item},${37.402056,127.108212}`">
-                <i class="fas fa-arrow-down"></i>
-              </a>
-            </div>
-        </li>
-      </draggable>
-      <button>코스 저장</button>
+    <KakaoMap></KakaoMap>
+    <draggable :list="getSelectedCourse" :disabled="!enabled" @start="dragging = true" @end="dragging = false">
+      <li class="courseList" v-for="course in getSelectedCourse" v-bind:key="course.item">
+        <!-- 아이템표시 -->
+          <template v-if="course.url !== ''">
+            <a class="linkText" :href="course.url" target="_blank">
+              {{course.item}}
+            </a>
+          </template>
+          <template v-else>
+            {{ course.item }} 
+          </template>
+          <span class="moveList">
+            <i class="far fa-line-height"></i>
+          </span>
+          <div class="arrowContainer">
+            <a :href="`https://map.kakao.com/link/to/${course},${37.402056,127.108212}`">
+              <i class="fas fa-arrow-down"></i>
+            </a>
+          </div>
+      </li>
+    </draggable>
+    <button v-on:click="storeCourse()">코스 저장</button>
   </section>
 </template>
 
@@ -34,12 +34,15 @@ import KakaoMap from '../../components/KakaoMaps.vue';
 import draggable from 'vuedraggable';
 
 export default {
+  order: 0,
   components : {
     KakaoMap,
     draggable
   },
   data() {
     return {
+      enabled: true,
+      dragging: false,
       urlText : "",
       posText : ""
     }
@@ -49,8 +52,11 @@ export default {
   },
   methods : {
     createCourse() {
-      this.$store.commit('createOneCourse')
+      this.$store.commit('createOneCourse');
     },
+    storeCourse(course) {
+      this.$store.commit('storeOneCourse', course);
+    }
   }
 }
 </script>
@@ -79,7 +85,7 @@ li {
   color : #ee27bc;
   font-weight: bold;
 }
-.itemList {
+.courseList {
   margin-bottom: 3rem;
 }
 .moveList {

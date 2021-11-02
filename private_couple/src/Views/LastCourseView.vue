@@ -1,6 +1,6 @@
 <template>
   <div>
-    이전코스입니다.
+    이전코스페이지입니다.
   </div>
 </template>
 
