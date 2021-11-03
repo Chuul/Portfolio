@@ -34,7 +34,6 @@ import KakaoMap from '../../components/KakaoMaps.vue';
 import draggable from 'vuedraggable';
 
 export default {
-  order: 0,
   components : {
     KakaoMap,
     draggable
@@ -54,8 +53,8 @@ export default {
     createCourse() {
       this.$store.commit('createOneCourse');
     },
-    storeCourse(course) {
-      this.$store.commit('storeOneCourse', course);
+    storeCourse() {
+      this.$store.commit('storeOneCourse');
     }
   }
 }

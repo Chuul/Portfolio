@@ -12,9 +12,14 @@
         </template>
       </span>
       <!-- 아이템표시 -->
-      <a v-bind:href="course.url" target="_blank">{{course.item}}</a>
+      <a v-if="course.url !== ''" v-bind:href="course.url" target="_blank">
+        {{course.item}}
+      </a>
+      <span v-else>
+        {{course.item}}
+      </span>
       <!-- URL -->
-      <span class="UrlContainer">
+      <span class="urlContainer">
         <!-- URL실행버튼 -->
         <span v-on:click="openURL(course)">
           <span v-if="course.url == ''">
@@ -26,11 +31,11 @@
         </span>
         <!-- URL양식 -->
         <span v-bind:class="{checkURL : !course.urlCheck}">
-          <span v-on:click="openURL(course)">
+          <span class="backBtn" v-on:click="openURL(course)">
             <i class="fas fa-undo"></i>
           </span>
           <input type="text" class="inputURL" v-model="urlText" v-on:keyup.enter="attachURL(course)" placeholder="URL을 입력하세요.">
-          <span v-on:click="attachURL(course)">
+          <span class="addBtn" v-on:click="attachURL(course)">
             <i class="fas fa-plus"></i>
           </span>
         </span>
@@ -58,8 +63,8 @@
         </span>
       </span>
       <!-- 삭제버튼 -->
-      <span v-on:click="removeCourse(course, index)">
-        <i class="removeBtn far fa-trash-alt"></i>
+      <span class="removeContainer" v-on:click="removeCourse(course, index)">
+        <i class="far fa-trash-alt"></i>
       </span>
     </li>
   </section>
@@ -126,9 +131,12 @@ li {
   display : none;
 }
 .notpickBtn {
-  line-height: 45px;
   color : #3273e4;
-  margin-right: 5px;
+  margin-right: 10px;
+}
+.urlContainer {
+  margin : 0 5px 0 10px;
+  cursor: pointer;
 }
 .checkURL {
   display : none;
@@ -143,15 +151,24 @@ li {
   line-height: 45px;
   margin-right: 5px;
 }
-.existPOS {
-  display: none;
+.backBtn {
+  margin : 0 5px;
 }
 .inputURL {
   height: 1rem;
 }
-.removeBtn {
-  line-height: 45px;
+.addBtn {
+  margin : 0 5px;
+}
+.posContainer {
+  cursor: pointer;
+  margin : 0 5px;
+}
+.existPOS {
+  display: none;
+}
+.removeContainer {
   color : #62acde;
-  margin-left: 5px;
+  margin : 0 5px;
 }
 </style>

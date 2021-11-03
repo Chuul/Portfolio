@@ -55,6 +55,9 @@ export const store = new Vuex.Store({
       localStorage.removeItem(payload.course.item);
       state.dateCourses.splice(payload.index, 1);
     },
+    removeOneStoredCourse(state, payload) {
+      state.storedCourse.splice(payload.index, 1);
+    },
     checkOneCourse(state, course) {
       course.checked = !course.checked;
       localStorage.removeItem(course.item);
@@ -118,8 +121,7 @@ export const store = new Vuex.Store({
         localStorage.removeItem(state.selectedCourse[i].item);
         localStorage.setItem(state.selectedCourse[i].item, JSON.stringify(state.selectedCourse[i]));
       }
-      state.storedCourse.push(state.selectedCourse);
-      console.log(state.storedCourse)
+      state.storedCourse.push((state.selectedCourse));
     }
   } 
 })
