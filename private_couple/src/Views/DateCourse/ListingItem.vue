@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="list-cont">
     <SortList></SortList>
     <li v-for="(course, index) in getDateCourse" v-bind:key="course.item" v-bind:class="{filterItem : !course.display}">
       <!-- 체크버튼 -->
@@ -117,6 +117,9 @@ export default {
 </script>
 
 <style scoped>
+.list-cont {
+  margin : 0;
+}
 li {
   list-style: none;
   min-height: 50px;

@@ -1,5 +1,5 @@
 <template>
-  <section class="inputBox">
+  <section class="input-cont">
     <div class="selectCategory">
       <select v-model="selected">
         <option disabled value="">--카테고리--</option>
@@ -47,7 +47,8 @@ export default {
 </script>
 
 <style scoped>
-.inputBox {
+.input-cont {
+  margin : 0;
   background: rgba(124, 198, 255, 0.247);
   height: 50px;
   line-height: 50px;
@@ -57,7 +58,7 @@ export default {
   float : left;
   margin-left : 10px;
 }
-.inputBox input {
+.input-cont input {
   border-style: none;
   font-size: 0.9rem;
   width: 60%;

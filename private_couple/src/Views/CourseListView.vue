@@ -45,7 +45,7 @@ li {
   list-style: none;
 }
 .storedList {
-  background: rgb(248, 173, 244);
+  background: rgb(189, 209, 245);
   margin: 15px;
   padding : 1rem;
 }

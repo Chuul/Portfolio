@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <h2>Go on a Date</h2>
+  <section>
+    <header>Go on a Date</header>
     <AddItem></AddItem>
     <ListingItem></ListingItem>
     <CreateCourse></CreateCourse>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -22,7 +22,10 @@ export default {
 </script>
 
 <style>
-h2 {
-  font-family: 'Noto Sans Mono', monospace;
+section {
+  margin : 0 2em;
+}
+header {
+  font-family: 'Noto Sans KR', sans-serif;
 }
 </style>
