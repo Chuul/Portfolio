@@ -26,6 +26,8 @@ section {
   margin : 0 2em;
 }
 header {
+  margin-bottom: 1em;
+  font-size: 2em;
   font-family: 'Noto Sans KR', sans-serif;
 }
 </style>

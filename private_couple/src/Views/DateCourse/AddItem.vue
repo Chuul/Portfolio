@@ -1,6 +1,6 @@
 <template>
-  <section class="input-cont">
-    <div class="selectCategory">
+  <section class="addItem-cont">
+    <div class="select-cont">
       <select v-model="selected">
         <option disabled value="">--카테고리--</option>
         <option v-for="option in options" v-bind:key="option.text">
@@ -9,7 +9,7 @@
       </select>
     </div>
     <input type="text" v-model="newDateCourse" v-on:keyup.enter="addCourse">
-    <div class="addBtnContainer" v-on:click="addCourse">
+    <div class="btn-cont" v-on:click="addCourse">
       <i class="addBtn fas fa-plus"></i>
     </div>
   </section>
@@ -47,30 +47,40 @@ export default {
 </script>
 
 <style scoped>
-.input-cont {
+.addItem-cont {
   margin : 0;
-  background: rgba(124, 198, 255, 0.247);
+  text-align: center;
   height: 50px;
   line-height: 50px;
-  border-radius: 5px;
+  border-radius: 0.5em;
+  background: rgba(124, 198, 255, 0.247);
 }
-.selectCategory {
+.select-cont {
+  height: 100%;
   float : left;
-  margin-left : 10px;
+  margin-left : 1em;
 }
-.input-cont input {
+select {
+  height: 60%;
+  text-align: center;
+  border-style : none;
+  border-radius: 0.5em;
+}
+.addItem-cont input {
   border-style: none;
   font-size: 0.9rem;
   width: 60%;
   height: 50%;
-  border-radius: 5px;
+  border-radius: 0.5em;
+  cursor: text;
 }
-.addBtnContainer {
+.btn-cont {
+  display: block;
   float : right;
   background: linear-gradient(to right, #6478FB, #8763FB);
-  display: block;
-  width: 3rem;
-  border-radius: 0 5px 5px 0;
+  width: 3em;
+  border-radius: 0 0.5em 0.5em 0;
+  cursor: pointer;
 }
 .addBtn {
   color : white;

@@ -20,7 +20,7 @@ export default {
 
 <style>
 body {
-  background:  #e1e1fd;
+	background-color: #F6F6F6;
 }
 
 /* reset CSS */

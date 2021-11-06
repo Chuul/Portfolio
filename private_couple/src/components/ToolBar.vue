@@ -17,11 +17,15 @@ export default {
   text-align: center;
   margin : 2em;
 }
+.router-cont .router-link-exact-active {
+  color : rgb(31, 152, 245);
+}
 a {
+  color : black;
   margin : auto 1em;
   font-family: 'Noto Sans KR', sans-serif;
 }
 a:hover {
-  color : #1a66ff;
+  color : rgba(124, 198, 255, 0.8);
 }
 </style>

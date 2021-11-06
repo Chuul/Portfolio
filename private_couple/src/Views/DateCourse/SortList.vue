@@ -1,5 +1,5 @@
 <template>
-  <div class="sortContainer">
+  <section class="sort-cont">
     <a v-on:click="filterItem('전체')">
       <span>전체</span>
     </a> 
@@ -12,29 +12,44 @@
     <a v-on:click="filterItem('즐길거리')">
       <span>즐길거리</span>
     </a>
-  </div>
+  </section>
 </template>
 
 <script>
 export default {
   methods : {
     filterItem(name) {
-      this.$store.commit('filterListItem', name)
+      this.$store.commit('filterListItem', name);
     },
   }
 }
 </script>
 
 <style scoped>
-.sortContainer {
-  margin: 10px;
+.sort-cont {
+  text-align: center;
+  margin: 1em;
 }
 a {
-  color : white;
-  margin-right: 20px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+}
+a::after {
+  display: inline-block;
+  content : '';
+  width: 1px;
+  height: 0.8em;
+  margin : 0 1em;
+  background : black;
+}
+a:last-child::after {
+  display: none;
+}
+a:active {
+  color : rgba(124, 198, 255, 0.8);
 }
 a:hover {
-  color : #1a66ff;
+  color : rgba(124, 198, 255, 0.8);
   cursor : pointer;
 }
 </style>
