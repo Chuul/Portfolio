@@ -5,14 +5,14 @@
       <!-- 체크버튼 -->
       <span class="checkBtn-cont" v-on:click="checkCourse(course)"> 
         <template v-if="course.checked !== false">
-          <i class="notpickBtn fas fa-check-circle"></i>
+          <i class="checkBtn fas fa-check-circle"></i>
         </template>
         <template v-else>
-          <i class="notpickBtn far fa-check-circle"></i>
+          <i class="checkBtn far fa-check-circle"></i>
         </template>
       </span>
       <!-- 아이템표시 -->
-      <span class="course-cont">
+      <span>
         <a v-if="course.url !== ''" v-bind:href="course.url" target="_blank">
           {{course.item}}
         </a>
@@ -23,7 +23,7 @@
       <!-- 버튼 컨테이너 -->
       <span class="utilBtn-cont">
         <!-- URL 버튼 -->
-        <span class="urlContainer">
+        <span class="url-cont">
           <!-- URL 실행 -->
           <span v-on:click="openURL(course)">
             <span v-if="course.url == ''">
@@ -34,18 +34,18 @@
             </span>
           </span>
           <!-- URL 양식 -->
-          <span v-bind:class="{checkURL : !course.urlCheck}">
-            <span class="backBtn" v-on:click="openURL(course)">
-              <i class="fas fa-undo"></i>
+          <span class="showURL" v-bind:class="{checkURL : !course.urlCheck}">
+            <span class="backBtn-cont" v-on:click="openURL(course)">
+              <i class="backbBtn fas fa-undo"></i>
             </span>
             <input type="text" class="inputURL" v-model="urlText" v-on:keyup.enter="attachURL(course)" placeholder="URL을 입력하세요.">
-            <span class="addBtn" v-on:click="attachURL(course)">
-              <i class="fas fa-plus"></i>
+            <span class="addBtn-cont" v-on:click="attachURL(course)">
+              <i class="addBtn fas fa-plus"></i>
             </span>
           </span>
         </span>
         <!-- 주소 버튼 -->
-        <span class="posContainer">
+        <span class="position-cont">
           <!-- 주소 실행 -->
           <span v-on:click="openPos(course)">
             <span v-if="course.pos == ''">
@@ -56,8 +56,8 @@
             </span>
           </span>
           <!-- 주소 양식 -->
-          <span class="url-container" v-bind:class="{existPOS : !course.posCheck}">
-            <span v-on:click="openPos(course)">
+          <span class="showURL" v-bind:class="{existPOS : !course.posCheck}">
+            <span class="backBtn-cont" v-on:click="openPos(course)">
               <i class="fas fa-undo"></i>
             </span>
             <input type="text" class="inputURL" v-model="posText" v-on:keyup.enter="attachPos(course)" placeholder="주소를 입력하세요.">
@@ -67,7 +67,7 @@
           </span>
         </span>
         <!-- 삭제 버튼 -->
-        <span class="removeContainer" v-on:click="removeCourse(course, index)">
+        <span class="remove-cont" v-on:click="removeCourse(course, index)">
           <i class="far fa-trash-alt"></i>
         </span>
       </span>
@@ -127,58 +127,71 @@ export default {
 }
 li {
   list-style: none;
+  text-align: center;
   /* min-height: 50px; */
   height: 3em;
   line-height: 3em;
-  margin: 1rem 0;
-  padding: 0 1rem;
-  font-family: 'Noto Sans KR', sans-serif;
+  margin: 1em 0;
+  padding: 0 1em;
+  font-family: 'Dongle', sans-serif;
+  font-size: 1.5em;
   font-weight: 300;
   background: white;
   border-radius: 0.5em;
+  box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
 }
 .filterItem {
   display : none;
 }
-.notpickBtn {
-  color : #3273e4;
-  margin-right: 10px;
+.checkBtn {
+  float: left;
+  margin : 1em;
+  color : rgba(124, 198, 255, 0.8);
+  cursor : pointer
 }
-.urlContainer {
-  margin : 0 5px 0 10px;
+.utilBtn-cont {
+  float : right;
+}
+.url-cont {
+  margin-right : 1em;
   cursor: pointer;
 }
 .checkURL {
   display : none;
 }
-.shareBtn {
-  color :  #62acde;
-  line-height: 45px;
-  margin-right: 5px;
+/* url실행 */
+.showURL {
+  border-radius: 0.5em;
+  background-color: #F6F6F6;
+  padding: 0.2em 0.4em;
 }
-.existBtn {
-  color :  #f83dc0;
-  line-height: 45px;
-  margin-right: 5px;
-}
-.backBtn {
-  margin : 0 5px;
+.backBtn-cont {
+  margin-right : 0.5em;
 }
 .inputURL {
-  height: 1rem;
+  border-style: none;
+  border-radius: 0.5em;
+  height: 1.5em;
 }
-.addBtn {
-  margin : 0 5px;
+.addBtn-cont {
+  margin-left : 0.5em;
 }
-.posContainer {
+.shareBtn {
+  color : rgba(124, 198, 255, 0.8);
+}
+.existBtn {
+  color :  #ffa7e5;
+}
+.position-cont {
+  margin-right : 1em;
   cursor: pointer;
-  margin : 0 5px;
 }
 .existPOS {
   display: none;
 }
-.removeContainer {
-  color : #62acde;
-  margin : 0 5px;
+.remove-cont {
+  margin-right : 1em;
+  color : rgba(124, 198, 255, 0.8);
+  cursor : pointer;
 }
 </style>

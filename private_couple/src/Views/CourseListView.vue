@@ -6,18 +6,18 @@
   <section>
     <li v-for="(storedList, index) in getStoredCourse" :key="storedList.item">
       <div class="storedList">
-        <li class="listContainer" v-for="storedItem in storedList" :key="storedItem.item">
+        <li class="list-cont" v-for="storedItem in storedList" :key="storedItem.item">
           <a v-if="storedItem.url !== ''" v-bind:href="storedItem.url" class="linkText" target="_blank">
             {{storedItem.item}}
           </a>
           <span v-else>
             {{storedItem.item}}
           </span>
-          <div class="arrowContainer">
+          <div class="arrow-cont">
             <i class="fas fa-arrow-down"></i>
           </div>
         </li>
-        <span class="removeContainer" v-on:click="removeStoredCourse(storedList, index)">
+        <span class="remove-cont" v-on:click="removeStoredCourse(storedList, index)">
           <i class="far fa-trash-alt"></i>
         </span>
       </div>
@@ -45,21 +45,25 @@ li {
   list-style: none;
 }
 .storedList {
-  background: rgb(189, 209, 245);
+  text-align: center;
   margin: 15px;
   padding : 1rem;
+  background: rgba(124, 198, 255, 0.247);
+  border-radius: 0.5em;
+  box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
 }
-.arrowContainer {
+.arrow-cont {
   margin-top: 0rem;
 }
-.listContainer:nth-last-child(2) .arrowContainer {
+.list-cont:nth-last-child(2) .arrow-cont {
   display: none;
 }
 .linkText {
   color : #ee27bc;
   font-weight: bold;
 }
-.removeContainer {
+.remove-cont {
+  float: right;
   color : #62acde;
   margin : 0 5px;
 }

@@ -125,6 +125,7 @@ export default {
   width: 80%;
   height: 320px;
   border-radius: 10px;
+   box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
 }
 
 .button-group {
@@ -137,7 +138,9 @@ button {
   border-style : none;
   border-radius: 5px;
   padding : 5px 10px;
+  font-family: 'Noto Sans KR', sans-serif;
   color : rgb(86, 153, 253);
   cursor : pointer;
+  box-shadow: 0.5em -0.2em 10px 1px rgba(143, 143, 143, 0.2);
 }
 </style>

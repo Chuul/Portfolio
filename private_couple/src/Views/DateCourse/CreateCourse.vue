@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="create-cont">
     <button class="createBtn" v-on:click="createCourse()">코스생성</button>
     <!-- <template v-if="this.$store.state.selectedCourse !== []"> -->
     <KakaoMap></KakaoMap>
@@ -14,17 +14,17 @@
           <template v-else>
             {{ course.item }} 
           </template>
-          <span class="moveList">
+          <span class="moveListBtn">
             <i class="far fa-line-height"></i>
           </span>
-          <div class="arrowContainer">
+          <div class="arrow-cont">
             <a :href="`https://map.kakao.com/link/to/${course},${37.402056,127.108212}`">
               <i class="fas fa-arrow-down"></i>
             </a>
           </div>
       </li>
     </draggable>
-    <button v-on:click="storeCourse()">코스 저장</button>
+    <button class="storeBtn" v-on:click="storeCourse()">코스 저장</button>
   </section>
 </template>
 
@@ -61,24 +61,35 @@ export default {
 </script>
 
 <style scoped>
+.create-cont {
+  text-align: center;
+}
+.createBtn {
+  margin: 1em 0;
+  background: rgba(124, 198, 255, 0.247);
+  border-style : none;
+  border-radius: 0.5em;
+  padding : 0.6em 1.5em;
+  font-size : 1em;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  color : rgb(86, 153, 253);
+  cursor : pointer;
+  box-shadow: 0.5em -0.2em 10px 1px rgba(143, 143, 143, 0.2);
+}
 li {
+  margin-top: 1em;
   list-style: none;
   min-height: 50px;
   height: 50px;
   line-height: 50px;
-  padding: 0 0.9rem;
+  padding: 0 0.9eem;
   background: white;
-  border-radius: 5px;
-}
-.createBtn {
-  margin: 10px 3px;
-  background: rgba(124, 198, 255, 0.247);
-  border-style : none;
-  border-radius: 5px;
-  padding : 10px 20px;
-  font-size : 20px;
-  color : rgb(86, 153, 253);
-  cursor : pointer;
+  border-radius: 0.5em;
+  font-family: 'Dongle', sans-serif;
+  font-size: 1.5em;
+  font-weight: 300;
+  box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
 }
 .linkText {
   color : #ee27bc;
@@ -87,19 +98,33 @@ li {
 .courseList {
   margin-bottom: 3rem;
 }
-.moveList {
+.moveListBtn {
   float : right;
+  margin-right: 1em;
 }
-.moveList i {
+.moveListBtn i {
   color: #e1e1fd;
 }
-.moveList i:hover {
+.moveListBtn i:hover {
   cursor: pointer;
 }
-.arrowContainer {
+.arrow-cont {
   margin-top: 0rem;
 }
-li:last-child .arrowContainer {
+li:last-child .arrow-cont {
   display: none;
+}
+.storeBtn {
+  margin: 1em 0;
+  background: rgba(124, 198, 255, 0.247);
+  border-style : none;
+  border-radius: 0.5em;
+  padding : 0.6em 1.5em;
+  font-size : 1em;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  color : rgb(86, 153, 253);
+  cursor : pointer;
+  box-shadow: 0.5em -0.2em 10px 1px rgba(143, 143, 143, 0.2);
 }
 </style>

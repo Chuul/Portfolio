@@ -54,6 +54,7 @@ export default {
   line-height: 50px;
   border-radius: 0.5em;
   background: rgba(124, 198, 255, 0.247);
+  box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
 }
 .select-cont {
   height: 100%;
@@ -65,12 +66,18 @@ select {
   text-align: center;
   border-style : none;
   border-radius: 0.5em;
+  font-family: 'Dongle', sans-serif;
+  font-size: 1.5em;
+  font-weight: 300;
 }
 .addItem-cont input {
-  border-style: none;
-  font-size: 0.9rem;
+  text-align: center;
   width: 60%;
-  height: 50%;
+  height: 60%;
+  font-family: 'Dongle', sans-serif;
+  font-weight: 300;
+  font-size: 1.8em;
+  border-style: none;
   border-radius: 0.5em;
   cursor: text;
 }
