@@ -35,13 +35,13 @@
           </span>
           <!-- URL 양식 -->
           <span class="showURL" v-bind:class="{checkURL : !course.urlCheck}">
-            <span class="backBtn-cont" v-on:click="openURL(course)">
-              <i class="backbBtn fas fa-undo"></i>
-            </span>
+            <!-- <span class="backBtn-cont" > -->
+            <i class="backBtn fas fa-undo" v-on:click="openURL(course)"></i>
+            <!-- </span> -->
             <input type="text" class="inputURL" v-model="urlText" v-on:keyup.enter="attachURL(course)" placeholder="URL을 입력하세요.">
-            <span class="addBtn-cont" v-on:click="attachURL(course)">
-              <i class="addBtn fas fa-plus"></i>
-            </span>
+            <!-- <span class="addBtn-cont" v-on:click="attachURL(course)"> -->
+              <i class="addBtn fas fa-plus" v-on:click="attachURL(course)"></i>
+            <!-- </span> -->
           </span>
         </span>
         <!-- 주소 버튼 -->
@@ -57,13 +57,13 @@
           </span>
           <!-- 주소 양식 -->
           <span class="showURL" v-bind:class="{existPOS : !course.posCheck}">
-            <span class="backBtn-cont" v-on:click="openPos(course)">
-              <i class="fas fa-undo"></i>
-            </span>
+            <!-- <span class="backBtn-cont" v-on:click="openPos(course)"> -->
+              <i class="backBtn fas fa-undo"  v-on:click="openPos(course)"></i>
+            <!-- </span> -->
             <input type="text" class="inputURL" v-model="posText" v-on:keyup.enter="attachPos(course)" placeholder="주소를 입력하세요.">
-            <span v-on:click="attachPos(course)">
-              <i class="fas fa-plus"></i>
-            </span>
+            <!-- <span v-on:click="attachPos(course)"> -->
+              <i class="fas fa-plus" v-on:click="attachPos(course)"></i>
+            <!-- </span> -->
           </span>
         </span>
         <!-- 삭제 버튼 -->
@@ -129,8 +129,8 @@ li {
   list-style: none;
   text-align: center;
   /* min-height: 50px; */
-  height: 3em;
-  line-height: 3em;
+  height: 2em;
+  line-height: 2em;
   margin: 1em 0;
   padding: 0 1em;
   font-family: 'Dongle', sans-serif;
@@ -145,7 +145,7 @@ li {
 }
 .checkBtn {
   float: left;
-  margin : 1em;
+  margin : 0.5em;
   color : rgba(124, 198, 255, 0.8);
   cursor : pointer
 }
@@ -153,6 +153,7 @@ li {
   float : right;
 }
 .url-cont {
+  display: inline-block;
   margin-right : 1em;
   cursor: pointer;
 }
@@ -165,7 +166,13 @@ li {
   background-color: #F6F6F6;
   padding: 0.2em 0.4em;
 }
-.backBtn-cont {
+/* .backBtn-cont {
+  margin-right : 0.5em;
+} */
+/* ******************뭔가 display:none이랑 관련 있을 듯...showURL 클래스를 다시 보자 */
+.backBtn {
+  display: inline-block;
+  padding-top: 0.5em;
   margin-right : 0.5em;
 }
 .inputURL {
@@ -173,9 +180,9 @@ li {
   border-radius: 0.5em;
   height: 1.5em;
 }
-.addBtn-cont {
+/* .addBtn-cont {
   margin-left : 0.5em;
-}
+} */
 .shareBtn {
   color : rgba(124, 198, 255, 0.8);
 }

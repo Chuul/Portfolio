@@ -1,11 +1,7 @@
-<!--
-우선순위 
-2. 새로고침해도 리스트 없어지지 않게 하기
-3. 리스트 삭제해도 없어지지 않게 하기  -->
 <template>
   <section>
-    <li v-for="(storedList, index) in getStoredCourse" :key="storedList.item">
-      <div class="storedList">
+    <li v-for="(storedList, index) in storedCourseList" :key="storedList.item">
+      <div class="displayStroedList">
         <li class="list-cont" v-for="storedItem in storedList" :key="storedItem.item">
           <a v-if="storedItem.url !== ''" v-bind:href="storedItem.url" class="linkText" target="_blank">
             {{storedItem.item}}
@@ -26,11 +22,22 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+// import { mapGetters } from 'vuex';
 
 export default {
   computed : {
-    ...mapGetters(['getStoredCourse']),
+    storedCourseList() {
+      let arr = [];
+      let base = this.$store.state.dateCourses;
+      for(let i = 0 ; i < base.length ; i++) {
+        // typeof로 구하면 모두 object이므로 배열 여부 체크 불가
+        if(Array.isArray(base[i])) {
+          arr.push(base[i]);
+        }
+      }
+      console.log(arr); 
+      return arr;
+    }
   },
   methods : {
     removeStoredCourse(storedList, index) {
@@ -44,7 +51,7 @@ export default {
 li {
   list-style: none;
 }
-.storedList {
+.displayStroedList {
   text-align: center;
   margin: 15px;
   padding : 1rem;

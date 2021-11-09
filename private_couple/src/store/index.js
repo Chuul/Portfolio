@@ -4,25 +4,36 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const storage = {
-  fetch() {
+  dateCoursefetch() {
     const arr = [];
     if(localStorage.length > 0) {
       for(let i = 0 ; i < localStorage.length ; i++) {
-        // let itemString = JSON.parse(localStorage.getItem(localStorage.key(i)))
         if(localStorage.key(i) !== 'loglevel:webpack-dev-server') {
-          // JSON.parse(localStorage.getItem(localStorage.key(i))).stored !== true
           arr.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
         }
       }
     }
     return arr;
-  }
+  },
+  // storedCoursefetch() {
+  //   const arr = [];
+  //   if(localStorage.length > 0) {
+  //     for(let i = 0 ; i < localStorage.length ; i++) {
+  //       if(localStorage.getItem(localStorage.key(i)) !== 'SILENT') {
+  //         arr.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+  //       }
+  //     }
+  //     console.log(arr)
+  //   }
+  //   return arr;
+  // }
 }
 export const store = new Vuex.Store({
   state : {
-    dateCourses : storage.fetch(),
+    dateCourses : storage.dateCoursefetch(),
     selectedCourse : [],
-    storedCourse : []
+    // storedCourse : storage.storedCoursefetch()
+    // storedCourse : []
   },
   getters : {
     getDateCourse(state) {
@@ -31,9 +42,9 @@ export const store = new Vuex.Store({
     getSelectedCourse(state) {
       return state.selectedCourse;
     },
-    getStoredCourse(state) {
-      return state.storedCourse;
-    }
+    // getStoredCourse(state) {
+    //   return state.storedCourse;
+    // }
   },
   mutations : {
     addOneCourse(state, option) {
@@ -46,7 +57,7 @@ export const store = new Vuex.Store({
         pos : '',
         posCheck : false,
         display : true,
-        stored : false
+        // stored : false
       }
       localStorage.setItem(obj.item, JSON.stringify(obj));
       state.dateCourses.push(obj);
@@ -55,9 +66,9 @@ export const store = new Vuex.Store({
       localStorage.removeItem(payload.course.item);
       state.dateCourses.splice(payload.index, 1);
     },
-    removeOneStoredCourse(state, payload) {
-      state.storedCourse.splice(payload.index, 1);
-    },
+    // removeOneStoredCourse(state, payload) {
+    //   state.storedCourse.splice(payload.index, 1);
+    // },
     checkOneCourse(state, course) {
       course.checked = !course.checked;
       localStorage.removeItem(course.item);
@@ -116,12 +127,19 @@ export const store = new Vuex.Store({
       }
     },
     storeOneCourse(state) {
+      let arr = [];
+      let max = 0;
       for(let i = 0 ; i < state.selectedCourse.length ; i++) {
-        state.selectedCourse[i].stored = !state.selectedCourse[i].stored;
-        localStorage.removeItem(state.selectedCourse[i].item);
-        localStorage.setItem(state.selectedCourse[i].item, JSON.stringify(state.selectedCourse[i]));
+        arr.push(state.selectedCourse[i]);
       }
-      state.storedCourse.push((state.selectedCourse));
+      // localStorage에서 코스목록 번호의 최대값을 세는 반복문
+      for(let i = 0 ; i < localStorage.length ; i++) {
+        if(localStorage.key(i).slice(0, 15) == 'storedCourseKey') {
+          max = Math.max(localStorage.key(i).charAt(15), max);
+        }
+      }
+      localStorage.setItem(`storedCourseKey${max+1}`, JSON.stringify(arr));
+      // state.storedCourse.push(state.selectedCourse);
     }
   } 
 })

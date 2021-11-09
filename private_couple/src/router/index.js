@@ -9,6 +9,10 @@ Vue.use(VueRouter);
 export const router = new VueRouter({
   routes : [
     {
+      path : '/',
+      redirect : '/createCourse'
+    },
+    {
       path : '/createCourse',
       component : DateView
     },
