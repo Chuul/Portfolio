@@ -8,6 +8,7 @@ const storage = {
     const arr = [];
     if(localStorage.length > 0) {
       for(let i = 0 ; i < localStorage.length ; i++) {
+        // console.log('localStorage : ',localStorage.key(i), i);
         if(localStorage.key(i) !== 'loglevel:webpack-dev-server') {
           arr.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
         }
@@ -63,12 +64,28 @@ export const store = new Vuex.Store({
       state.dateCourses.push(obj);
     },
     removeOneCourse(state, payload) {
+      console.log(payload.course);
       localStorage.removeItem(payload.course.item);
       state.dateCourses.splice(payload.index, 1);
     },
-    // removeOneStoredCourse(state, payload) {
-    //   state.storedCourse.splice(payload.index, 1);
-    // },
+    removeOneStoredCourse(state, payload) {
+      localStorage.removeItem(payload.storedList);
+      state.dateCourses.splice(payload.index, 1);
+      // for(let i = 0 ; i < localStorage.length ; i++) {
+      //   if(localStorage.key(i) !== 'loglevel:webpack-dev-server') {
+      //     let sym = JSON.parse(localStorage.getItem(localStorage.key(i)));
+      //     console.log(sym);
+      //     console.log(payload);
+      //     if(sym == payload) {
+      //       console.log('여기요')
+      //       // let index = localStorage.getItem(localStorage.key(i)).indexOf(payload);
+      //       // console.log(index);
+      //       // localStorage.removeItem(localStorage.key(index));
+      //       // state.dateCourses.splice(index, 1);
+      //     }
+      //   }
+      // }
+    },
     checkOneCourse(state, course) {
       course.checked = !course.checked;
       localStorage.removeItem(course.item);
@@ -129,6 +146,7 @@ export const store = new Vuex.Store({
     storeOneCourse(state) {
       let arr = [];
       let max = 0;
+      // 
       for(let i = 0 ; i < state.selectedCourse.length ; i++) {
         arr.push(state.selectedCourse[i]);
       }
@@ -139,6 +157,7 @@ export const store = new Vuex.Store({
         }
       }
       localStorage.setItem(`storedCourseKey${max+1}`, JSON.stringify(arr));
+      state.dateCourses.push(arr);
       // state.storedCourse.push(state.selectedCourse);
     }
   } 
