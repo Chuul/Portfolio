@@ -1,8 +1,10 @@
 <template>
   <section>
-    <li v-for="(storedList, index) in getDateCourse" :key="storedList.item">
-      <div v-if="Array.isArray(storedList)" class="displayStroedList">
-        <li class="list-cont" v-for="storedItem in storedList" :key="storedItem.item">
+    <li v-for="(course, index) in getDateCourse" :key="course.item">
+      <!-- <div class="displayStroedList"> -->
+      <div v-if="Array.isArray(course)" class="displayStroedList">
+        <div v-on:click="checkIndex(course, index)">##############</div>
+        <li class="list-cont" v-for="storedItem in course" :key="storedItem.item">
           <a v-if="storedItem.url !== ''" v-bind:href="storedItem.url" class="linkText" target="_blank">
             {{storedItem.item}}
           </a>
@@ -13,7 +15,8 @@
             <i class="fas fa-arrow-down"></i>
           </div>
         </li>
-        <span class="remove-cont" v-on:click="removeStoredCourse(storedList, index)">
+        <span class="remove-cont" v-on:click="removeStoredCourse(course, index)">
+          'index : ', {{ index }}
           <i class="far fa-trash-alt"></i>
         </span>
       </div>
@@ -27,21 +30,18 @@ import { mapGetters } from 'vuex';
 export default {
   computed : {
     ...mapGetters(['getDateCourse']),
-    // storedCourseList() {
-    //   let arr = [];
-    //   let base = this.$store.state.dateCourses;
-    //   for(let i = 0 ; i < base.length ; i++) {
-    //     // typeof로 구하면 모두 object이므로 배열 여부 체크 불가
-    //     if(Array.isArray(base[i])) {
-    //       arr.push(base[i]);
-    //     }
-    //   }
-    //   return arr;
-    // }
   },
   methods : {
-    removeStoredCourse(storedList, index) {
-      this.$store.commit('removeOneStoredCourse', {storedList, index});
+    checkIndex(course, index){
+      console.log('course : ',course);
+      console.log('index : ', index);
+    },
+    checkCourse(course, index) {
+      this.$store.commit('checkOneCourse', {course, index});
+    },
+    removeStoredCourse(course, index) {
+      localStorage.removeItem('loglevel:webpack-dev-server')
+      this.$store.commit('removeOneStoredCourse', {course, index});
     },
   }
 }
@@ -58,6 +58,12 @@ li {
   background: rgba(124, 198, 255, 0.247);
   border-radius: 0.5em;
   box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
+}
+.checkBtn {
+  float: left;
+  margin : 0.5em;
+  color : rgba(124, 198, 255, 0.8);
+  cursor : pointer
 }
 .arrow-cont {
   margin-top: 0rem;

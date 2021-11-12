@@ -3,7 +3,7 @@
     <SortList></SortList>
     <li v-for="(course, index) in getDateCourse" v-bind:key="course.item" v-bind:class="{filterItem : !course.display}">
       <!-- 체크버튼 -->
-      <span class="checkBtn-cont" v-on:click="checkCourse(course)"> 
+      <span class="checkBtn-cont" v-on:click="checkedItem(course)"> 
         <template v-if="course.checked !== false">
           <i class="checkBtn fas fa-check-circle"></i>
         </template>
@@ -93,8 +93,8 @@ export default {
     ...mapGetters(['getDateCourse']),
   },
   methods : {
-    checkCourse(course) {
-      this.$store.commit('checkOneCourse', course);
+    checkedItem(course) {
+      this.$store.commit('checkOneItem', course);
     },
     openURL(course) {
       this.$store.commit('openURLText', course);

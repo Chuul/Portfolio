@@ -8,7 +8,6 @@ const storage = {
     const arr = [];
     if(localStorage.length > 0) {
       for(let i = 0 ; i < localStorage.length ; i++) {
-        // console.log('localStorage : ',localStorage.key(i), i);
         if(localStorage.key(i) !== 'loglevel:webpack-dev-server') {
           arr.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
         }
@@ -16,25 +15,11 @@ const storage = {
     }
     return arr;
   },
-  // storedCoursefetch() {
-  //   const arr = [];
-  //   if(localStorage.length > 0) {
-  //     for(let i = 0 ; i < localStorage.length ; i++) {
-  //       if(localStorage.getItem(localStorage.key(i)) !== 'SILENT') {
-  //         arr.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
-  //       }
-  //     }
-  //     console.log(arr)
-  //   }
-  //   return arr;
-  // }
 }
 export const store = new Vuex.Store({
   state : {
     dateCourses : storage.dateCoursefetch(),
     selectedCourse : [],
-    // storedCourse : storage.storedCoursefetch()
-    // storedCourse : []
   },
   getters : {
     getDateCourse(state) {
@@ -43,9 +28,6 @@ export const store = new Vuex.Store({
     getSelectedCourse(state) {
       return state.selectedCourse;
     },
-    // getStoredCourse(state) {
-    //   return state.storedCourse;
-    // }
   },
   mutations : {
     addOneCourse(state, option) {
@@ -58,35 +40,15 @@ export const store = new Vuex.Store({
         pos : '',
         posCheck : false,
         display : true,
-        // stored : false
       }
       localStorage.setItem(obj.item, JSON.stringify(obj));
       state.dateCourses.push(obj);
     },
     removeOneCourse(state, payload) {
-      console.log(payload.course);
       localStorage.removeItem(payload.course.item);
       state.dateCourses.splice(payload.index, 1);
     },
-    removeOneStoredCourse(state, payload) {
-      localStorage.removeItem(payload.storedList);
-      state.dateCourses.splice(payload.index, 1);
-      // for(let i = 0 ; i < localStorage.length ; i++) {
-      //   if(localStorage.key(i) !== 'loglevel:webpack-dev-server') {
-      //     let sym = JSON.parse(localStorage.getItem(localStorage.key(i)));
-      //     console.log(sym);
-      //     console.log(payload);
-      //     if(sym == payload) {
-      //       console.log('여기요')
-      //       // let index = localStorage.getItem(localStorage.key(i)).indexOf(payload);
-      //       // console.log(index);
-      //       // localStorage.removeItem(localStorage.key(index));
-      //       // state.dateCourses.splice(index, 1);
-      //     }
-      //   }
-      // }
-    },
-    checkOneCourse(state, course) {
+    checkOneItem(state, course) {
       course.checked = !course.checked;
       localStorage.removeItem(course.item);
       localStorage.setItem(course.item, JSON.stringify(course))
@@ -144,13 +106,13 @@ export const store = new Vuex.Store({
       }
     },
     storeOneCourse(state) {
+      // selectedCourse에 담긴 data를 배열에 넣어주는 코드
       let arr = [];
-      let max = 0;
-      // 
       for(let i = 0 ; i < state.selectedCourse.length ; i++) {
         arr.push(state.selectedCourse[i]);
       }
       // localStorage에서 코스목록 번호의 최대값을 세는 반복문
+      let max = 0;
       for(let i = 0 ; i < localStorage.length ; i++) {
         if(localStorage.key(i).slice(0, 15) == 'storedCourseKey') {
           max = Math.max(localStorage.key(i).charAt(15), max);
@@ -158,7 +120,16 @@ export const store = new Vuex.Store({
       }
       localStorage.setItem(`storedCourseKey${max+1}`, JSON.stringify(arr));
       state.dateCourses.push(arr);
-      // state.storedCourse.push(state.selectedCourse);
-    }
+    },
+    removeOneStoredCourse(state, payload) {
+      // dateCourse에서의 index는 맞는데, localStorage에서 localStorage때문에 안 맞는 것으로 예상
+      // console.log(state);
+      // console.log('payload.course : ', payload.course);
+      // console.log('payload.index : ', payload.index);
+      // console.log('localStorage.key(payload.index) : ', localStorage.key(payload.index));
+      // console.log('===============================================')
+      localStorage.removeItem(localStorage.key(payload.index));
+      state.dateCourses.splice(payload.index, 1);
+    },
   } 
 })
