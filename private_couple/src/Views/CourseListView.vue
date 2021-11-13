@@ -1,9 +1,7 @@
 <template>
   <section>
     <li v-for="(course, index) in getDateCourse" :key="course.item">
-      <!-- <div class="displayStroedList"> -->
       <div v-if="Array.isArray(course)" class="displayStroedList">
-        <div v-on:click="checkIndex(course, index)">##############</div>
         <li class="list-cont" v-for="storedItem in course" :key="storedItem.item">
           <a v-if="storedItem.url !== ''" v-bind:href="storedItem.url" class="linkText" target="_blank">
             {{storedItem.item}}
@@ -16,7 +14,7 @@
           </div>
         </li>
         <span class="remove-cont" v-on:click="removeStoredCourse(course, index)">
-          'index : ', {{ index }}
+          {{index }}
           <i class="far fa-trash-alt"></i>
         </span>
       </div>

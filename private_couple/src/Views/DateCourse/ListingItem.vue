@@ -1,7 +1,7 @@
 <template>
   <section class="list-cont">
     <SortList></SortList>
-    <li v-for="(course, index) in getDateCourse" v-bind:key="course.item" v-bind:class="{filterItem : !course.display}">
+    <li v-for="(course, index) in getDateCourse" v-bind:key="course.item" v-bind:class="{filterItem : !course.filtered}">
       <!-- 체크버튼 -->
       <span class="checkBtn-cont" v-on:click="checkedItem(course)"> 
         <template v-if="course.checked !== false">
@@ -199,6 +199,8 @@ li {
 .remove-cont {
   margin-right : 1em;
   color : rgba(124, 198, 255, 0.8);
-  cursor : pointer;
+}
+.fa-trash-alt {
+  cursor: pointer;
 }
 </style>
