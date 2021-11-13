@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import DateView from '../Views/DateCourse/DateView.vue'
 import CourseListView from '../Views/CourseListView.vue'
 import LastCourseView from '../Views/LastCourseView.vue'
-
+import startCourseView from '../Views/startCourseView.vue'
 Vue.use(VueRouter);
 
 export const router = new VueRouter({
@@ -23,6 +23,10 @@ export const router = new VueRouter({
     {
       path : '/lastCourse',
       component : LastCourseView
+    },
+    {
+      path : '/startCourse',
+      component : startCourseView
     }
   ]
 })

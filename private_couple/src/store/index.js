@@ -27,6 +27,7 @@ export const store = new Vuex.Store({
   state : {
     dateCourses : storage.dateCoursefetch(),
     selectedCourse : [],
+    startCourse : []
   },
   getters : {
     getDateCourse(state) {
@@ -35,6 +36,9 @@ export const store = new Vuex.Store({
     getSelectedCourse(state) {
       return state.selectedCourse;
     },
+    getStartCourse(state) {
+      return state.startCourse;
+    }
   },
   mutations : {
     addOneCourse(state, option) {
@@ -117,5 +121,9 @@ export const store = new Vuex.Store({
       localStorage.removeItem(JSON.stringify(payload.course));
       state.dateCourses.splice(payload.index, 1);
     },
+    startOneCourse(state, course) {
+      state.startCourse = [];
+      state.startCourse.push(course);
+    }
   } 
 })

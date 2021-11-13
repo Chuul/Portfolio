@@ -2,6 +2,9 @@
   <section>
     <li v-for="(course, index) in getDateCourse" :key="course.item">
       <div v-if="Array.isArray(course)" class="displayStroedList">
+        <router-link to="/startCourse">
+          <i class="fas fa-heart-square" v-on:click="startCourse(course)"></i>
+        </router-link>
         <li class="list-cont" v-for="storedItem in course" :key="storedItem.item">
           <a v-if="storedItem.url !== ''" v-bind:href="storedItem.url" class="linkText" target="_blank">
             {{storedItem.item}}
@@ -14,7 +17,6 @@
           </div>
         </li>
         <span class="remove-cont" v-on:click="removeStoredCourse(course, index)">
-          {{index }}
           <i class="far fa-trash-alt"></i>
         </span>
       </div>
@@ -30,15 +32,11 @@ export default {
     ...mapGetters(['getDateCourse']),
   },
   methods : {
-    checkIndex(course, index){
-      console.log('course : ',course);
-      console.log('index : ', index);
-    },
-    checkCourse(course, index) {
-      this.$store.commit('checkOneCourse', {course, index});
+    startCourse(course) {
+      this.$store.commit('startOneCourse', course);
     },
     removeStoredCourse(course, index) {
-      localStorage.removeItem('loglevel:webpack-dev-server')
+      localStorage.removeItem('loglevel:webpack-dev-server');
       this.$store.commit('removeOneStoredCourse', {course, index});
     },
   }
@@ -48,6 +46,11 @@ export default {
 <style scoped>
 li {
   list-style: none;
+}
+.fa-heart-square {
+  float: left;
+  color : rgba(124, 198, 255, 0.8);
+  cursor : pointer
 }
 .displayStroedList {
   text-align: center;
@@ -63,19 +66,20 @@ li {
   color : rgba(124, 198, 255, 0.8);
   cursor : pointer
 }
-.arrow-cont {
-  margin-top: 0rem;
-}
 .list-cont:nth-last-child(2) .arrow-cont {
   display: none;
+}
+.arrow-cont {
+  margin: 0.5em;
 }
 .linkText {
   color : #ee27bc;
   font-weight: bold;
 }
-.remove-cont {
+.fa-trash-alt {
+  width: 1em;
   float: right;
   color : #62acde;
-  margin : 0 5px;
+  cursor: pointer;
 }
 </style>
