@@ -1,7 +1,7 @@
 <template>
-  <section>
-    <li v-for="(course, index) in getDateCourse" :key="course.item">
-      <div v-if="Array.isArray(course)" class="displayStroedList">
+  <section class="courelist-cont">
+    <li v-for="(course, index) in getStoredCourse" :key="course.item">
+      <div class="displayStroedList">
         <router-link to="/startCourse">
           <i class="fas fa-heart-square" v-on:click="startCourse(course)"></i>
         </router-link>
@@ -29,7 +29,7 @@ import { mapGetters } from 'vuex';
 
 export default {
   computed : {
-    ...mapGetters(['getDateCourse']),
+    ...mapGetters(['getStoredCourse']),
   },
   methods : {
     startCourse(course) {
@@ -46,6 +46,10 @@ export default {
 <style scoped>
 li {
   list-style: none;
+}
+.courelist-cont {
+  height: 80vh;
+  margin: 2em;
 }
 .fa-heart-square {
   float: left;

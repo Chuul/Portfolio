@@ -3,18 +3,32 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
+// 새로고침 후에 localStorage에 저장된 값을 state.addCourse에 담아주는 코드
 const storage = {
-  dateCoursefetch() {
+  addCoursefetch() {
     const arr = [];
     if(localStorage.length > 0) {
       for(let i = 0 ; i < localStorage.length ; i++) {
+        let str = localStorage.getItem(localStorage.key(i))
         if(localStorage.key(i) !== 'loglevel:webpack-dev-server') {
-          arr.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+          arr.push(JSON.parse(str));
         }
       }
     }
     return arr;
   },
+  storeCoursefetch() {
+    const arr = [];
+    if(localStorage.length > 0) {
+      for(let i = 0 ; i < localStorage.length ; i++) {
+        let str = localStorage.getItem(localStorage.key(i))
+        if(str !== 'SILENT' && Array.isArray(JSON.parse(str))) {
+            arr.push(JSON.parse(str));
+        }
+      }
+    }
+    return arr;
+  }
 }
 const func = {
   resetItem(key) {
@@ -25,16 +39,21 @@ const func = {
 
 export const store = new Vuex.Store({
   state : {
-    dateCourses : storage.dateCoursefetch(),
+    addCourse : storage.addCoursefetch(),
     selectedCourse : [],
-    startCourse : []
+    storedCourse : storage.storeCoursefetch(),
+    startCourse : [],
+    prevCourse : []
   },
   getters : {
     getDateCourse(state) {
-      return state.dateCourses;
+      return state.addCourse;
     },
     getSelectedCourse(state) {
       return state.selectedCourse;
+    },
+    getStoredCourse(state) {
+      return state.storedCourse;
     },
     getStartCourse(state) {
       return state.startCourse;
@@ -53,11 +72,12 @@ export const store = new Vuex.Store({
         filtered : true,
       }
       localStorage.setItem(obj.item, JSON.stringify(obj));
-      state.dateCourses.push(obj);
+      state.addCourse.push(obj);
     },
+    
     removeOneCourse(state, payload) {
       localStorage.removeItem(payload.course.item);
-      state.dateCourses.splice(payload.index, 1);
+      state.addCourse.splice(payload.index, 1);
     },
     checkOneItem(state, course) {
       course.checked = !course.checked;
@@ -83,12 +103,12 @@ export const store = new Vuex.Store({
     },
     filterListItem(state, name) {
       if(name == '전체') {
-        for(let x of state.dateCourses) {
+        for(let x of state.addCourse) {
           x.filtered = true;
           func.resetItem(x);
         }
       } else {
-        for(let x of state.dateCourses) {
+        for(let x of state.addCourse) {
           if(x.category !== name) {
             x.filtered = false;
           } else {
@@ -110,16 +130,17 @@ export const store = new Vuex.Store({
       }
     },
     storeOneCourse(state) {
+      // 코스목록을 하나로 묶어주기 위한 코드
       let arr = [];
       for(let i = 0 ; i < state.selectedCourse.length ; i++) {
         arr.push(state.selectedCourse[i]);
       }
       localStorage.setItem(JSON.stringify(arr), JSON.stringify(arr));
-      state.dateCourses.push(arr);
+      state.storedCourse.push(arr);
     },
     removeOneStoredCourse(state, payload) {
       localStorage.removeItem(JSON.stringify(payload.course));
-      state.dateCourses.splice(payload.index, 1);
+      state.storedCourse.splice(payload.index, 1);
     },
     startOneCourse(state, course) {
       state.startCourse = [];
