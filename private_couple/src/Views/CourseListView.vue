@@ -36,7 +36,6 @@ export default {
       this.$store.commit('startOneCourse', course);
     },
     removeStoredCourse(course, index) {
-      localStorage.removeItem('loglevel:webpack-dev-server');
       this.$store.commit('removeOneStoredCourse', {course, index});
     },
   }

@@ -33,7 +33,7 @@ export default {
       if(this.newDateCourse !== '') {
         const obj = { 
           category : this.selected, 
-          item : this.newDateCourse
+          item : 'addCourse: ' + this.newDateCourse,
         }
         this.$store.commit('addOneCourse', obj)
         this.clearInput()

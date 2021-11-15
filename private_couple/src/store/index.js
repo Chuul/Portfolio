@@ -10,7 +10,7 @@ const storage = {
     if(localStorage.length > 0) {
       for(let i = 0 ; i < localStorage.length ; i++) {
         let str = localStorage.getItem(localStorage.key(i))
-        if(localStorage.key(i) !== 'loglevel:webpack-dev-server') {
+        if(localStorage.key(i).substr(0,3) == 'add') {
           arr.push(JSON.parse(str));
         }
       }
@@ -22,18 +22,12 @@ const storage = {
     if(localStorage.length > 0) {
       for(let i = 0 ; i < localStorage.length ; i++) {
         let str = localStorage.getItem(localStorage.key(i))
-        if(str !== 'SILENT' && Array.isArray(JSON.parse(str))) {
-            arr.push(JSON.parse(str));
+        if(localStorage.key(i).substr(0,3) == 'sto') {
+          arr.push(JSON.parse(str));
         }
       }
     }
     return arr;
-  }
-}
-const func = {
-  resetItem(key) {
-    localStorage.removeItem(key.item);
-    localStorage.setItem(key.item, JSON.stringify(key))
   }
 }
 
@@ -46,7 +40,7 @@ export const store = new Vuex.Store({
     prevCourse : []
   },
   getters : {
-    getDateCourse(state) {
+    getAddCourse(state) {
       return state.addCourse;
     },
     getSelectedCourse(state) {
@@ -81,31 +75,37 @@ export const store = new Vuex.Store({
     },
     checkOneItem(state, course) {
       course.checked = !course.checked;
-      func.resetItem(course)
+      localStorage.removeItem(course.item);
+      localStorage.setItem(course.item, JSON.stringify(course))
     },
     openURLText(state, course) {
       course.urlCheck = !course.urlCheck;
-      func.resetItem(course)
+      localStorage.removeItem(course.item);
+      localStorage.setItem(course.item, JSON.stringify(course))
     },
     attachOneURL(state, attachInfo) {
       attachInfo.course.urlCheck = !attachInfo.course.urlCheck;
       attachInfo.course.url = attachInfo.url;
-      func.resetItem(attachInfo.course);
+      localStorage.removeItem(attachInfo.course.item);
+      localStorage.setItem(attachInfo.course.item, JSON.stringify(attachInfo.course))
     },
     openPosTxt(state, course) {
       course.posCheck = !course.posCheck;
-      func.resetItem(course)
+      localStorage.removeItem(course.item);
+      localStorage.setItem(course.item, JSON.stringify(course))
     },
     attachOnePOS(state, attachInfo) {
       attachInfo.course.posCheck = !attachInfo.course.posCheck;
       attachInfo.course.pos = attachInfo.pos;
-      func.resetItem(attachInfo.course);
+      localStorage.removeItem(attachInfo.course.item);
+      localStorage.setItem(attachInfo.course.item, JSON.stringify(attachInfo.course))
     },
     filterListItem(state, name) {
       if(name == '전체') {
         for(let x of state.addCourse) {
           x.filtered = true;
-          func.resetItem(x);
+          localStorage.removeItem(x);
+          localStorage.setItem(x, JSON.stringify(x));
         }
       } else {
         for(let x of state.addCourse) {
@@ -114,7 +114,8 @@ export const store = new Vuex.Store({
           } else {
             x.filtered = true;
           }
-          func.resetItem(x)
+          localStorage.removeItem(x);
+          localStorage.setItem(x, JSON.stringify(x));
         }
       }
     },
@@ -122,7 +123,7 @@ export const store = new Vuex.Store({
       state.selectedCourse = [];
       for(let i = 0 ; i < localStorage.length ; i++) {
         if(localStorage.key(i) !== 'loglevel:webpack-dev-server') {
-          let itemString = JSON.parse(localStorage.getItem(localStorage.key(i)))
+          let itemString = JSON.parse(localStorage.getItem(localStorage.key(i)));
           if(itemString.checked == true){
             state.selectedCourse.push(itemString);
           }
@@ -133,18 +134,26 @@ export const store = new Vuex.Store({
       // 코스목록을 하나로 묶어주기 위한 코드
       let arr = [];
       for(let i = 0 ; i < state.selectedCourse.length ; i++) {
+        state.selectedCourse[i].item = state.selectedCourse[i].item.slice(11);
         arr.push(state.selectedCourse[i]);
       }
-      localStorage.setItem(JSON.stringify(arr), JSON.stringify(arr));
+      localStorage.setItem('storedCourse: ' + JSON.stringify(arr), JSON.stringify(arr));
       state.storedCourse.push(arr);
-    },
-    removeOneStoredCourse(state, payload) {
-      localStorage.removeItem(JSON.stringify(payload.course));
-      state.storedCourse.splice(payload.index, 1);
+      state.selectedCourse = [];
     },
     startOneCourse(state, course) {
+      for(let i = 0 ; i < localStorage.length ; i++) {
+        if(localStorage.key(i).slice(0,3) == 'sta') {
+          localStorage.removeItem(localStorage.key(i));
+        }
+      }
       state.startCourse = [];
       state.startCourse.push(course);
-    }
+      localStorage.setItem('startCourse: ' + JSON.stringify(course), JSON.stringify(course))
+    },
+    removeOneStoredCourse(state, payload) {
+      localStorage.removeItem('storedCourse: ' + JSON.stringify(payload.course));
+      state.storedCourse.splice(payload.index, 1);
+    },
   } 
 })

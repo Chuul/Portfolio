@@ -1,20 +1,19 @@
 <template>
   <section class="create-cont">
     <button class="createBtn" v-on:click="createCourse()">코스생성</button>
-    <!-- <template v-if="this.$store.state.selectedCourse !== []"> -->
     <KakaoMap></KakaoMap>
     <draggable :list="getSelectedCourse" :disabled="!enabled" @start="dragging = true" @end="dragging = false">
       <li class="courseList" v-for="course in getSelectedCourse" v-bind:key="course.item">
         <!-- 아이템표시 -->
           <template v-if="course.url !== ''">
             <a class="linkText" :href="course.url" target="_blank">
-              {{course.item}}
+              {{ course.item.slice(11) }}
             </a>
           </template>
           <template v-else>
-            {{ course.item }} 
+            {{ course.item.slice(11) }} 
           </template>
-          <span class="moveListBtn">
+          <span class="moveListBtn">  
             <i class="far fa-line-height"></i>
           </span>
           <div class="arrow-cont">

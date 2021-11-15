@@ -1,7 +1,7 @@
 <template>
   <section class="list-cont">
     <SortList></SortList>
-    <li v-for="(course, index) in getDateCourse" v-bind:key="course.item" v-bind:class="{filterItem : !course.filtered}">
+    <li v-for="(course, index) in getAddCourse" v-bind:key="course.item" v-bind:class="{filterItem : !course.filtered}">
       <!-- 체크버튼 -->
       <span class="checkBtn-cont" v-on:click="checkedItem(course)"> 
         <template v-if="course.checked !== false">
@@ -14,10 +14,10 @@
       <!-- 아이템표시 -->
       <span>
         <a v-if="course.url !== ''" v-bind:href="course.url" target="_blank">
-          {{course.item}}
+          {{ course.item.slice(11) }}
         </a>
         <span v-else>
-          {{course.item}}
+          {{ course.item.slice(11) }}
         </span>
       </span>
       <!-- 버튼 컨테이너 -->
@@ -90,7 +90,7 @@ export default {
     }
   },
   computed : {
-    ...mapGetters(['getDateCourse']),
+    ...mapGetters(['getAddCourse']),
   },
   methods : {
     checkedItem(course) {

@@ -1,15 +1,37 @@
 <template>
-  <div>
-    이전코스페이지입니다.
-  </div>
+  <section class="lastcourse-cont">
+    <li v-for="item in getStoredCourse" :key="item">
+      <div class="displayStroedList">
+        {{ item }}
+      </div>
+    </li>
+  </section>
 </template>
 
 <script>
-export default {
+import { mapGetters } from 'vuex';
 
+export default {
+  computed : {
+    ...mapGetters(['getStoredCourse']),
+  },
 }
 </script>
 
-<style>
-
+<style scoped``>
+li {
+  list-style: none;
+}
+.lastcourse-cont {
+  height: 80vh;
+  margin: 2em;
+}
+.displayStroedList {
+  text-align: center;
+  margin: 15px;
+  padding : 1rem;
+  background: rgba(124, 198, 255, 0.247);
+  border-radius: 0.5em;
+  box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
+}
 </style>
