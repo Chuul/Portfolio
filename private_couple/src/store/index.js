@@ -9,8 +9,8 @@ const storage = {
     const arr = [];
     if(localStorage.length > 0) {
       for(let i = 0 ; i < localStorage.length ; i++) {
-        let str = localStorage.getItem(localStorage.key(i))
         if(localStorage.key(i).substr(0,3) == 'add') {
+          let str = localStorage.getItem(localStorage.key(i))
           arr.push(JSON.parse(str));
         }
       }
@@ -21,13 +21,24 @@ const storage = {
     const arr = [];
     if(localStorage.length > 0) {
       for(let i = 0 ; i < localStorage.length ; i++) {
-        let str = localStorage.getItem(localStorage.key(i))
         if(localStorage.key(i).substr(0,3) == 'sto') {
+          let str = localStorage.getItem(localStorage.key(i))
           arr.push(JSON.parse(str));
         }
       }
     }
     return arr;
+  },
+  startCoursefetch() {
+    const arr = [];
+    if(localStorage.length > 0) {
+      for(let i = 0 ; i < localStorage.length ; i++) {
+        if(localStorage.key(i).substr(0,3) == 'sta') {
+          let str = localStorage.getItem(localStorage.key(i))
+          arr.push(JSON.parse(str));
+        }
+      }
+    }
   }
 }
 
@@ -36,7 +47,7 @@ export const store = new Vuex.Store({
     addCourse : storage.addCoursefetch(),
     selectedCourse : [],
     storedCourse : storage.storeCoursefetch(),
-    startCourse : [],
+    startCourse : storage.startCoursefetch(),
     prevCourse : []
   },
   getters : {
@@ -68,7 +79,6 @@ export const store = new Vuex.Store({
       localStorage.setItem(obj.item, JSON.stringify(obj));
       state.addCourse.push(obj);
     },
-    
     removeOneCourse(state, payload) {
       localStorage.removeItem(payload.course.item);
       state.addCourse.splice(payload.index, 1);
@@ -130,6 +140,8 @@ export const store = new Vuex.Store({
         }
       }
     },
+
+    // CourseListView mutation
     storeOneCourse(state) {
       // 코스목록을 하나로 묶어주기 위한 코드
       let arr = [];
@@ -141,6 +153,10 @@ export const store = new Vuex.Store({
       state.storedCourse.push(arr);
       state.selectedCourse = [];
     },
+    removeOneStoredCourse(state, payload) {
+      localStorage.removeItem('storedCourse: ' + JSON.stringify(payload.course));
+      state.storedCourse.splice(payload.index, 1);
+    },
     startOneCourse(state, course) {
       for(let i = 0 ; i < localStorage.length ; i++) {
         if(localStorage.key(i).slice(0,3) == 'sta') {
@@ -149,11 +165,37 @@ export const store = new Vuex.Store({
       }
       state.startCourse = [];
       state.startCourse.push(course);
-      localStorage.setItem('startCourse: ' + JSON.stringify(course), JSON.stringify(course))
+      localStorage.setItem('startCourse', JSON.stringify(course));
     },
-    removeOneStoredCourse(state, payload) {
-      localStorage.removeItem('storedCourse: ' + JSON.stringify(payload.course));
-      state.storedCourse.splice(payload.index, 1);
+
+    // startCourseView mutation
+    openStartURLText(state, attachInfo) {
+      attachInfo.course.urlCheck = !attachInfo.course.urlCheck;
+      localStorage.removeItem('startCourse');
+      localStorage.setItem('startCourse', JSON.stringify(attachInfo.obj));
+    },
+    attachStartURL(state, attachInfo) {
+      attachInfo.course.urlCheck = !attachInfo.course.urlCheck;
+      attachInfo.course.url = attachInfo.url;
+      localStorage.removeItem('startCourse');
+      localStorage.setItem('startCourse', JSON.stringify(attachInfo.obj));
+    },
+    openStartPosTxt(state, attachInfo) {
+      attachInfo.course.posCheck = !attachInfo.course.posCheck;
+      localStorage.removeItem('startCourse');
+      localStorage.setItem('startCourse', JSON.stringify(attachInfo.obj));
+    },
+    attachStartPOS(state, attachInfo) {
+      attachInfo.course.posCheck = !attachInfo.course.posCheck;
+      attachInfo.course.pos = attachInfo.pos;
+      localStorage.removeItem('startCourse');
+      localStorage.setItem('startCourse', JSON.stringify(attachInfo.obj));
+    },
+    removeStartCourse(state, attachInfo) {
+      // localStorage.removeItem('startCourse');
+      console.log(state.startCourse[0]);
+      console.log(attachInfo);
+      state.startCourse[0].splice(attachInfo.index, 1);
     },
   } 
 })

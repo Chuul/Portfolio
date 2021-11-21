@@ -24,7 +24,7 @@
           <span class="showURL" v-bind:class="{checkURL : !course.urlCheck}">
             <i class="backBtn fas fa-undo" v-on:click="openURL(course)"></i>
             <input type="text" class="inputURL" v-model="urlText" v-on:keyup.enter="attachURL(course)" placeholder="URL을 입력하세요.">
-              <i class="addBtn fas fa-plus" v-on:click="attachURL(course)"></i>
+            <i class="addBtn fas fa-plus" v-on:click="attachURL(course)"></i>
           </span>
         </span>
         <!-- 주소 버튼 -->
@@ -73,23 +73,28 @@ export default {
   },
   methods : {
     openURL(course) {
-      this.$store.commit('openURLText', course);
+      const obj = this.getStartCourse;
+      this.$store.commit('openStartURLText', {course, obj});
     },
     attachURL(course) {
       const url = this.urlText;
-      this.$store.commit('attachOneURL', {course, url});
+      const obj = this.getStartCourse;
+      this.$store.commit('attachStartURL', {course, url, obj});
       this.urlText = "";
     },
     openPos(course) {
-      this.$store.commit('openPosTxt', course);
+      const obj = this.getStartCourse;
+      this.$store.commit('openStartPosTxt', {course, obj});
     },
     attachPos(course) {
       const pos = this.posText;
-      this.$store.commit('attachOnePOS', {course, pos});
+      const obj = this.getStartCourse;
+      this.$store.commit('attachStartPOS', {course, pos, obj});
       this.posText = "";
     },
     removeCourse(course, index) {
-      this.$store.commit('removeOneCourse', {course, index});
+      const obj = this.getStartCourse;
+      this.$store.commit('removeStartCourse', {course, index, obj});
     },
   }
 }
