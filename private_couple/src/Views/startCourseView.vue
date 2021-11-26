@@ -1,11 +1,41 @@
 <template>
   <section class="course-cont">
-    <li class="list-cont" v-for="(course, index) in getStartCourse[0]" :key="course.item">
+    <!-- stored -->
+    <li class="list-cont" v-for="(course, index) in getStartCourse" :key="course.item">
+      <!-- 체크버튼 -->
+      <span class="checkBtn-cont" v-on:click="checkedItem(course)"> 
+        <template v-if="course.checked !== false">
+          <i class="checkBtn fas fa-check-circle"></i>
+        </template>
+        <template v-else>
+          <i class="checkBtn far fa-check-circle"></i>
+        </template>
+      </span>
+      <!-- 아이템 표시 -->
       <a v-if="course.url !== ''" v-bind:href="course.url" class="linkText" target="_blank">
         {{course.item}}
       </a>
       <span v-else>
         {{course.item}}
+      </span>
+      <!-- 평가 영역 -->
+      <span>
+        <template v-if="course.checked">
+          <button v-on:click="ratingItem(course)">
+              평가하기
+          </button>
+          <div v-show="course.ratingChecked">
+            <section class="rating-cont">
+              <input type="text" v-model="comment">
+              <button v-on:click="completRatingItem(course)">
+                  평가완료
+              </button>
+              <button v-on:click="ratingItem(course)">
+                  취소
+              </button>
+            </section>    
+          </div>
+        </template>
       </span>
       <!-- 버튼 컨테이너 -->
       <span class="utilBtn-cont">
@@ -64,14 +94,31 @@ import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
+      comment : "",
       urlText : "",
-      posText : ""
+      posText : "",
     }
   },
   computed : {
-    ...mapGetters(['getStartCourse'])
+    ...mapGetters(['getStartCourse']),
   },
   methods : {
+    ratingItem(course){ 
+      // this.is_show = !this.is_show;
+      console.log(course.ratingChecked);
+      course.ratingChecked = !course.ratingChecked;
+    },
+    completRatingItem(course) {
+      this.is_show = false;
+      const obj = this.getStartCourse;
+      const commentContent = this.comment;
+      this.$store.commit('ratingStartItem', {course, commentContent, obj});
+      this.comment = '';
+    },
+    checkedItem(course) {
+      const obj = this.getStartCourse;
+      this.$store.commit('checkedStartItem', {course, obj});
+    },
     openURL(course) {
       const obj = this.getStartCourse;
       this.$store.commit('openStartURLText', {course, obj});
@@ -106,6 +153,16 @@ section {
 }
 li {
   list-style: none;
+}
+.rating-cont {
+  margin : 1em;
+  border : 1px solid
+}
+.checkBtn {
+  float: left;
+  margin : 0.5em;
+  color : rgba(124, 198, 255, 0.8);
+  cursor : pointer
 }
 .course-cont {
   height: 80vh;

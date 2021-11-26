@@ -41,8 +41,6 @@ export default {
     return {
       enabled: true,
       dragging: false,
-      urlText : "",
-      posText : ""
     }
   },
   computed : {

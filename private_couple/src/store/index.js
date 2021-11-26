@@ -29,17 +29,16 @@ const storage = {
     }
     return arr;
   },
-  startCoursefetch() {
-    const arr = [];
-    if(localStorage.length > 0) {
-      for(let i = 0 ; i < localStorage.length ; i++) {
-        if(localStorage.key(i).substr(0,3) == 'sta') {
-          let str = localStorage.getItem(localStorage.key(i))
-          arr.push(JSON.parse(str));
-        }
-      }
-    }
-  }
+  // startCoursefetch() {
+  //   if(localStorage.length > 0) {
+  //     for(let i = 0 ; i < localStorage.length ; i++) {
+  //       if(localStorage.key(i).substr(0,3) == 'sta') {
+  //         let str = localStorage.getItem(localStorage.key(i))
+  //         return str;
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 export const store = new Vuex.Store({
@@ -47,7 +46,7 @@ export const store = new Vuex.Store({
     addCourse : storage.addCoursefetch(),
     selectedCourse : [],
     storedCourse : storage.storeCoursefetch(),
-    startCourse : storage.startCoursefetch(),
+    startCourse : [],
     prevCourse : []
   },
   getters : {
@@ -65,10 +64,10 @@ export const store = new Vuex.Store({
     }
   },
   mutations : {
-    addOneCourse(state, option) {
+    addOneCourse(state, payload) {
       const obj = {
-        category : option.category,
-        item : option.item,
+        category : payload.category,
+        item : payload.item,
         checked : false, 
         url : '',
         urlCheck : false,
@@ -140,18 +139,21 @@ export const store = new Vuex.Store({
         }
       }
     },
-
-    // CourseListView mutation
+    // CourseListView
     storeOneCourse(state) {
       // 코스목록을 하나로 묶어주기 위한 코드
       let arr = [];
-      for(let i = 0 ; i < state.selectedCourse.length ; i++) {
-        state.selectedCourse[i].item = state.selectedCourse[i].item.slice(11);
-        arr.push(state.selectedCourse[i]);
+      if(state.selectedCourse.length > 0) {
+        for(let i = 0 ; i < state.selectedCourse.length ; i++) {
+          delete state.selectedCourse[i].checked;
+          delete state.selectedCourse[i].filtered;
+          state.selectedCourse[i].item = state.selectedCourse[i].item.slice(11);
+          arr.push(state.selectedCourse[i]);
+        }
+        state.selectedCourse = [];
       }
       localStorage.setItem('storedCourse: ' + JSON.stringify(arr), JSON.stringify(arr));
       state.storedCourse.push(arr);
-      state.selectedCourse = [];
     },
     removeOneStoredCourse(state, payload) {
       localStorage.removeItem('storedCourse: ' + JSON.stringify(payload.course));
@@ -161,14 +163,29 @@ export const store = new Vuex.Store({
       for(let i = 0 ; i < localStorage.length ; i++) {
         if(localStorage.key(i).slice(0,3) == 'sta') {
           localStorage.removeItem(localStorage.key(i));
+          break;
         }
       }
-      state.startCourse = [];
-      state.startCourse.push(course);
+      for(let i = 0 ; i < course.length ; i++) {
+        course[i].checked = false;
+        course[i].ratingBtnChecked = false;
+        course[i].comment = "";
+      }
+      state.startCourse = course;
+      // course를 start해서 페이지가 넘어갈 때, checked를 기본으로 돌려주는 코드
       localStorage.setItem('startCourse', JSON.stringify(course));
     },
-
     // startCourseView mutation
+    checkedStartItem(state, attachInfo) {
+      attachInfo.course.checked = !attachInfo.course.checked;
+      localStorage.removeItem('startCourse');
+      localStorage.setItem('startCourse', JSON.stringify(attachInfo.obj));
+    },
+    ratingStartItem(state, attachInfo) {
+      attachInfo.course.comment = attachInfo.commentContent;
+      localStorage.removeItem('startCourse');
+      localStorage.setItem('startCourse', JSON.stringify(attachInfo.obj));
+    },
     openStartURLText(state, attachInfo) {
       attachInfo.course.urlCheck = !attachInfo.course.urlCheck;
       localStorage.removeItem('startCourse');
