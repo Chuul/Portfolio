@@ -1,5 +1,6 @@
 <template>
   <section class="course-cont">
+    <h2>코스 진행중...</h2>
     <!-- stored -->
     <li class="list-cont" v-for="(course, index) in getStartCourse" :key="course.item">
       <!-- 체크버튼 -->
@@ -18,24 +19,18 @@
       <span v-else>
         {{course.item}}
       </span>
-      <!-- 평가 영역 -->
-      <span>
-        <template v-if="course.checked">
-          <button v-on:click="ratingItem(course)">
-              평가하기
-          </button>
-          <div v-show="course.ratingChecked">
-            <section class="rating-cont">
-              <input type="text" v-model="comment">
-              <button v-on:click="completRatingItem(course)">
-                  평가완료
-              </button>
-              <button v-on:click="ratingItem(course)">
-                  취소
-              </button>
-            </section>    
-          </div>
-        </template>
+      <!-- 코멘트 컨테이너 -->
+      <span v-if="course.checked !== false" v-on:click="commentItem(course)">
+        <!-- <template v-if="course.comment == ''"> -->
+          <i class="commentBtn far fa-comments"></i>
+        <!-- </template> -->
+        <!-- <template v-else> -->
+          <!-- <i class="commentBtn fas fa-comments"></i> -->
+        <!-- </template> -->
+      </span>
+      <span v-bind:class="{checkComment : !course.ratingBtnChecked}">
+        <input type="text" v-model="comment" placeholder="한줄평을 입력해주세요." v-on:keyup.enter="completeComment(course)">
+        <button v-on:click="completeComment(course)">저장</button>
       </span>
       <!-- 버튼 컨테이너 -->
       <span class="utilBtn-cont">
@@ -103,21 +98,19 @@ export default {
     ...mapGetters(['getStartCourse']),
   },
   methods : {
-    ratingItem(course){ 
-      // this.is_show = !this.is_show;
-      console.log(course.ratingChecked);
-      course.ratingChecked = !course.ratingChecked;
-    },
-    completRatingItem(course) {
-      this.is_show = false;
-      const obj = this.getStartCourse;
-      const commentContent = this.comment;
-      this.$store.commit('ratingStartItem', {course, commentContent, obj});
-      this.comment = '';
-    },
     checkedItem(course) {
       const obj = this.getStartCourse;
       this.$store.commit('checkedStartItem', {course, obj});
+    },
+    commentItem(course){ 
+      const obj = this.getStartCourse;
+      this.$store.commit('commentStartItem', {course, obj});
+    },
+    completeComment(course) {
+      const commentText = this.comment;
+      const obj = this.getStartCourse;
+      this.$store.commit('completeStartComment', {course, commentText, obj});
+      this.comment = '';
     },
     openURL(course) {
       const obj = this.getStartCourse;
@@ -154,7 +147,13 @@ section {
 li {
   list-style: none;
 }
-.rating-cont {
+h2 {
+  text-align: center;
+  font-family: 'Dongle', sans-serif;
+  font-size: 2em;
+  font-weight: 700;
+}
+.rating_cont {
   margin : 1em;
   border : 1px solid
 }
@@ -163,6 +162,12 @@ li {
   margin : 0.5em;
   color : rgba(124, 198, 255, 0.8);
   cursor : pointer
+}
+.commentBtn {
+  cursor: pointer;
+}
+.checkComment {
+  display: none;
 }
 .course-cont {
   height: 80vh;

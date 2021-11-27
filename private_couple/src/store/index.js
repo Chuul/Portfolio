@@ -29,16 +29,18 @@ const storage = {
     }
     return arr;
   },
-  // startCoursefetch() {
-  //   if(localStorage.length > 0) {
-  //     for(let i = 0 ; i < localStorage.length ; i++) {
-  //       if(localStorage.key(i).substr(0,3) == 'sta') {
-  //         let str = localStorage.getItem(localStorage.key(i))
-  //         return str;
-  //       }
-  //     }
-  //   }
-  // }
+  startCoursefetch() {
+    let arr;
+    if(localStorage.length > 0) {
+      for(let i = 0 ; i < localStorage.length ; i++) {
+        if(localStorage.key(i).substr(0,3) == 'sta') {
+          let str = localStorage.getItem(localStorage.key(i))
+          arr = JSON.parse(str);
+        }
+      }
+    }
+    return arr;
+  }
 }
 
 export const store = new Vuex.Store({
@@ -46,7 +48,7 @@ export const store = new Vuex.Store({
     addCourse : storage.addCoursefetch(),
     selectedCourse : [],
     storedCourse : storage.storeCoursefetch(),
-    startCourse : [],
+    startCourse : storage.startCoursefetch(),
     prevCourse : []
   },
   getters : {
@@ -145,7 +147,6 @@ export const store = new Vuex.Store({
       let arr = [];
       if(state.selectedCourse.length > 0) {
         for(let i = 0 ; i < state.selectedCourse.length ; i++) {
-          delete state.selectedCourse[i].checked;
           delete state.selectedCourse[i].filtered;
           state.selectedCourse[i].item = state.selectedCourse[i].item.slice(11);
           arr.push(state.selectedCourse[i]);
@@ -160,31 +161,45 @@ export const store = new Vuex.Store({
       state.storedCourse.splice(payload.index, 1);
     },
     startOneCourse(state, course) {
+      // course : storedCourse배열에 저장된 값 중 특정 코스
+      // 1. localStorage에서 startCourse제거
       for(let i = 0 ; i < localStorage.length ; i++) {
         if(localStorage.key(i).slice(0,3) == 'sta') {
           localStorage.removeItem(localStorage.key(i));
           break;
         }
       }
+      // 2. course list에서 특정 코스를 시작했을 때, 해당 코스 속성 디폴트+추가
       for(let i = 0 ; i < course.length ; i++) {
         course[i].checked = false;
         course[i].ratingBtnChecked = false;
         course[i].comment = "";
       }
+      // 3. startCourseView에서 뿌려주기 위해 state에 값을 저장하는 코드
       state.startCourse = course;
-      // course를 start해서 페이지가 넘어갈 때, checked를 기본으로 돌려주는 코드
       localStorage.setItem('startCourse', JSON.stringify(course));
     },
+
     // startCourseView mutation
     checkedStartItem(state, attachInfo) {
       attachInfo.course.checked = !attachInfo.course.checked;
+      attachInfo.course.ratingBtnChecked = false;
       localStorage.removeItem('startCourse');
       localStorage.setItem('startCourse', JSON.stringify(attachInfo.obj));
+      // if(attachInfo.obj.checked == true) {
+      //   state.prevCourse.push(attachInfo.course);
+      // } 
     },
-    ratingStartItem(state, attachInfo) {
-      attachInfo.course.comment = attachInfo.commentContent;
+    commentStartItem(state, attachInfo) {
+      attachInfo.course.ratingBtnChecked = !attachInfo.course.ratingBtnChecked;
       localStorage.removeItem('startCourse');
-      localStorage.setItem('startCourse', JSON.stringify(attachInfo.obj));
+      localStorage.setItem('startCourse', JSON.stringify(attachInfo.obj))
+    },
+    completeStartComment(state, attachInfo) {
+      attachInfo.course.comment = attachInfo.commentText;
+      attachInfo.course.ratingBtnChecked = false;
+      localStorage.removeItem('startCourse');
+      localStorage.setItem('startCourse', JSON.stringify(attachInfo.obj))
     },
     openStartURLText(state, attachInfo) {
       attachInfo.course.urlCheck = !attachInfo.course.urlCheck;
@@ -209,10 +224,17 @@ export const store = new Vuex.Store({
       localStorage.setItem('startCourse', JSON.stringify(attachInfo.obj));
     },
     removeStartCourse(state, attachInfo) {
-      // localStorage.removeItem('startCourse');
-      console.log(state.startCourse[0]);
-      console.log(attachInfo);
-      state.startCourse[0].splice(attachInfo.index, 1);
+      // 1. startCourse에서 제거
+      state.startCourse.splice(attachInfo.index, 1);
+      // 2. 화면에서 제거
+      for(let i = 0 ; i < localStorage.length ; i++) {
+        if(localStorage.key(i).slice(0,3) == 'sta') {
+          let tmp = JSON.parse(localStorage.getItem(localStorage.key(i)));
+          tmp.splice(attachInfo.index, 1);
+          localStorage.removeItem('startCourse')
+          localStorage.setItem('startCourse', JSON.stringify(tmp));
+        }
+      }
     },
   } 
 })

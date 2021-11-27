@@ -1,9 +1,7 @@
 <template>
   <section class="lastcourse-cont">
     <li v-for="item in getStoredCourse" :key="item">
-      <div class="displayStroedList">
-        {{ item }}
-      </div>
+      
     </li>
   </section>
 </template>
