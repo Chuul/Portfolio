@@ -159,17 +159,17 @@ export const store = new Vuex.Store({
     // CourseListView
     storeOneCourse(state) {
       // 코스목록을 하나로 묶어주기 위한 코드
-      let arr = [];
       if(state.selectedCourse.length > 0) {
+        let arr = [];
         for(let i = 0 ; i < state.selectedCourse.length ; i++) {
           // delete state.selectedCourse[i].filtered;
           state.selectedCourse[i].item = state.selectedCourse[i].item.slice(11);
           arr.push(state.selectedCourse[i]);
         }
         state.selectedCourse = [];
+        localStorage.setItem('storedCourse: ' + JSON.stringify(arr), JSON.stringify(arr));
+        state.storedCourse.push(arr);
       }
-      localStorage.setItem('storedCourse: ' + JSON.stringify(arr), JSON.stringify(arr));
-      state.storedCourse.push(arr);
     },
     removeOneStoredCourse(state, payload) {
       localStorage.removeItem('storedCourse: ' + JSON.stringify(payload.course));

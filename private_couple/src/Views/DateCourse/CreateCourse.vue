@@ -5,25 +5,32 @@
     <draggable :list="getSelectedCourse" :disabled="!enabled" @start="dragging = true" @end="dragging = false">
       <li class="courseList" v-for="course in getSelectedCourse" v-bind:key="course.item">
         <!-- 아이템표시 -->
-          <template v-if="course.url !== ''">
-            <a class="linkText" :href="course.url" target="_blank">
-              {{ course.item.slice(11) }}
-            </a>
-          </template>
-          <template v-else>
-            {{ course.item.slice(11) }} 
-          </template>
-          <span class="moveListBtn">  
-            <i class="far fa-line-height"></i>
-          </span>
-          <div class="arrow-cont">
-            <a :href="`https://map.kakao.com/link/to/${course},${37.402056,127.108212}`">
-              <i class="fas fa-arrow-down"></i>
-            </a>
-          </div>
+        <template v-if="course.url !== ''">
+          <a class="linkText" :href="course.url" target="_blank">
+            {{ course.item.slice(11) }}
+          </a>
+        </template>
+        <template v-else>
+          {{ course.item.slice(11) }} 
+        </template>
+        <span class="moveListBtn">  
+          <i class="far fa-line-height"></i>
+        </span>
+        <div class="arrow-cont">
+          <a :href="`https://map.kakao.com/link/to/${course},${37.402056,127.108212}`">
+            <i class="fas fa-arrow-down"></i>
+          </a>
+        </div>
       </li>
     </draggable>
     <button class="storeBtn" v-on:click="storeCourse()">코스 저장</button>
+    <Modal v-if="showModal_success" @close="showModal_success = false">
+      <h2 slot="header">코스 저장 완료</h2>
+    </Modal>
+    <Modal v-if="showModal_fail" @close="showModal_fail = false">
+      <h2 slot="header">코스 저장 실패</h2>
+      <div slot="body">코스 생성 후 저장해주세요</div>
+    </Modal>
   </section>
 </template>
 
@@ -31,16 +38,20 @@
 import { mapGetters } from 'vuex';
 import KakaoMap from '../../components/KakaoMaps.vue';
 import draggable from 'vuedraggable';
+import Modal from '../../components/common/Modal.vue'
 
 export default {
   components : {
     KakaoMap,
-    draggable
+    draggable,
+    Modal
   },
   data() {
     return {
       enabled: true,
       dragging: false,
+      showModal_success: false,
+      showModal_fail: false,
     }
   },
   computed : {
@@ -51,7 +62,12 @@ export default {
       this.$store.commit('createOneCourse');
     },
     storeCourse() {
-      this.$store.commit('storeOneCourse');
+      if(this.getSelectedCourse.length !== 0) {
+        this.showModal_success = true;
+        this.$store.commit('storeOneCourse');
+      } else {
+        this.showModal_fail = true;
+      }
     }
   }
 }
