@@ -21,16 +21,14 @@
       </span>
       <!-- 코멘트 컨테이너 -->
       <span v-if="course.checked !== false" v-on:click="commentItem(course)">
-        <!-- <template v-if="course.comment == ''"> -->
           <i class="commentBtn far fa-comments"></i>
-        <!-- </template> -->
-        <!-- <template v-else> -->
-          <!-- <i class="commentBtn fas fa-comments"></i> -->
-        <!-- </template> -->
       </span>
       <span v-bind:class="{checkComment : !course.ratingBtnChecked}">
         <input type="text" v-model="comment" placeholder="한줄평을 입력해주세요." v-on:keyup.enter="completeComment(course)">
         <button v-on:click="completeComment(course)">저장</button>
+      </span>
+      <span v-if="course.comment !== ''">
+        {{ course.comment }}
       </span>
       <!-- 버튼 컨테이너 -->
       <span class="utilBtn-cont">

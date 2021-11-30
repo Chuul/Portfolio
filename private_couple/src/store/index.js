@@ -40,6 +40,18 @@ const storage = {
       }
     }
     return arr;
+  },
+  prevCoursefetch() {
+    const arr = [];
+    if(localStorage.length > 0) {
+      for(let i = 0 ; i < localStorage.length ; i++) {
+        if(localStorage.key(i).substr(0,3) == 'pre') {
+          let str = localStorage.getItem(localStorage.key(i))
+          arr.push(JSON.parse(str));
+        }
+      }
+    }
+    return arr;
   }
 }
 
@@ -49,7 +61,7 @@ export const store = new Vuex.Store({
     selectedCourse : [],
     storedCourse : storage.storeCoursefetch(),
     startCourse : storage.startCoursefetch(),
-    prevCourse : []
+    prevCourse : storage.prevCoursefetch()
   },
   getters : {
     getAddCourse(state) {
@@ -63,6 +75,9 @@ export const store = new Vuex.Store({
     },
     getStartCourse(state) {
       return state.startCourse;
+    },
+    getPrevCourse(state) {
+      return state.prevCourse;
     }
   },
   mutations : {
@@ -133,7 +148,7 @@ export const store = new Vuex.Store({
     createOneCourse(state) {
       state.selectedCourse = [];
       for(let i = 0 ; i < localStorage.length ; i++) {
-        if(localStorage.key(i) !== 'loglevel:webpack-dev-server') {
+        if(localStorage.key(i).slice(0,3) == 'add') {
           let itemString = JSON.parse(localStorage.getItem(localStorage.key(i)));
           if(itemString.checked == true){
             state.selectedCourse.push(itemString);
@@ -147,7 +162,7 @@ export const store = new Vuex.Store({
       let arr = [];
       if(state.selectedCourse.length > 0) {
         for(let i = 0 ; i < state.selectedCourse.length ; i++) {
-          delete state.selectedCourse[i].filtered;
+          // delete state.selectedCourse[i].filtered;
           state.selectedCourse[i].item = state.selectedCourse[i].item.slice(11);
           arr.push(state.selectedCourse[i]);
         }
@@ -186,9 +201,10 @@ export const store = new Vuex.Store({
       attachInfo.course.ratingBtnChecked = false;
       localStorage.removeItem('startCourse');
       localStorage.setItem('startCourse', JSON.stringify(attachInfo.obj));
-      // if(attachInfo.obj.checked == true) {
-      //   state.prevCourse.push(attachInfo.course);
-      // } 
+      console.log(attachInfo.course);
+      state.prevCourse.push(attachInfo.course);
+      console.log(state.prevCourse);
+      localStorage.setItem('prev: ' + JSON.stringify(attachInfo.course), JSON.stringify(attachInfo.course));
     },
     commentStartItem(state, attachInfo) {
       attachInfo.course.ratingBtnChecked = !attachInfo.course.ratingBtnChecked;
@@ -232,9 +248,19 @@ export const store = new Vuex.Store({
           let tmp = JSON.parse(localStorage.getItem(localStorage.key(i)));
           tmp.splice(attachInfo.index, 1);
           localStorage.removeItem('startCourse')
-          localStorage.setItem('startCourse', JSON.stringify(tmp));
         }
       }
     },
+    removePrevCourse(state, attachInfo) {
+      // 1. startCourse에서 제거
+      state.prevCourse.splice(attachInfo.index, 1);
+      console.log('prevCourse : ', state.prevCourse);
+      // 2. 화면에서 제거
+      for(let i = 0 ; i < localStorage.length ; i++) {
+        if(localStorage.key(i).slice(0,3) == 'pre') {
+          localStorage.removeItem('prev: ' + JSON.stringify(attachInfo.course))
+        }
+      }
+    }
   } 
 })
