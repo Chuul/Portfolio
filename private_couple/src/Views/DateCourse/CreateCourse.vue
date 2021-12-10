@@ -1,9 +1,9 @@
 <template>
   <section class="create-cont">
-    <button class="createBtn" v-on:click="createCourse()">코스생성</button>
+    <button class="createBtn" @click="createCourse()">코스생성</button>
     <KakaoMap></KakaoMap>
     <draggable :list="getSelectedCourse" :disabled="!enabled" @start="dragging = true" @end="dragging = false">
-      <li class="courseList" v-for="course in getSelectedCourse" v-bind:key="course.item">
+      <li class="courseList" v-for="course in getSelectedCourse" :key="course.item">
         <!-- 아이템표시 -->
         <template v-if="course.url !== ''">
           <a class="linkText" :href="course.url" target="_blank">
@@ -23,7 +23,7 @@
         </div>
       </li>
     </draggable>
-    <button class="storeBtn" v-on:click="storeCourse()">코스 저장</button>
+    <button class="storeBtn" @click="storeCourse()">코스 저장</button>
     <Modal v-if="showModal_success" @close="showModal_success = false">
       <h2 slot="header">코스 저장 완료</h2>
     </Modal>

@@ -3,10 +3,10 @@
     <li v-for="(course, index) in getStoredCourse" :key="course.item">
       <div class="displayStroedList">
         <router-link to="/startCourse">
-          <i class="fas fa-heart-square" v-on:click="startCourse(course)"></i>
+          <i class="fas fa-heart-square" @click="startCourse(course)"></i>
         </router-link>
         <li class="list-cont" v-for="storedItem in course" :key="storedItem.item">
-          <a v-if="storedItem.url !== ''" v-bind:href="storedItem.url" class="linkText" target="_blank">
+          <a v-if="storedItem.url !== ''" :href="storedItem.url" class="linkText" target="_blank">
             {{storedItem.item}}
           </a>
           <span v-else>
@@ -16,7 +16,7 @@
             <i class="fas fa-arrow-down"></i>
           </div>
         </li>
-        <span class="remove-cont" v-on:click="removeStoredCourse(course, index)">
+        <span class="remove-cont" @click="removeStoredCourse(course, index)">
           <i class="far fa-trash-alt"></i>
         </span>
       </div>

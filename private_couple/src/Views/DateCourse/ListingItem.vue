@@ -1,9 +1,9 @@
 <template>
   <section class="list-cont">
     <SortList></SortList>
-    <li v-for="(course, index) in getAddCourse" v-bind:key="course.item" v-bind:class="{filterItem : !course.filtered}">
+    <li v-for="(course, index) in getAddCourse" :key="course.item" :class="{filterItem : !course.filtered}">
       <!-- 체크버튼 -->
-      <span class="checkBtn-cont" v-on:click="checkedItem(course)"> 
+      <span class="checkBtn-cont" @click="checkedItem(course)"> 
         <template v-if="course.checked !== false">
           <i class="checkBtn fas fa-check-circle"></i>
         </template>
@@ -13,7 +13,7 @@
       </span>
       <!-- 아이템표시 -->
       <span>
-        <a v-if="course.url !== ''" v-bind:href="course.url" target="_blank">
+        <a v-if="course.url !== ''" :href="course.url" target="_blank">
           {{ course.item.slice(11) }}
         </a>
         <span v-else>
@@ -25,49 +25,49 @@
         <!-- URL 버튼 -->
         <span class="url-cont">
           <!-- URL 실행 -->
-          <span v-on:click="openURL(course)">
+          <span @click="openURL(course)">
             <span v-if="course.url == ''">
-              <i v-bind:class="{checkURL : course.urlCheck}" class="shareBtn fas fa-share-square"></i>
+              <i :class="{checkURL : course.urlCheck}" class="shareBtn fas fa-share-square"></i>
             </span>
             <span v-else>
-              <i v-bind:class="{checkURL : course.urlCheck}" class="existBtn fas fa-share-square"></i>
+              <i :class="{checkURL : course.urlCheck}" class="existBtn fas fa-share-square"></i>
             </span>
           </span>
           <!-- URL 양식 -->
-          <span class="showURL" v-bind:class="{checkURL : !course.urlCheck}">
+          <span class="showURL" :class="{checkURL : !course.urlCheck}">
             <!-- <span class="backBtn-cont" > -->
-            <i class="backBtn fas fa-undo" v-on:click="openURL(course)"></i>
+            <i class="backBtn fas fa-undo" @click="openURL(course)"></i>
             <!-- </span> -->
-            <input type="text" class="inputURL" v-model="urlText" v-on:keyup.enter="attachURL(course)" placeholder="URL을 입력하세요.">
-            <!-- <span class="addBtn-cont" v-on:click="attachURL(course)"> -->
-              <i class="addBtn fas fa-plus" v-on:click="attachURL(course)"></i>
+            <input type="text" class="inputURL" v-model="urlText" @keyup.enter="attachURL(course)" placeholder="URL을 입력하세요.">
+            <!-- <span class="addBtn-cont" @click="attachURL(course)"> -->
+              <i class="addBtn fas fa-plus" @click="attachURL(course)"></i>
             <!-- </span> -->
           </span>
         </span>
         <!-- 주소 버튼 -->
         <span class="position-cont">
           <!-- 주소 실행 -->
-          <span v-on:click="openPos(course)">
+          <span @click="openPos(course)">
             <span v-if="course.pos == ''">
-              <i v-bind:class="{existPOS : course.posCheck}" class="shareBtn fas fa-map-marker-alt"></i>
+              <i :class="{existPOS : course.posCheck}" class="shareBtn fas fa-map-marker-alt"></i>
             </span>
             <span v-else>
-              <i v-bind:class="{existPOS : course.posCheck}" class="existBtn fas fa-map-marker-alt"></i>
+              <i :class="{existPOS : course.posCheck}" class="existBtn fas fa-map-marker-alt"></i>
             </span>
           </span>
           <!-- 주소 양식 -->
-          <span class="showURL" v-bind:class="{existPOS : !course.posCheck}">
-            <!-- <span class="backBtn-cont" v-on:click="openPos(course)"> -->
-              <i class="backBtn fas fa-undo"  v-on:click="openPos(course)"></i>
+          <span class="showURL" :class="{existPOS : !course.posCheck}">
+            <!-- <span class="backBtn-cont" @click="openPos(course)"> -->
+              <i class="backBtn fas fa-undo"  @click="openPos(course)"></i>
             <!-- </span> -->
-            <input type="text" class="inputURL" v-model="posText" v-on:keyup.enter="attachPos(course)" placeholder="주소를 입력하세요.">
-            <!-- <span v-on:click="attachPos(course)"> -->
-              <i class="fas fa-plus" v-on:click="attachPos(course)"></i>
+            <input type="text" class="inputURL" v-model="posText" @keyup.enter="attachPos(course)" placeholder="주소를 입력하세요.">
+            <!-- <span @click="attachPos(course)"> -->
+              <i class="fas fa-plus" @click="attachPos(course)"></i>
             <!-- </span> -->
           </span>
         </span>
         <!-- 삭제 버튼 -->
-        <span class="remove-cont" v-on:click="removeCourse(course, index)">
+        <span class="remove-cont" @click="removeCourse(course, index)">
           <i class="far fa-trash-alt"></i>
         </span>
       </span>
@@ -78,46 +78,16 @@
 <script>
 import { mapGetters } from 'vuex';
 import SortList from './SortList.vue';
+import ListControl from '../../mixins/ListControl.js'
 
 export default {
   components : {
     SortList,
   },
-  data() {
-    return {
-      urlText : "",
-      posText : ""
-    }
-  },
   computed : {
     ...mapGetters(['getAddCourse']),
   },
-  methods : {
-    checkedItem(course) {
-      this.$store.commit('checkOneItem', course);
-    },
-    openURL(course) {
-      this.$store.commit('openURLText', course);
-    },
-    attachURL(course) {
-      const url = this.urlText;
-      this.$store.commit('attachOneURL', {course, url});
-      this.urlText = "";
-    },
-    openPos(course) {
-      this.$store.commit('openPosTxt', course);
-    },
-    attachPos(course) {
-      const pos = this.posText;
-      this.$store.commit('attachOnePOS', {course, pos});
-      this.posText = "";
-    },
-    removeCourse(course, index) {
-      this.$store.commit('removeOneCourse', {course, index});
-    },
-    
-  },
-  
+  mixins : [ListControl]
 }
 </script>
 

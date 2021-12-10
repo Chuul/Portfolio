@@ -2,18 +2,18 @@
   <main>
     <tool-bar></tool-bar>
     <router-view></router-view>
-    <Footer></Footer>
+    <comInfo></comInfo>
   </main>
 </template>
 
 <script>
 import ToolBar from './components/ToolBar.vue'
-import Footer from './Views/footer.vue'
+import comInfo from './Views/comInfo.vue'
  
 export default {
   components: {
     ToolBar,
-    Footer
+    comInfo
   }
 }
 </script>

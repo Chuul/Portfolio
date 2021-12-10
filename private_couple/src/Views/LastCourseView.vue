@@ -8,7 +8,7 @@
         <span>
           {{ course.comment }}
         </span>
-        <span class="remove-cont" v-on:click="removeCourse(course, index)">
+        <span class="remove-cont" @click="removeCourse(course, index)">
           <i class="far fa-trash-alt"></i>
         </span>
       </div>
@@ -25,8 +25,7 @@ export default {
   },
   methods : {
     removeCourse(course, index) {
-      const obj = this.getPrevCourse;
-       this.$store.commit('removePrevCourse', {course, index, obj});
+       this.$store.commit('removePrevCourse', {course, index});
     }
   }
 }

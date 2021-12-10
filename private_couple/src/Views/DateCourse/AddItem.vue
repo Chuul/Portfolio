@@ -3,13 +3,13 @@
     <div class="select-cont">
       <select v-model="selected">
         <option disabled value="">--카테고리--</option>
-        <option v-for="option in options" v-bind:key="option.text">
+        <option v-for="option in options" :key="option.text">
           {{ option.text}}
         </option>
       </select>
     </div>
-    <input type="text" v-model="newDateCourse" v-on:keyup.enter="addCourse">
-    <div class="btn-cont" v-on:click="addCourse">
+    <input type="text" v-model="newDateCourse" @keyup.enter="addCourse">
+    <div class="btn-cont" @click="addCourse">
       <i class="addBtn fas fa-plus"></i>
     </div>
   </section>
