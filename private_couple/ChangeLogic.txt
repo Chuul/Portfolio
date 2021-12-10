@@ -1,5 +1,0 @@
-작업일지
-
-**2021년 10월 7일
-1. DateCourse폴더를 생성하고 DateView, AddCourse, ListCourse 파일로 각각 분리
-2. AddCourse, ListCourse(하.컴)의 로직을 DateView(상.컴)로 정리하고, props랑 event emit사용

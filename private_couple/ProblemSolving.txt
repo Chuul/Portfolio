@@ -1,5 +1,0 @@
-***2021년 10월 7일 
-1. DateView에서 created로 "this.dateCourses.push(JSON.parse(localStorage.getItem(localStorage.key(i))))" 코드 실행하게 되면 object가 dateCourses에 넘어가게 된다. 
-localStorage.removeItem()은 key name을 param으로 넘겨줘야 실행되는데 v-for에서 object로 그대로 넘겨준걸 removeCourse()에서 그대로 사용하니까 당연히 실행이 안됐다. 
-localStorage.removeItem(course)를
-localStorage.removeItem(course.item);으로 바꿔주니까 해결됐다. 
