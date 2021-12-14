@@ -36,9 +36,9 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import KakaoMap from '../../components/KakaoMaps.vue';
 import draggable from 'vuedraggable';
-import Modal from '../../components/Modal.vue'
+import KakaoMap from '@/components/common/KakaoMaps.vue';
+import Modal from '@/components/common/Modal.vue'
 
 export default {
   components : {

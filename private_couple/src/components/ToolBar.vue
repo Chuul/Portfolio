@@ -1,8 +1,8 @@
 <template>
   <nav class="router-cont">
-    <router-link to="/createCourse">코스생성</router-link>  
-    <router-link to="/courseList">코스목록</router-link>   
-    <router-link to="/lastCourse">이전코스</router-link>  
+    <router-link to="/create">코스생성</router-link>  
+    <router-link to="/list">코스목록</router-link>   
+    <router-link to="/last">이전코스</router-link>  
   </nav>
 </template>
 

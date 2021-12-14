@@ -1,19 +1,19 @@
 <template>
   <main>
-    <tool-bar></tool-bar>
+    <ToolBar></ToolBar>
     <router-view></router-view>
-    <comInfo></comInfo>
+    <InformationView></InformationView>
   </main>
 </template>
 
 <script>
 import ToolBar from './components/ToolBar.vue'
-import comInfo from './Views/comInfo.vue'
+import InformationView from './components/InformationView.vue'
  
 export default {
   components: {
     ToolBar,
-    comInfo
+    InformationView
   }
 }
 </script>
