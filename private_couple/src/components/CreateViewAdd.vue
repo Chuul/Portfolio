@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { addItem } from '../api/index'
 export default {
   data() {
     return {
@@ -29,12 +30,20 @@ export default {
     }
   },
   methods : {
-    addCourse() {
+    async addCourse() {
       if(this.newDateCourse !== '') {
         const obj = { 
           category : this.selected, 
-          item : 'addCourse: ' + this.newDateCourse,
+          name : this.newDateCourse,
+          checked : false, 
+          url : '',
+          urlCheck : false,
+          pos : '',
+          posCheck : false,
+          filtered : true,
         }
+        const response = await addItem(obj);
+        console.log('response 반환 : ', response);
         this.$store.commit('addOneCourse', obj)
         this.clearInput()
       }

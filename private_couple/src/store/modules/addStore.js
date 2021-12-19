@@ -32,17 +32,7 @@ const getters = {
 }
 
 const mutations = {
-  addOneCourse(state, payload) {
-    const obj = {
-      category : payload.category,
-      item : payload.item,
-      checked : false, 
-      url : '',
-      urlCheck : false,
-      pos : '',
-      posCheck : false,
-      filtered : true,
-    }
+  addOneCourse(state, obj) {
     localStorage.setItem(obj.item, JSON.stringify(obj));
     state.addCourse.push(obj);
   },
