@@ -10,10 +10,10 @@ Vue.use(VueRouter);
 export const router = new VueRouter({
   mode: 'history',
   routes : [
-    {
-      path : '/',
-      component : CreateView
-    },
+    // {
+    //   path : '/',
+    //   component : CreateView
+    // },
     {
       path : '/create',
       component : CreateView

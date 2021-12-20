@@ -1,21 +1,21 @@
 <template>
   <section>
-    <CreateViewAdd></CreateViewAdd>
+    <CreateViewAddItem></CreateViewAddItem>
     <CreateViewList></CreateViewList>
-    <CreateViewMake></CreateViewMake>
+    <CreateViewAddCourse></CreateViewAddCourse>
   </section>
 </template>
 
 <script>
-import CreateViewAdd from './CreateViewAdd.vue'
+import CreateViewAddItem from './CreateViewAddItem.vue'
 import CreateViewList from './CreateViewList.vue'
-import CreateViewMake from './CreateViewMake.vue'
+import CreateViewAddCourse from './CreateViewAddCourse.vue'
 
 export default {  
   components : {
-    CreateViewAdd,
+    CreateViewAddItem,
     CreateViewList,
-    CreateViewMake
+    CreateViewAddCourse
   },
 }
 </script>

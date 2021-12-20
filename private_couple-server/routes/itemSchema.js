@@ -9,4 +9,4 @@ const itemSchema = new mongoose.Schema({
   posCheck : Boolean,
   filtered : Boolean,
 });
-module.exports = mongoose.model('Item', itemSchema);
+module.exports = mongoose.model('creates', itemSchema);
