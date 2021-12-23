@@ -1,9 +1,15 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const path = require('path');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+const router = express.Router();
+
+router.get('/', (req, res, next) => {
+  try {
+    res.sendFile(path.join(__dirname, '/public/index.html'))
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
 });
 
 module.exports = router;

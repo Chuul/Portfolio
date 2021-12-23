@@ -8,15 +8,15 @@
         </option>
       </select>
     </div>
-    <input type="text" v-model="newDateCourse" @keyup.enter="addCourse">
-    <div class="btn-cont" @click="addCourse">
+    <input type="text" v-model="newDateCourse" @keyup.enter="addItem">
+    <div class="btn-cont" @click="addItem">
       <i class="addBtn fas fa-plus"></i>
     </div>
   </section>
 </template>
 
 <script>
-import { addItem } from '../api/index'
+import { fetchItem } from '../api/index'
 export default {
   data() {
     return {
@@ -30,7 +30,7 @@ export default {
     }
   },
   methods : {
-    async addCourse() {
+    async addItem() {
       if(this.newDateCourse !== '') {
         const obj = { 
           category : this.selected, 
@@ -42,8 +42,8 @@ export default {
           posCheck : false,
           filtered : true,
         }
-        const response = await addItem(obj);
-        console.log('response 반환 : ', response);
+        const {data} = await fetchItem(obj);
+        console.log('response 반환 : ', data);
         this.$store.commit('addOneCourse', obj)
         this.clearInput()
       }

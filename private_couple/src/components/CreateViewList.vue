@@ -14,7 +14,7 @@
         <span>즐길거리</span>
       </a>
     </div>
-    <li v-for="(course, index) in getAddCourse" :key="course.item" :class="{filterItem : !course.filtered}">
+    <li v-for="(course, index) in itemList" :key="course.name" :class="{filterItem : !course.filtered}">
       <!-- 체크버튼 -->
       <span class="checkBtn-cont" @click="checkedItem(course)"> 
         <template v-if="course.checked !== false">
@@ -27,10 +27,10 @@
       <!-- 아이템표시 -->
       <span>
         <a v-if="course.url !== ''" :href="course.url" target="_blank">
-          {{ course.item.slice(11) }}
+          {{ course.name }}
         </a>
         <span v-else>
-          {{ course.item.slice(11) }}
+          {{ course.name }}
         </span>
       </span>
       <!-- 버튼 컨테이너 -->
@@ -89,13 +89,30 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+// import { mapGetters } from 'vuex';
 import ListControl from '@/mixins/ListControl.js'
+import { fetchItemList } from '@/api/index'
 
 export default {
-  computed : {
-    ...mapGetters(['getAddCourse']),
+   data() {
+    return {
+      itemList: [],
+    };
   },
+  methods: {
+    async fetchData() {
+      const { data } = await fetchItemList();
+      console.log('가져왔다 : ', data);
+      this.itemList = data;
+      console.log(this.itemList);
+    },
+  },
+  created() {
+    this.fetchData();
+  },
+  // computed : {
+  //   ...mapGetters(['getAddCourse']),
+  // },
   mixins : [ListControl],
   filterItem(name) {
       this.$store.commit('filterListItem', name);

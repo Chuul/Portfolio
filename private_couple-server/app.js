@@ -1,55 +1,39 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const morgan = require('morgan');
 
-// 인스턴스
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var itemRouter = require('./routes/addItem');
+const connect = require('./schemas/connect');
+const indexRouter = require('./routes/index')
+const addItemRouter = require('./routes/addItem');
 
-var app = express();
+const app = express();
 
-const mongoose = require('mongoose');
-mongoose.connect(
-  'mongodb+srv://Private_Chuul:2030@cluster0.tv2ci.mongodb.net/private_couple?retryWrites=true&w=majority',
-  {useNewUrlParser: true, useUnifiedTopology: true},
-  function(error) {
-    if(error) {
-      console.error('mongodb connection error!!!', err);
-    }
-    console.log('mongodb connected!!!');
-  });
+app.set('port', process.env.PORT || 8800);
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+connect();
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(morgan('dev'));
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/create/add', itemRouter);
+app.use('/creating', addItemRouter);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+// app.get('/', (req, res) => {
+//   res.send('hello')
+// })
+
+app.use((req, res, next) => {
+  const error =  new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
+  error.status = 404;
+  next(error);
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
+app.use((err, req, res, next) => {
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
+  res.locals.error = process.env.NODE_ENV !== 'production' ? err : {};
   res.status(err.status || 500);
   res.render('error');
 });
 
-module.exports = app;
+app.listen(app.get('port'), () => {
+  console.log('8800번 포트에서 서버 실행 중')
+})

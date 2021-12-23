@@ -7,11 +7,11 @@
         <!-- 아이템표시 -->
         <template v-if="course.url !== ''">
           <a class="linkText" :href="course.url" target="_blank">
-            {{ course.item.slice(11) }}
+            {{ course.item }}
           </a>
         </template>
         <template v-else>
-          {{ course.item.slice(11) }} 
+          {{ course.item }} 
         </template>
         <span class="moveListBtn">  
           <i class="far fa-line-height"></i>

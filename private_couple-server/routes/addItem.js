@@ -1,28 +1,30 @@
-var express = require('express');
-var router = express.Router();
-var bodyParser = require('body-parser');
-router.use(bodyParser.urlencoded({extended:false}));
-var Item = require('./itemSchema');
+const express= require('express');
+const addItem = require('../schemas/addItemSchema');
 
-router.post('/', async function(req, res, next) {
-  try {
-    const doc = await Item.create({
-      category : req.body.category, 
-      name : req.body.name,
-      checked : req.body.checked, 
-      url : req.body.url,
-      urlCheck : req.body.urlCheck,
-      pos : req.body.pos,
-      posCheck : req.body.posCheck,
-      filtered : req.body.filtered,
-    });
-    res.status(201).json({ data: doc });
-  } catch (error) {
-    console.log(error);
-    if (error.code === 11000) {
-      return res.status(400).send({ message: 'Duplicated Data', error });
+const router = express.Router();
+
+router.route('/')
+  .get(async(req, res, next) => {
+    try {
+      const items = await addItem.find({});
+      res.json(items);
+      console.log("가져온 items : ", items);
+    } catch (err) {
+      console.log(err);
+      next(err);
     }
-    res.status(400).send({ message: 'sth wrong', error });
-  }
-});
+  })
+  .post(async (req, res, next) => {
+    try {
+      const items = await addItem.create({
+        name: req.body.name,
+      });
+      console.log(items);
+      res.status(201).json(items)
+    } catch (err) {
+      console.log(err);
+      next(err)
+    }
+  });
+
 module.exports = router;

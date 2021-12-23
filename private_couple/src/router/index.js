@@ -15,7 +15,7 @@ export const router = new VueRouter({
     //   component : CreateView
     // },
     {
-      path : '/create',
+      path : '/creating',
       component : CreateView
     },
     {

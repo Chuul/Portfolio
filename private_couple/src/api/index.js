@@ -1,8 +1,13 @@
 import axios from 'axios';
 
-function addItem(userData) {
-  const url = 'http://localhost:3000/create/add';
+function fetchItem(userData) {
+  const url = 'http://localhost:8800/creating/add';
   return axios.post(url, userData);
 }
 
-export { addItem };
+function fetchItemList() {
+  const url = 'http://localhost:8800/creating';
+  return axios.get(url);
+}
+
+export { fetchItem, fetchItemList };
