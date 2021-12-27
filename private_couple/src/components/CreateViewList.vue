@@ -56,11 +56,11 @@ export default {
       const { data } = await getItemList();
       console.log('getItemList data : ', data);
       this.itemList = data;
-      EventBus.$on('refresh', () => this.getData())
     },
   },
   created() {
     this.getData();
+    EventBus.$on('refresh', () => this.getData())
   },
   // computed : {
   //   ...mapGetters(['getAddCourse']),
