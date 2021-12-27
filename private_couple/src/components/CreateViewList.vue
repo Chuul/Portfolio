@@ -1,6 +1,6 @@
 <template>
   <section class="list-cont">
-    <div class="sort-cont">
+    <!-- <div class="sort-cont">
       <a @click="filterItem('전체')">
         <span>전체</span>
       </a> 
@@ -13,77 +13,28 @@
       <a @click="filterItem('즐길거리')">
         <span>즐길거리</span>
       </a>
-    </div>
-    <li v-for="(course, index) in itemList" :key="course.name" :class="{filterItem : !course.filtered}">
+    </div> -->
+    <li 
+      v-for="course in itemList" 
+      :key="course.name">
       <!-- 체크버튼 -->
-      <span class="checkBtn-cont" @click="checkedItem(course)"> 
+      <!-- <span class="checkBtn-cont" @click="checkedItem(course)"> 
         <template v-if="course.checked !== false">
           <i class="checkBtn fas fa-check-circle"></i>
         </template>
         <template v-else>
           <i class="checkBtn far fa-check-circle"></i>
         </template>
-      </span>
+      </span> -->
       <!-- 아이템표시 -->
-      <span>
-        <a v-if="course.url !== ''" :href="course.url" target="_blank">
+      <!-- <span> -->
+        <!-- <a v-if="course.url !== ''" :href="course.url" target="_blank">
           {{ course.name }}
-        </a>
-        <span v-else>
+        </a> -->
+        <span>
           {{ course.name }}
         </span>
-      </span>
-      <!-- 버튼 컨테이너 -->
-      <span class="utilBtn-cont">
-        <!-- URL 버튼 -->
-        <span class="url-cont">
-          <!-- URL 실행 -->
-          <span @click="openURL(course)">
-            <span v-if="course.url == ''">
-              <i :class="{checkURL : course.urlCheck}" class="shareBtn fas fa-share-square"></i>
-            </span>
-            <span v-else>
-              <i :class="{checkURL : course.urlCheck}" class="existBtn fas fa-share-square"></i>
-            </span>
-          </span>
-          <!-- URL 양식 -->
-          <span class="showURL" :class="{checkURL : !course.urlCheck}">
-            <!-- <span class="backBtn-cont" > -->
-            <i class="backBtn fas fa-undo" @click="openURL(course)"></i>
-            <!-- </span> -->
-            <input type="text" class="inputURL" v-model="urlText" @keyup.enter="attachURL(course)" placeholder="URL을 입력하세요.">
-            <!-- <span class="addBtn-cont" @click="attachURL(course)"> -->
-              <i class="addBtn fas fa-plus" @click="attachURL(course)"></i>
-            <!-- </span> -->
-          </span>
-        </span>
-        <!-- 주소 버튼 -->
-        <span class="position-cont">
-          <!-- 주소 실행 -->
-          <span @click="openPos(course)">
-            <span v-if="course.pos == ''">
-              <i :class="{existPOS : course.posCheck}" class="shareBtn fas fa-map-marker-alt"></i>
-            </span>
-            <span v-else>
-              <i :class="{existPOS : course.posCheck}" class="existBtn fas fa-map-marker-alt"></i>
-            </span>
-          </span>
-          <!-- 주소 양식 -->
-          <span class="showURL" :class="{existPOS : !course.posCheck}">
-            <!-- <span class="backBtn-cont" @click="openPos(course)"> -->
-              <i class="backBtn fas fa-undo"  @click="openPos(course)"></i>
-            <!-- </span> -->
-            <input type="text" class="inputURL" v-model="posText" @keyup.enter="attachPos(course)" placeholder="주소를 입력하세요.">
-            <!-- <span @click="attachPos(course)"> -->
-              <i class="fas fa-plus" @click="attachPos(course)"></i>
-            <!-- </span> -->
-          </span>
-        </span>
-        <!-- 삭제 버튼 -->
-        <span class="remove-cont" @click="removeCourse(course, index)">
-          <i class="far fa-trash-alt"></i>
-        </span>
-      </span>
+      <!-- </span> -->
     </li>
   </section>
 </template>
@@ -91,7 +42,8 @@
 <script>
 // import { mapGetters } from 'vuex';
 import ListControl from '@/mixins/ListControl.js'
-import { fetchItemList } from '@/api/index'
+import { getItemList } from '@/api/index'
+import EventBus from '../utils/bus';
 
 export default {
    data() {
@@ -100,15 +52,15 @@ export default {
     };
   },
   methods: {
-    async fetchData() {
-      const { data } = await fetchItemList();
-      console.log('가져왔다 : ', data);
+    async getData() {
+      const { data } = await getItemList();
+      console.log('getItemList data : ', data);
       this.itemList = data;
-      console.log(this.itemList);
+      EventBus.$on('refresh', () => this.getData())
     },
   },
   created() {
-    this.fetchData();
+    this.getData();
   },
   // computed : {
   //   ...mapGetters(['getAddCourse']),

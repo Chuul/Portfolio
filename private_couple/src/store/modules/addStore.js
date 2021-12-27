@@ -33,7 +33,7 @@ const getters = {
 
 const mutations = {
   addOneCourse(state, obj) {
-    localStorage.setItem(obj.item, JSON.stringify(obj));
+    // localStorage.setItem(obj.item, JSON.stringify(obj));
     state.addCourse.push(obj);
   },
   startOneCourse(state, course) {

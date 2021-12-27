@@ -8,7 +8,7 @@
         </option>
       </select>
     </div>
-    <input type="text" v-model="newDateCourse" @keyup.enter="addItem">
+    <input type="text" v-model="newItem" @keyup.enter="addItem">
     <div class="btn-cont" @click="addItem">
       <i class="addBtn fas fa-plus"></i>
     </div>
@@ -16,7 +16,9 @@
 </template>
 
 <script>
-import { fetchItem } from '../api/index'
+import { postItem } from '../api/index';
+import EventBus from '../utils/bus';
+
 export default {
   data() {
     return {
@@ -26,30 +28,31 @@ export default {
         {text : '즐길거리'},
       ],
       selected : "",
-      newDateCourse : "",
+      newItem : "",
     }
   },
   methods : {
     async addItem() {
-      if(this.newDateCourse !== '') {
+      if(this.newItem !== '') {
         const obj = { 
           category : this.selected, 
-          name : this.newDateCourse,
-          checked : false, 
+          name : this.newItem,
+          // checked : false, 
           url : '',
-          urlCheck : false,
+          // urlCheck : false,
           pos : '',
-          posCheck : false,
-          filtered : true,
+          // posCheck : false,
+          // filtered : true,
         }
-        const {data} = await fetchItem(obj);
-        console.log('response 반환 : ', data);
-        this.$store.commit('addOneCourse', obj)
+        const response = await postItem(obj);
+        console.log('postItem response: ', response);
+        // this.$store.commit('addOneCourse', obj)
+        EventBus.$emit('refresh');
         this.clearInput()
       }
     },
     clearInput() {
-      this.newDateCourse = ""
+      this.newItem = ""
     }
   }
 }

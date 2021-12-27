@@ -11,24 +11,24 @@ const addItemSchema = new Schema({
     required: true,
     unique: true,
   },
-  checked : {
-    type: Boolean,
-  }, 
+  // checked : {
+  //   type: Boolean,
+  // }, 
   url : {
     type: String,
   },
-  urlCheck : {
-    type: Boolean,
-  },
+  // urlCheck : {
+  //   type: Boolean,
+  // },
   pos : {
     type: String,
   },
-  posCheck : {
-    type: Boolean,
-  },
-  filtered : {
-    type: Boolean,
-  },
+  // posCheck : {
+  //   type: Boolean,
+  // },
+  // filtered : {
+  //   type: Boolean,
+  // },
 });
 
 module.exports = mongoose.model('item', addItemSchema);
