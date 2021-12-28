@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 // const { Types: {ObjectId}} = Schema;
-const addItemSchema = new Schema({
+const itemSchema = new Schema({
   category : {
     type: String,
   },
@@ -31,4 +31,4 @@ const addItemSchema = new Schema({
   // },
 });
 
-module.exports = mongoose.model('item', addItemSchema);
+module.exports = mongoose.model('item', itemSchema);

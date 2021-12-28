@@ -44,16 +44,28 @@ export default {
           // posCheck : false,
           // filtered : true,
         }
-        const response = await postItem(obj);
-        console.log('postItem response: ', response);
-        // this.$store.commit('addOneCourse', obj)
+        await postItem(obj);
+        // console.log('postItem response: ', response);
         EventBus.$emit('refresh');
+        console.log('viewaddItem에서 지나가요')
+        // this.$store.commit('addOneItem', obj);
         this.clearInput()
       }
     },
     clearInput() {
       this.newItem = ""
-    }
+    },
+    created() {
+      console.log('addItem에서의 created');
+      this.getData();
+    },
+    mounted() {
+      console.log('addItem에서의 mounted');
+      EventBus.$on('refresh', () => this.getData())
+    },
+    updated() {
+      console.log('addItem에서의 updated');
+    },
   }
 }
 </script>

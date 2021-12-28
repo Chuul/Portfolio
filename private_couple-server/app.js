@@ -4,7 +4,7 @@ const morgan = require('morgan');
 
 const connect = require('./schemas/connect');
 const indexRouter = require('./routes/index')
-const addItemRouter = require('./routes/addItem');
+const itemRouter = require('./routes/item');
 
 const app = express();
 
@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(morgan('dev'));
 app.use('/', indexRouter);
-app.use('/creating', addItemRouter);
+app.use('/creating', itemRouter);
 
 app.use((req, res, next) => {
   const error =  new Error(`${req.method} ${req.url} 라우터가 없습니다.`);

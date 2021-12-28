@@ -1,22 +1,22 @@
-const storage = {
-  coursefetch(name) {
-    const arr = [];
-    if(localStorage.length > 0) {
-      for(let i = 0 ; i < localStorage.length ; i++) {
-        if(localStorage.key(i).substr(0,3) == name) {
-          let str = localStorage.getItem(localStorage.key(i))
-          arr.push(JSON.parse(str));
-        }
-      }
-    }
-    return arr;
-  },
-}
+// const storage = {
+//   coursefetch(name) {
+//     const arr = [];
+//     if(localStorage.length > 0) {
+//       for(let i = 0 ; i < localStorage.length ; i++) {
+//         if(localStorage.key(i).substr(0,3) == name) {
+//           let str = localStorage.getItem(localStorage.key(i))
+//           arr.push(JSON.parse(str));
+//         }
+//       }
+//     }
+//     return arr;
+//   },
+// }
 
 const state = {
-  addCourse : storage.coursefetch('add'),
-  startCourse : storage.coursefetch('sta'),
-  prevCourse : storage.coursefetch('pre')
+  addItemState : []
+  // startCourse : storage.coursefetch('sta'),
+  // prevCourse : storage.coursefetch('pre')
 }
 
 const getters = {
@@ -32,9 +32,36 @@ const getters = {
 }
 
 const mutations = {
-  addOneCourse(state, obj) {
-    // localStorage.setItem(obj.item, JSON.stringify(obj));
-    state.addCourse.push(obj);
+  fetchItemList(state, payload) {
+    state.addItemState = [];
+    for(let i = 0 ; i < payload.length ; i ++) {
+      const obj = {
+        category : payload[i].category, 
+        name : payload[i].name,
+        checked : false, 
+        url : '',
+        urlCheck : false,
+        pos : '',
+        posCheck : false,
+        filtered : true,
+      }
+      state.addItemState.push(obj);
+    }
+    console.log('state.addItemState: ', state.addItemState);
+  },
+  addOneItem(state, payload) {
+    const obj = {
+      category : payload.category, 
+      name : payload.name,
+      checked : false, 
+      url : '',
+      urlCheck : false,
+      pos : '',
+      posCheck : false,
+      filtered : true,
+    }
+    state.addItemState.push(obj);
+    console.log('state.addItemState: ', state.addItemState);
   },
   startOneCourse(state, course) {
     // course : storedCourse배열에 저장된 값 중 특정 코스

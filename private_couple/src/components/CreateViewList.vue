@@ -14,39 +14,38 @@
         <span>즐길거리</span>
       </a>
     </div> -->
-    <li 
-      v-for="course in itemList" 
-      :key="course.name">
+    <li v-for="item in itemList" :key="item.name">
       <!-- 체크버튼 -->
-      <!-- <span class="checkBtn-cont" @click="checkedItem(course)"> 
-        <template v-if="course.checked !== false">
+      <span class="checkBtn-cont" @click="changeCheck(item)"> 
+        <template v-if="item.checked !== false">
           <i class="checkBtn fas fa-check-circle"></i>
         </template>
         <template v-else>
           <i class="checkBtn far fa-check-circle"></i>
         </template>
-      </span> -->
+      </span>
       <!-- 아이템표시 -->
       <!-- <span> -->
-        <!-- <a v-if="course.url !== ''" :href="course.url" target="_blank">
-          {{ course.name }}
+        <!-- <a v-if="item.url !== ''" :href="item.url" target="_blank">
+          {{ item.name }}
         </a> -->
         <span>
-          {{ course.name }}
+          {{ item.name }}
         </span>
       <!-- </span> -->
+        <i class="far fa-trash-alt" @click="deleteOneItem(item)"></i>
     </li>
   </section>
 </template>
 
 <script>
 // import { mapGetters } from 'vuex';
-import ListControl from '@/mixins/ListControl.js'
-import { getItemList } from '@/api/index'
+// import ListControl from '@/mixins/ListControl.js'
+import { getItemList, deleteItem } from '@/api/index'
 import EventBus from '../utils/bus';
 
 export default {
-   data() {
+  data() {
     return {
       itemList: [],
     };
@@ -54,18 +53,36 @@ export default {
   methods: {
     async getData() {
       const { data } = await getItemList();
-      console.log('getItemList data : ', data);
+      // console.log('getItemList data : ', data);
       this.itemList = data;
+      console.log('getData에서 지나가요');
+      this.$store.commit('fetchItemList', this.itemList);
     },
+    changeCheck(item) {
+      item.checked = !item.checked;
+      console.log(item.checked);
+    },
+    async deleteOneItem(item) {
+      console.log('item : ',item);
+      await deleteItem(item.name);
+      this.getData();
+    }
   },
   created() {
+    console.log('view list에서의 created');
     this.getData();
+  },
+  mounted() {
+    console.log('view list에서의 mounted');
     EventBus.$on('refresh', () => this.getData())
+  },
+  updated() {
+    console.log('view list에서의 updated');
   },
   // computed : {
   //   ...mapGetters(['getAddCourse']),
   // },
-  mixins : [ListControl],
+  // mixins : [ListControl],
   filterItem(name) {
       this.$store.commit('filterListItem', name);
     },
