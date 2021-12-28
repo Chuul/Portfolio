@@ -38,4 +38,19 @@ router.route('/')
     }
   })
 
+router.patch('/:id', async (req, res, next) => {
+  try {
+    console.log('req.body: ', req.body);
+    const result = await item.update({
+      _id: req.body.id,
+    }, {
+      url: req.body.urlText,
+    });
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
+
 module.exports = router;

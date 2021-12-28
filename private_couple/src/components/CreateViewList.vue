@@ -34,6 +34,15 @@
         </span>
       <!-- </span> -->
         <i class="far fa-trash-alt" @click="deleteOneItem(item)"></i>
+        <i class="far fa-window-restore" @click="openUrlForm()"></i>
+        <Modal v-if="showModal" @close="showModal = false">
+          <h2 slot="header">URL 입력</h2>
+          <form slot="body">
+            <label for="urlInput">URL</label>
+            <input type="text" id="urlInput" v-model="urlText">
+            <button @click.prevent="patchOneURL(item)">입력</button>
+          </form>
+        </Modal>
     </li>
   </section>
 </template>
@@ -41,31 +50,47 @@
 <script>
 // import { mapGetters } from 'vuex';
 // import ListControl from '@/mixins/ListControl.js'
-import { getItemList, deleteItem } from '@/api/index'
+import { getItemList, deleteItem, patchUrl } from '@/api/index'
 import EventBus from '../utils/bus';
+import Modal from '@/components/common/Modal.vue'
 
 export default {
+  components: {
+    Modal
+  },
   data() {
     return {
       itemList: [],
+      showModal: false,
+      urlText: ""
     };
   },
   methods: {
-    async getData() {
-      const { data } = await getItemList();
-      // console.log('getItemList data : ', data);
-      this.itemList = data;
-      console.log('getData에서 지나가요');
-      this.$store.commit('fetchItemList', this.itemList);
-    },
     changeCheck(item) {
       item.checked = !item.checked;
       console.log(item.checked);
     },
+    openUrlForm() {
+      this.showModal = true;
+    },
+    async getData() {
+      const { data } = await getItemList();
+      // console.log('getItemList data : ', data);
+      this.itemList = data;
+      this.$store.commit('fetchItemList', this.itemList);
+    },
     async deleteOneItem(item) {
-      console.log('item : ',item);
       await deleteItem(item.name);
       this.getData();
+    },
+    async patchOneURL(item) {
+      const obj = {
+        id: item._id,
+        urlText: this.urlText
+      }
+      await patchUrl(obj);
+      this.getData();
+      this.urlText = "";
     }
   },
   created() {

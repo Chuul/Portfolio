@@ -10,7 +10,11 @@ function postItem(userData) {
 }
 function deleteItem(name) {
   const url = 'http://localhost:8800/creating';
-  return axios.delete(url, {data: {name: name}});
+  return axios.delete(url, {name: name});
+}
+function patchUrl(source) {
+  const url = 'http://localhost:8800/creating';
+  return axios.patch(url+`/${source.id}`, {id: source.id, urlText: source.urlText});
 }
 
-export { getItemList, postItem, deleteItem };
+export { getItemList, postItem, deleteItem, patchUrl };
