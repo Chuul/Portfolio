@@ -21,12 +21,20 @@
       <!-- </span> -->
       <i class="far fa-trash-alt" @click="deleteOneItem(item)"></i>
       <i class="far fa-window-restore" @click="openUrlForm(item)"></i>
+      <i class="fas fa-map-marked-alt" @click="openPosForm(item)"></i>
     </li>
-    <Modal v-if="showModal" @close="showModal = false">
+    <Modal v-if="showUrlModal" @close="closeUrlForm()">
       <h2 slot="header">URL 입력</h2>
       <form slot="body">
         <input type="text" id="urlInput" v-model="urlText">
-        <button @click.prevent="patchOneURL()">입력</button>
+        <button @click.prevent="patchOneUrl()">입력</button>
+      </form>
+    </Modal>
+    <Modal v-if="showPosModal" @close="closePosForm()">
+      <h2 slot="header">Position 입력</h2>
+      <form slot="body">
+        <input type="text" id="posInput" v-model="posText">
+        <button @click.prevent="patchOnePos()">입력</button>
       </form>
     </Modal>
   </section>
@@ -35,7 +43,7 @@
 <script>
 // import { mapGetters } from 'vuex';
 // import ListControl from '@/mixins/ListControl.js'
-import { getItemList, deleteItem, patchUrl } from '@/api/index'
+import { getItemList, deleteItem, patchUrl, patchPos } from '@/api/index'
 import EventBus from '../utils/bus';
 import Modal from '@/components/common/Modal.vue'
 
@@ -46,16 +54,29 @@ export default {
   data() {
     return {
       itemList: [],
-      showModal: false,
+      showUrlModal: false,
+      showPosModal: false,
       urlText: "",
+      posText: "",
       item: {},
     };
   },
   methods: {
     openUrlForm(item) {
-      this.showModal = true;
+      this.showUrlModal = true;
       this.item = item;
-      console.log(this.item);
+    },
+    openPosForm(item) {
+      this.showPosModal = true;
+      this.item = item;
+    },
+    closeUrlForm() {
+      this.showUrlModal = false
+      this.urlText = "";
+    },
+    closePosForm() {
+      this.showPosModal = false
+      this.posText = "";
     },
     async getData() {
       const { data } = await getItemList();
@@ -67,9 +88,7 @@ export default {
       await deleteItem(item._id);
       this.getData();
     },
-    async patchOneURL() {
-      console.log('this.item : ', this.item);
-      console.log('this.urlText : ', this.urlText)
+    async patchOneUrl() {
       const obj = {
         id: this.item._id,
         urlText: this.urlText
@@ -77,7 +96,16 @@ export default {
       await patchUrl(obj);
       this.getData();
       this.urlText = "";
-    }
+    },
+    async patchOnePos() {
+      const obj = {
+        id: this.item._id,
+        posText: this.posText
+      }
+      await patchPos(obj);
+      this.getData();
+      this.posText = "";
+    },
   },
   created() {
     console.log('view list에서의 created');

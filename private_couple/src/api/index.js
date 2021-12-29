@@ -1,25 +1,27 @@
 import axios from 'axios';
 
+const baseUrl = 'http://localhost:8800/creating';
+
 function getItemList() {
-  const url = 'http://localhost:8800/creating';
-  return axios.get(url);
+  return axios.get(baseUrl);
 }
 function postItem(userData) {
-  const url = 'http://localhost:8800/creating';
-  return axios.post(url, userData);
+  return axios.post(baseUrl, userData);
 }
 function deleteItem(id) {
-  const url = 'http://localhost:8800/creating';
-  return axios.delete(url+`/${id}`);
+  return axios.delete(baseUrl+`/${id}`);
 }
 function patchUrl(payload) {
-  const url = 'http://localhost:8800/creating';
-  return axios.patch(url+`/${payload.id}`, {data: {urlText: payload.urlText}});
+  return axios.patch(baseUrl+`/url/${payload.id}`, {data: {urlText: payload.urlText}});
+}
+function patchPos(payload) {
+  return axios.patch(baseUrl+`/pos/${payload.id}`, {data: {posText: payload.posText}});
 }
 
 export { 
   getItemList, 
   postItem, 
   deleteItem, 
-  patchUrl 
+  patchUrl,
+  patchPos 
 };

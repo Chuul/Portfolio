@@ -29,31 +29,42 @@ router.route('/')
     }
   })
   
+router.delete('/:id', async(req, res, next) => {
+  try {
+    const result = await item.remove({_id: req.params.id})
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+})
 
-router.route('/:id')
-  .delete(async(req, res, next) => {
-    try {
-      const result = await item.remove({_id: req.params.id})
-      res.json(result);
-    } catch (err) {
-      console.log(err);
-      next(err);
-    }
-  })
-  .patch(async(req, res, next) => {
-    try {
-      console.log('req.params: ', req.params);
-      console.log('req.body: ', req.body.data);
-      const result = await item.updateOne({
-        _id: req.params.id
-      }, {
-        url: req.body.data.urlText
-      });
-      res.json(result);
-    } catch (err) {
-      console.log(err);
-      next(err);
-    }
-  })
+router.patch('/url/:id', async(req, res, next) => {
+  try {
+    const result = await item.updateOne({
+      _id: req.params.id
+    }, {
+      url: req.body.data.urlText
+    });
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+})
+
+router.patch('/pos/:id', async(req, res, next) => {
+  try {
+    const result = await item.updateOne({
+      _id: req.params.id
+    }, {
+      pos: req.body.data.posText
+    });
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+})
 
 module.exports = router;
