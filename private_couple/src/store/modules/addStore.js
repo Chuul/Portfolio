@@ -47,7 +47,7 @@ const mutations = {
       }
       state.addItemState.push(obj);
     }
-    console.log('state.addItemState: ', state.addItemState);
+    // console.log('state.addItemState: ', state.addItemState);
   },
   addOneItem(state, payload) {
     const obj = {
@@ -61,7 +61,7 @@ const mutations = {
       filtered : true,
     }
     state.addItemState.push(obj);
-    console.log('state.addItemState: ', state.addItemState);
+    // console.log('state.addItemState: ', state.addItemState);
   },
   startOneCourse(state, course) {
     // course : storedCourse배열에 저장된 값 중 특정 코스

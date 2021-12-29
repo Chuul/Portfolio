@@ -15,35 +15,20 @@
       </a>
     </div> -->
     <li v-for="item in itemList" :key="item.name">
-      <!-- 체크버튼 -->
-      <span class="checkBtn-cont" @click="changeCheck(item)"> 
-        <template v-if="item.checked !== false">
-          <i class="checkBtn fas fa-check-circle"></i>
-        </template>
-        <template v-else>
-          <i class="checkBtn far fa-check-circle"></i>
-        </template>
+      <span>
+        {{ item.name }}
       </span>
-      <!-- 아이템표시 -->
-      <!-- <span> -->
-        <!-- <a v-if="item.url !== ''" :href="item.url" target="_blank">
-          {{ item.name }}
-        </a> -->
-        <span>
-          {{ item.name }}
-        </span>
       <!-- </span> -->
-        <i class="far fa-trash-alt" @click="deleteOneItem(item)"></i>
-        <i class="far fa-window-restore" @click="openUrlForm()"></i>
-        <Modal v-if="showModal" @close="showModal = false">
-          <h2 slot="header">URL 입력</h2>
-          <form slot="body">
-            <label for="urlInput">URL</label>
-            <input type="text" id="urlInput" v-model="urlText">
-            <button @click.prevent="patchOneURL(item)">입력</button>
-          </form>
-        </Modal>
+      <i class="far fa-trash-alt" @click="deleteOneItem(item)"></i>
+      <i class="far fa-window-restore" @click="openUrlForm(item)"></i>
     </li>
+    <Modal v-if="showModal" @close="showModal = false">
+      <h2 slot="header">URL 입력</h2>
+      <form slot="body">
+        <input type="text" id="urlInput" v-model="urlText">
+        <button @click.prevent="patchOneURL()">입력</button>
+      </form>
+    </Modal>
   </section>
 </template>
 
@@ -62,16 +47,15 @@ export default {
     return {
       itemList: [],
       showModal: false,
-      urlText: ""
+      urlText: "",
+      item: {},
     };
   },
   methods: {
-    changeCheck(item) {
-      item.checked = !item.checked;
-      console.log(item.checked);
-    },
-    openUrlForm() {
+    openUrlForm(item) {
       this.showModal = true;
+      this.item = item;
+      console.log(this.item);
     },
     async getData() {
       const { data } = await getItemList();
@@ -80,12 +64,14 @@ export default {
       this.$store.commit('fetchItemList', this.itemList);
     },
     async deleteOneItem(item) {
-      await deleteItem(item.name);
+      await deleteItem(item._id);
       this.getData();
     },
-    async patchOneURL(item) {
+    async patchOneURL() {
+      console.log('this.item : ', this.item);
+      console.log('this.urlText : ', this.urlText)
       const obj = {
-        id: item._id,
+        id: this.item._id,
         urlText: this.urlText
       }
       await patchUrl(obj);
@@ -110,7 +96,7 @@ export default {
   // mixins : [ListControl],
   filterItem(name) {
       this.$store.commit('filterListItem', name);
-    },
+  },
 }
 </script>
 
