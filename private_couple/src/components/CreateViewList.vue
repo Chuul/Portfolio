@@ -1,27 +1,13 @@
 <template>
   <section class="list-cont">
-    <!-- <div class="sort-cont">
-      <a @click="filterItem('전체')">
-        <span>전체</span>
-      </a> 
-      <a @click="filterItem('음식점')">
-        <span>음식점</span>
-      </a>
-      <a @click="filterItem('카페')">
-        <span>카페</span>
-      </a>
-      <a @click="filterItem('즐길거리')">
-        <span>즐길거리</span>
-      </a>
-    </div> -->
     <li v-for="item in itemList" :key="item.name">
+      <i class="checkBtn far fa-check-circle" @click="toggleOneItem(item)" :class="{checkBtnChecked: item.checked}"></i>
       <span>
         {{ item.name }}
       </span>
-      <!-- </span> -->
-      <i class="far fa-trash-alt" @click="deleteOneItem(item)"></i>
-      <i class="far fa-window-restore" @click="openUrlForm(item)"></i>
-      <i class="fas fa-map-marked-alt" @click="openPosForm(item)"></i>
+      <i class="deleteBtn far fa-trash-alt" @click="deleteOneItem(item)" :class="{checkBtnChecked: item.checked}"></i>
+      <i class="posBtn fas fa-map-marked-alt" @click="openPosForm(item)" :class="{checkBtnChecked: item.pos !== ''}"></i>
+      <i class="urlBtn far fa-window-restore" @click="openUrlForm(item)" :class="{checkBtnChecked: item.url !== ''}"></i>
     </li>
     <Modal v-if="showUrlModal" @close="closeUrlForm()">
       <h2 slot="header">URL 입력</h2>
@@ -41,9 +27,7 @@
 </template>
 
 <script>
-// import { mapGetters } from 'vuex';
-// import ListControl from '@/mixins/ListControl.js'
-import { getItemList, deleteItem, patchUrl, patchPos } from '@/api/index'
+import { getItemList, deleteItem, patchUrl, patchPos, toggleItem } from '@/api/index'
 import EventBus from '../utils/bus';
 import Modal from '@/components/common/Modal.vue'
 
@@ -62,25 +46,12 @@ export default {
     };
   },
   methods: {
-    openUrlForm(item) {
-      this.showUrlModal = true;
-      this.item = item;
-    },
-    openPosForm(item) {
-      this.showPosModal = true;
-      this.item = item;
-    },
-    closeUrlForm() {
-      this.showUrlModal = false
-      this.urlText = "";
-    },
-    closePosForm() {
-      this.showPosModal = false
-      this.posText = "";
+    async toggleOneItem(item) {
+      await toggleItem(item._id);
+      this.getData();
     },
     async getData() {
       const { data } = await getItemList();
-      // console.log('getItemList data : ', data);
       this.itemList = data;
       this.$store.commit('fetchItemList', this.itemList);
     },
@@ -106,6 +77,22 @@ export default {
       this.getData();
       this.posText = "";
     },
+    openUrlForm(item) {
+      this.showUrlModal = true;
+      this.item = item;
+    },
+    openPosForm(item) {
+      this.showPosModal = true;
+      this.item = item;
+    },
+    closeUrlForm() {
+      this.showUrlModal = false
+      this.urlText = "";
+    },
+    closePosForm() {
+      this.showPosModal = false
+      this.posText = "";
+    },
   },
   created() {
     console.log('view list에서의 created');
@@ -113,26 +100,15 @@ export default {
   },
   mounted() {
     console.log('view list에서의 mounted');
-    EventBus.$on('refresh', () => this.getData())
   },
   updated() {
+    EventBus.$on('refresh', () => this.getData())
     console.log('view list에서의 updated');
-  },
-  // computed : {
-  //   ...mapGetters(['getAddCourse']),
-  // },
-  // mixins : [ListControl],
-  filterItem(name) {
-      this.$store.commit('filterListItem', name);
   },
 }
 </script>
 
 <style scoped>
-.sort-cont {
-  text-align: center;
-  margin: 1em;
-}
 a {
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: 500;
@@ -173,67 +149,28 @@ li {
   border-radius: 0.5em;
   box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
 }
-.filterItem {
-  display : none;
-}
 .checkBtn {
   float: left;
   margin : 0.5em;
   color : rgba(124, 198, 255, 0.8);
-  cursor : pointer
+  cursor : pointer;
 }
-.utilBtn-cont {
-  float : right;
+.checkBtnChecked {
+  color: #8763FB;
 }
-.url-cont {
-  display: inline-block;
-  margin-right : 1em;
-  cursor: pointer;
+.urlBtn {
+  float: right;
+  margin: 0.5em;
+  cursor : pointer;
 }
-.checkURL {
-  display : none;
+.posBtn {
+  float: right;
+  margin: 0.5em;
+  cursor : pointer;
 }
-/* url실행 */
-.showURL {
-  border-radius: 0.5em;
-  background-color: #F6F6F6;
-  padding: 0.2em 0.4em;
-}
-/* .backBtn-cont {
-  margin-right : 0.5em;
-} */
-/* ******************뭔가 display:none이랑 관련 있을 듯...showURL 클래스를 다시 보자 */
-.backBtn {
-  display: inline-block;
-  padding-top: 0.5em;
-  margin-right : 0.5em;
-}
-.inputURL {
-  border-style: none;
-  border-radius: 0.5em;
-  height: 1.5em;
-}
-/* .addBtn-cont {
-  margin-left : 0.5em;
-} */
-.shareBtn {
-  color : rgba(124, 198, 255, 0.8);
-}
-.existBtn {
-  color :  #ffa7e5;
-}
-.position-cont {
-  margin-right : 1em;
-  cursor: pointer;
-}
-.existPOS {
-  display: none;
-}
-.remove-cont {
-  margin-right : 1em;
-  color : rgba(124, 198, 255, 0.8);
-}
-.fa-trash-alt {
-  cursor: pointer;
+.deleteBtn {
+  float: right;
+  margin: 0.5em;
+  cursor : pointer;
 }
 </style>

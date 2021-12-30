@@ -83,7 +83,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import ListControl from '../mixins/ListControl.js';
 
 export default {
   data() {
@@ -94,7 +93,6 @@ export default {
   computed : {
     ...mapGetters(['getStartCourse']),
   },
-  mixins : [ListControl],
   methods : {
     commentItem(course){ 
       this.$store.commit('commentStartItem', course);

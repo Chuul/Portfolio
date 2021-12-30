@@ -5,6 +5,9 @@ const baseUrl = 'http://localhost:8800/creating';
 function getItemList() {
   return axios.get(baseUrl);
 }
+function toggleItem(id) {
+  return axios.patch(baseUrl+`/checked/${id}`);
+}
 function postItem(userData) {
   return axios.post(baseUrl, userData);
 }
@@ -23,5 +26,6 @@ export {
   postItem, 
   deleteItem, 
   patchUrl,
-  patchPos 
+  patchPos,
+  toggleItem 
 };

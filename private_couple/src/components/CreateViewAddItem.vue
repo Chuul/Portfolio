@@ -37,7 +37,7 @@ export default {
         const obj = { 
           category : this.selected, 
           name : this.newItem,
-          // checked : false, 
+          checked : false, 
           url : '',
           // urlCheck : false,
           pos : '',

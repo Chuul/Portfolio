@@ -18,6 +18,7 @@ router.route('/')
       const items = await item.create({
         category: req.body.category,
         name: req.body.name,
+        checked: req.body.checked,
         url: req.body.url,
         pos: req.body.pos
       });
@@ -28,7 +29,7 @@ router.route('/')
       next(err)
     }
   })
-  
+
 router.delete('/:id', async(req, res, next) => {
   try {
     const result = await item.remove({_id: req.params.id})
@@ -39,6 +40,20 @@ router.delete('/:id', async(req, res, next) => {
   }
 })
 
+router.patch('/checked/:id', async(req, res, next) => {
+  try {
+    const bool = await item.findById(req.params.id);
+    const result = await item.updateOne({
+      _id: bool._id
+    }, {
+      checked: !bool.checked
+    });
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+})
 router.patch('/url/:id', async(req, res, next) => {
   try {
     const result = await item.updateOne({
