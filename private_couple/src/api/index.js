@@ -20,6 +20,9 @@ function patchUrl(payload) {
 function patchPos(payload) {
   return axios.patch(baseUrl+`/pos/${payload.id}`, {data: {posText: payload.posText}});
 }
+function getCheckedItemList() {
+  return axios.get(baseUrl + '/list');
+}
 
 export { 
   getItemList, 
@@ -27,5 +30,6 @@ export {
   deleteItem, 
   patchUrl,
   patchPos,
-  toggleItem 
+  toggleItem,
+  getCheckedItemList 
 };

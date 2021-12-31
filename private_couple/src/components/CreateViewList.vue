@@ -5,7 +5,7 @@
       <span>
         {{ item.name }}
       </span>
-      <i class="deleteBtn far fa-trash-alt" @click="deleteOneItem(item)" :class="{checkBtnChecked: item.checked}"></i>
+      <i class="deleteBtn far fa-trash-alt" @click="deleteOneItem(item)"></i>
       <i class="posBtn fas fa-map-marked-alt" @click="openPosForm(item)" :class="{checkBtnChecked: item.pos !== ''}"></i>
       <i class="urlBtn far fa-window-restore" @click="openUrlForm(item)" :class="{checkBtnChecked: item.url !== ''}"></i>
     </li>
@@ -29,7 +29,7 @@
 <script>
 import { getItemList, deleteItem, patchUrl, patchPos, toggleItem } from '@/api/index'
 import EventBus from '../utils/bus';
-import Modal from '@/components/common/Modal.vue'
+import Modal from '@/components/common/Modal.vue';
 
 export default {
   components: {
@@ -63,7 +63,7 @@ export default {
       const obj = {
         id: this.item._id,
         urlText: this.urlText
-      }
+      };
       await patchUrl(obj);
       this.getData();
       this.urlText = "";
@@ -72,7 +72,7 @@ export default {
       const obj = {
         id: this.item._id,
         posText: this.posText
-      }
+      };
       await patchPos(obj);
       this.getData();
       this.posText = "";
@@ -102,7 +102,7 @@ export default {
     console.log('view list에서의 mounted');
   },
   updated() {
-    EventBus.$on('refresh', () => this.getData())
+    EventBus.$on('refresh', () => this.getData());
     console.log('view list에서의 updated');
   },
 }
@@ -159,16 +159,19 @@ li {
   color: #8763FB;
 }
 .urlBtn {
+  color: #e1e1fd;
   float: right;
   margin: 0.5em;
   cursor : pointer;
 }
 .posBtn {
+  color: #e1e1fdc5;
   float: right;
   margin: 0.5em;
   cursor : pointer;
 }
 .deleteBtn {
+  color: #e1e1fdc5;
   float: right;
   margin: 0.5em;
   cursor : pointer;

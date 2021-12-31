@@ -2,20 +2,20 @@
   <section>
     <CreateViewAddItem></CreateViewAddItem>
     <CreateViewList></CreateViewList>
-    <!-- <CreateViewAddCourse></CreateViewAddCourse> -->
+    <CreateViewAddCourse></CreateViewAddCourse>
   </section>
 </template>
 
 <script>
 import CreateViewAddItem from './CreateViewAddItem.vue'
 import CreateViewList from './CreateViewList.vue'
-// import CreateViewAddCourse from './CreateViewAddCourse.vue'
+import CreateViewAddCourse from './CreateViewAddCourse.vue'
 
 export default {  
   components : {
     CreateViewAddItem,
     CreateViewList,
-    // CreateViewAddCourse
+    CreateViewAddCourse
   },
 }
 </script>

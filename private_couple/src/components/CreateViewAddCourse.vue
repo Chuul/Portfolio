@@ -1,74 +1,68 @@
 <template>
   <section class="create-cont">
-    <button class="createBtn" @click="createCourse()">코스생성</button>
-    <KakaoMap></KakaoMap>
-    <draggable :list="getSelectedCourse" :disabled="!enabled" @start="dragging = true" @end="dragging = false">
-      <li class="courseList" v-for="course in getSelectedCourse" :key="course.item">
-        <!-- 아이템표시 -->
-        <template v-if="course.url !== ''">
-          <a class="linkText" :href="course.url" target="_blank">
-            {{ course.item }}
-          </a>
-        </template>
-        <template v-else>
-          {{ course.item }} 
-        </template>
-        <span class="moveListBtn">  
-          <i class="far fa-line-height"></i>
+    <button class="createBtn" @click="getCheckedData">코스생성</button>
+    <draggable 
+      :list="checkedItemList" 
+      :disabled="!enabled" 
+      @start="dragging = true" 
+      @end="dragging = false">
+      <li class="courseList" v-for="item in checkedItemList" :key="item.name">
+        <a class="linkText" :href="item.url" target="_blank">
+          {{ item.name }}
+        </a>
+        <span class="moveBtn-cont">
+          <i class="fas fa-bars"></i>
         </span>
-        <div class="arrow-cont">
-          <a :href="`https://map.kakao.com/link/to/${course},${37.402056,127.108212}`">
-            <i class="fas fa-arrow-down"></i>
-          </a>
+        <div class="arrowBtn-cont">
+          <i class=" fal fa-arrow-alt-down"></i>
         </div>
-      </li>
+      </li> 
     </draggable>
-    <button class="storeBtn" @click="storeCourse()">코스 저장</button>
+    <!-- <button class="storeBtn" @click="storeCourse()">코스 저장</button>
     <Modal v-if="showModal_success" @close="showModal_success = false">
       <h2 slot="header">코스 저장 완료</h2>
     </Modal>
     <Modal v-if="showModal_fail" @close="showModal_fail = false">
       <h2 slot="header">코스 저장 실패</h2>
       <div slot="body">코스 생성 후 저장해주세요</div>
-    </Modal>
+    </Modal> -->
   </section>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import draggable from 'vuedraggable';
-import KakaoMap from '@/components/common/KakaoMaps.vue';
-import Modal from '@/components/common/Modal.vue'
+// import Modal from '@/components/common/Modal.vue'
+import { getCheckedItemList } from '@/api/index';
 
 export default {
   components : {
-    KakaoMap,
     draggable,
-    Modal
+    // Modal
   },
   data() {
     return {
+      checkedItemList: [],
       enabled: true,
       dragging: false,
-      showModal_success: false,
-      showModal_fail: false,
+      // showModal_success: false,
+      // showModal_fail: false,
     }
-  },
-  computed : {
-    ...mapGetters(['getSelectedCourse']),
   },
   methods : {
-    createCourse() {
-      this.$store.commit('createOneCourse');
+    async getCheckedData() {
+      this.checkedItemList = [];
+      const { data } = await getCheckedItemList();
+      this.checkedItemList = data;
+      console.log('checkedItemList: ', this.checkedItemList);
     },
-    storeCourse() {
-      if(this.getSelectedCourse.length !== 0) {
-        this.showModal_success = true;
-        this.$store.commit('storeOneCourse');
-      } else {
-        this.showModal_fail = true;
-      }
-    }
+    // storeCourse() {
+    //   if(this.getSelectedCourse.length !== 0) {
+    //     this.showModal_success = true;
+    //     this.$store.commit('storeOneCourse');
+    //   } else {
+    //     this.showModal_fail = true;
+    //   }
+    // }
   }
 }
 </script>
@@ -104,27 +98,31 @@ li {
   font-weight: 300;
   box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
 }
+.courseList {
+  margin-bottom: 3rem;
+}
 .linkText {
   color : #ee27bc;
   font-weight: bold;
 }
-.courseList {
-  margin-bottom: 3rem;
-}
-.moveListBtn {
+.moveBtn-cont {
   float : right;
   margin-right: 1em;
 }
-.moveListBtn i {
-  color: #e1e1fd;
+.moveBtn-cont i {
+  color: #e1e1fdc5;
 }
-.moveListBtn i:hover {
+.moveBtn-cont i:hover {
+  color: #e1e1fdc5;
   cursor: pointer;
 }
-.arrow-cont {
-  margin-top: 0rem;
+.arrowBtn-cont {
+  text-align: center;
 }
-li:last-child .arrow-cont {
+.arrowBtn-cont i {
+  color : rgb(86, 153, 253);
+}
+li:last-child .arrowBtn-cont {
   display: none;
 }
 .storeBtn {

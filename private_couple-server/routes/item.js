@@ -82,4 +82,15 @@ router.patch('/pos/:id', async(req, res, next) => {
   }
 })
 
+router.get('/list', async(req, res, next) => {
+  try {
+    const list = await item.find({checked: true});
+    console.log('list: ', list);
+    res.json(list);
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+})
+
 module.exports = router;
