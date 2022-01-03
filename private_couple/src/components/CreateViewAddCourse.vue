@@ -18,34 +18,34 @@
         </div>
       </li> 
     </draggable>
-    <!-- <button class="storeBtn" @click="storeCourse()">코스 저장</button>
-    <Modal v-if="showModal_success" @close="showModal_success = false">
+    <button class="storeBtn" @click="storeCourse">코스 저장</button>
+    <Modal v-if="showSuccess" @close="closeSuccess">
       <h2 slot="header">코스 저장 완료</h2>
     </Modal>
-    <Modal v-if="showModal_fail" @close="showModal_fail = false">
+    <Modal v-if="showFail" @close="closeFail">
       <h2 slot="header">코스 저장 실패</h2>
       <div slot="body">코스 생성 후 저장해주세요</div>
-    </Modal> -->
+    </Modal>
   </section>
 </template>
 
 <script>
 import draggable from 'vuedraggable';
-// import Modal from '@/components/common/Modal.vue'
-import { getCheckedItemList } from '@/api/index';
+import Modal from '@/components/common/Modal.vue'
+import { getCheckedItemList, postCourse } from '@/api/index';
 
 export default {
   components : {
     draggable,
-    // Modal
+    Modal
   },
   data() {
     return {
       checkedItemList: [],
       enabled: true,
       dragging: false,
-      // showModal_success: false,
-      // showModal_fail: false,
+      showSuccess: false,
+      showFail: false,
     }
   },
   methods : {
@@ -53,16 +53,23 @@ export default {
       this.checkedItemList = [];
       const { data } = await getCheckedItemList();
       this.checkedItemList = data;
-      console.log('checkedItemList: ', this.checkedItemList);
     },
-    // storeCourse() {
-    //   if(this.getSelectedCourse.length !== 0) {
-    //     this.showModal_success = true;
-    //     this.$store.commit('storeOneCourse');
-    //   } else {
-    //     this.showModal_fail = true;
-    //   }
-    // }
+    async storeCourse() {
+      if(this.checkedItemList.length !== 0) {
+        console.log('this.checkedItemList : ', this.checkedItemList);
+        await postCourse(this.checkedItemList);
+        this.showSuccess = true;
+        this.checkedItemList = [];
+      } else {
+        this.showFail = true;
+      }
+    },
+    closeSuccess() {
+      this.showSuccess = false;
+    },
+    closeFail() {
+      this.showFail = false;
+    }
   }
 }
 </script>

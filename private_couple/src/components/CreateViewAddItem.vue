@@ -39,21 +39,12 @@ export default {
           name : this.newItem,
           checked : false, 
           url : '',
-          // urlCheck : false,
           pos : '',
-          // posCheck : false,
-          // filtered : true,
         }
         await postItem(obj);
-        // console.log('postItem response: ', response);
         EventBus.$emit('refresh');
-        console.log('viewaddItem에서 지나가요')
-        // this.$store.commit('addOneItem', obj);
-        this.clearInput()
+        this.newItem = ""
       }
-    },
-    clearInput() {
-      this.newItem = ""
     },
     created() {
       console.log('addItem에서의 created');

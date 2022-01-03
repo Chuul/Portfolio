@@ -11,7 +11,7 @@
     </li>
     <Modal v-if="showUrlModal" @close="closeUrlForm()">
       <h2 slot="header">URL 입력</h2>
-      <form slot="body">
+      <form slot="body">  
         <input type="text" id="urlInput" v-model="urlText">
         <button @click.prevent="patchOneUrl()">입력</button>
       </form>
@@ -38,11 +38,11 @@ export default {
   data() {
     return {
       itemList: [],
-      showUrlModal: false,
-      showPosModal: false,
       urlText: "",
       posText: "",
       item: {},
+      showUrlModal: false,
+      showPosModal: false,
     };
   },
   methods: {
