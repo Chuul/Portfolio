@@ -23,7 +23,7 @@ export const router = new VueRouter({
       component : ListView
     },
     {
-      path : '/last',
+      path : '/rating',
       component : LastView
     },
     {

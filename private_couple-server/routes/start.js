@@ -1,17 +1,16 @@
 const express= require('express');
-const course = require('../schemas/courseSchema');
+const start = require('../schemas/startSchema');
 
 const router = express.Router();
 
 router.route('/')
   .post(async(req, res, next) => {
     try {
-      console.log('req.body : ',req.body);
-      const courses = await course.create({
+      const starts = await start.create({
         name: new Date(),
-        course: req.body, 
+        start: req.body, 
       });
-      res.status(201).json(courses)
+      res.status(201).json(starts)
     } catch (err) {
       console.log(err);
       next(err)
@@ -19,17 +18,17 @@ router.route('/')
   })
   .get(async(req, res, next) => {
     try {
-      const list = await course.find({});
-      console.log('course!!!!!!: ', list);
+      const list = await start.find({});
+      console.log('list!!!!!!!!!!!!!!!!!!: ',list);
       res.json(list);
     } catch (error) {
       console.log(error);
       next(err);
     }
   })
-router.delete('/:name', async(req, res, next) => {
+router.delete('/delete', async(req, res, next) => {
   try {
-    const result = await course.remove({name: req.params.name})
+    const result = await start.remove({})
     res.json(result);
   } catch (err) {
     console.log(err);

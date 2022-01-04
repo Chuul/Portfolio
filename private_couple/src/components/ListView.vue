@@ -1,59 +1,63 @@
 <template>
   <section class="courelist-cont">
-    <draggable :list="getStoredCourse" :disabled="!enabled" @start="dragging = true" @end="dragging = false">
-      <li v-for="(course, index) in getStoredCourse" :key="course.item">
-        <div class="displayStroedList">
-          <router-link to="/startCourse">
-            <i class="fas fa-heart-square" @click="startCourse(course)"></i>
-          </router-link>
-          <li class="list-cont" v-for="storedItem in course" :key="storedItem.item">
-            <a v-if="storedItem.url !== ''" :href="storedItem.url" class="linkText" target="_blank">
-              {{storedItem.item}}
-            </a>
-            <span v-else>
-              {{storedItem.item}}
-            </span>
-            <div class="arrow-cont">
-              <i class="fas fa-arrow-down"></i>
-            </div>
-          </li>
-          <span class="remove-cont" @click="removeStoredCourse(course, index)">
-            <i class="far fa-trash-alt"></i>
-          </span>
-          <span class="moveListBtn">  
-            <i class="far fa-line-height"></i>
-          </span>
-        </div>
-      </li>
-    </draggable>
+    <li v-for="list in courseList" :key="list.course">
+      <div class="displayStroedList">
+        <router-link to="/start">
+          <i class="fas fa-heart-square" @click="startOneCourse(list)"></i>
+        </router-link>
+        <li class="list-cont" v-for="item in list.course" :key="item.name">
+          {{ item.name }}
+          <div class="arrow-cont">
+            <i class="fas fa-arrow-down"></i>
+          </div>
+        </li>
+        <span class="remove-cont" @click="deleteOneCourse(list)">
+          <i class="far fa-trash-alt"></i>
+        </span>
+        <span class="moveListBtn">  
+          <i class="far fa-line-height"></i>
+        </span>
+      </div>
+    </li>
   </section>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import draggable from 'vuedraggable';
+import { getCourseList, deleteCourse } from '@/api/index';
+import EventBus from '../utils/bus';
 
 export default {
-  components: {
-    draggable
-  },
   data() {
     return {
+      courseList: [],
       enabled: true,
       dragging: false,
     }
   },
-  computed : {
-    ...mapGetters(['getStoredCourse']),
-  },
   methods : {
-    startCourse(course) {
-      this.$store.commit('startOneCourse', course);
+    async getData() {
+      const { data } = await getCourseList();
+      this.courseList = data;
     },
-    removeStoredCourse(course, index) {
-      this.$store.commit('removeOneStoredCourse', {course, index});
+    async deleteOneCourse(list) {
+      await deleteCourse(list.name);
+      this.getData();
     },
-  }
+    startOneCourse(list) {
+      this.$store.commit('storeStartCourse', list);
+    }
+  },
+  created() {
+    this.getData();
+    console.log('listView에서 mounted');
+},
+  mounted() {
+    console.log('listView에서 mounted');
+  },
+  updated() {
+    EventBus.$on('refresh', () => this.getData());
+    console.log('ListView에서의 updated');
+  },
 }
 </script>
 

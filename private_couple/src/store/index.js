@@ -6,11 +6,15 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
   state : {
     itemListState : [],
-    checkedItems : [],
+    startCourse: []
+    // checkedItems : [],
   },
   mutations: {
     fetchItemList(state, itemList) {
       state.itemListState = itemList;
+    },
+    storeStartCourse(state, list) {
+      state.startCourse = list;
     },
     filterListItem(state, name) {
       if(name == '전체') {

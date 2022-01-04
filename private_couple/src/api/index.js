@@ -24,8 +24,22 @@ function getCheckedItemList() {
   return axios.get(baseUrl+'item' + '/list');
 }
 function postCourse(course) {
-  console.log('course: ', course);
   return axios.post(baseUrl+'course', course)
+}
+function getCourseList() {
+  return axios.get(baseUrl+'course');
+}
+function deleteCourse(name) {
+  return axios.delete(baseUrl+'course'+`/${name}`)
+}
+function deleteStartCourse() {
+  return axios.delete(baseUrl+'start/delete')
+}
+function startCourse(list) {
+  return axios.post(baseUrl+'start', list);
+}
+function getStartList() {
+  return axios.get(baseUrl+'start');
 }
 
 export { 
@@ -36,5 +50,10 @@ export {
   patchPos,
   toggleItem,
   getCheckedItemList,
-  postCourse 
+  postCourse,
+  getCourseList,
+  deleteCourse,
+  startCourse,
+  deleteStartCourse,
+  getStartList
 };

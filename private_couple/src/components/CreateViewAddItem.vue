@@ -52,7 +52,7 @@ export default {
     },
     mounted() {
       console.log('addItem에서의 mounted');
-      EventBus.$on('refresh', () => this.getData())
+      // EventBus.$on('refresh', () => this.getData())
     },
     updated() {
       console.log('addItem에서의 updated');
