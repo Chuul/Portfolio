@@ -10,9 +10,6 @@ const itemSchema = new Schema({
     required: true,
     unique: true,
   },
-  // checked : {
-  //   type: Boolean,
-  // }, 
   url : {
     type: String,
   },

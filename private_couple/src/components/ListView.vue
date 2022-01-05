@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { getCourseList, deleteCourse } from '@/api/index';
+import { getCourseList, deleteCourse, replaceStartCourse } from '@/api/index';
 import EventBus from '../utils/bus';
 
 export default {
@@ -43,8 +43,9 @@ export default {
       await deleteCourse(list.name);
       this.getData();
     },
-    startOneCourse(list) {
-      this.$store.commit('storeStartCourse', list);
+    async startOneCourse(list) {
+      this.$store.commit('storeStartCourse', list.course);
+      await replaceStartCourse(list);
     }
   },
   created() {

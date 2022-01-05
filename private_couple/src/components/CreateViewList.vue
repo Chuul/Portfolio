@@ -65,17 +65,16 @@ export default {
   },
   methods: {
     toggleOneItem(item) {
-      console.log('item: ', item);
       this.$store.commit('toggleItem', item);
       this.getData();
     },
     async getData() {
       const { data } = await getItemList();
-      // this.itemList = data;
       this.$store.commit('fetchItemList', data);
     },
     async deleteOneItem(item) {
       await deleteItem(item._id);
+      this.$store.commit('deleteCheckedItems', item.name)
       this.getData();
     },
     async patchOneUrl() {

@@ -2,14 +2,12 @@ import axios from 'axios';
 
 const baseUrl = 'http://localhost:8800/';
 
-function getItemList() {
-  return axios.get(baseUrl+'item');
-}
-function toggleItem(id) {
-  return axios.patch(baseUrl+'item'+`/checked/${id}`);
-}
+// item
 function postItem(item) {
   return axios.post(baseUrl+'item', item);
+}
+function getItemList() {
+  return axios.get(baseUrl+'item');
 }
 function deleteItem(id) {
   return axios.delete(baseUrl+'item'+`/${id}`);
@@ -23,11 +21,9 @@ function patchPos(payload) {
 function getCheckedItemList() { 
   return axios.get(baseUrl+'item' + '/list');
 }
+// course
 function postCourse(course) {
   return axios.post(baseUrl+'course', course)
-}
-function changeChecked(name) {
-  return axios.patch(baseUrl+'course'+`/${name}`);
 }
 function getCourseList() {
   return axios.get(baseUrl+'course');
@@ -35,12 +31,13 @@ function getCourseList() {
 function deleteCourse(name) {
   return axios.delete(baseUrl+'course'+`/${name}`)
 }
-function deleteStartCourse() {
-  return axios.delete(baseUrl+'start/delete')
-}
-function startCourse(list) {
+// start
+function replaceStartCourse(list) {
   return axios.post(baseUrl+'start', list);
 }
+// function deleteStartCourse() {
+//   return axios.delete(baseUrl+'start/delete')
+// }
 function getStartList() {
   return axios.get(baseUrl+'start');
 }
@@ -51,13 +48,10 @@ export {
   deleteItem, 
   patchUrl,
   patchPos,
-  toggleItem,
   getCheckedItemList,
   postCourse,
-  changeChecked,
   getCourseList,
   deleteCourse,
-  startCourse,
-  deleteStartCourse,
+  replaceStartCourse,
   getStartList
 };

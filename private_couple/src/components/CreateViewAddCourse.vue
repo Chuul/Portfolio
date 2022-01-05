@@ -1,12 +1,12 @@
 <template>
   <section class="create-cont">
-    <button class="createBtn" @click="getCheckedData">코스생성</button>
+    <button class="createBtn" @click="getCheckedItems">코스생성</button>
     <draggable 
-      :list="creatingCourse" 
+      :list="checkedItemList" 
       :disabled="!enabled" 
       @start="dragging = true" 
       @end="dragging = false">
-      <li class="courseList" v-for="item in getItemList" :key="item.name">
+      <li class="courseList" v-for="item in checkedItemList" :key="item.name">
         <a class="linkText" :href="item.url" target="_blank">
           {{ item.name }}
         </a>
@@ -19,6 +19,9 @@
       </li> 
     </draggable>
     <button class="storeBtn" @click="storeCourse">코스 저장</button>
+    <Modal v-if="checkFail" @close="closeCheck">
+      <h2 slot="header">최소 1개 이상의 아이템을 선택해주세요</h2>
+    </Modal>
     <Modal v-if="showSuccess" @close="closeSuccess">
       <h2 slot="header">코스 저장 완료</h2>
     </Modal>
@@ -32,7 +35,7 @@
 <script>
 import draggable from 'vuedraggable';
 import Modal from '@/components/common/Modal.vue'
-import { postCourse, changeChecked } from '@/api/index';
+import { postCourse } from '@/api/index';
 
 export default {
   components : {
@@ -41,35 +44,34 @@ export default {
   },
   data() {
     return {
-      // checkedItemList: [],
+      checkedItemList: [],
       enabled: true,
       dragging: false,
+      checkFail: false,
       showSuccess: false,
       showFail: false,
     }
   },
-  computed: {
-    getItemList() {
-      return this.$store.state.creatingCourse;
-    }
-  },
   methods : {
-    getCheckedData() {
-      this.$store.commit('createCourse');
+    getCheckedItems() {
+      if(this.$store.state.checkedItems.length === 0) {
+        this.checkFail = true;
+      } else {
+        this.checkedItemList = this.$store.state.checkedItems;
+      }
     },
     async storeCourse() {
-      const idList=[];
-      if(this.checkedItemList.length !== 0) {
-        this.checkedItemList.forEach((item) => {
-          idList.push(item._id);
-        })
-        await changeChecked(idList);
-        await postCourse(this.checkedItemList);
-        this.showSuccess = true;
-        this.checkedItemList = [];
-      } else {
+      if(this.$store.state.checkedItems === []) {
         this.showFail = true;
+      } else {
+        let course = this.$store.state.checkedItems;
+        await postCourse(course);
+        this.checkedItemList = [];
+        this.showSuccess = true;
       }
+    },
+    closeCheck() {
+      this.checkFail = false;
     },
     closeSuccess() {
       this.showSuccess = false;

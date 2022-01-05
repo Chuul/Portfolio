@@ -6,6 +6,8 @@ const router = express.Router();
 router.route('/')
   .post(async(req, res, next) => {
     try {
+      const result = await start.remove({})
+      res.json(result);
       const starts = await start.create({
         name: new Date(),
         start: req.body, 
@@ -26,14 +28,5 @@ router.route('/')
       next(err);
     }
   })
-router.delete('/delete', async(req, res, next) => {
-  try {
-    const result = await start.remove({})
-    res.json(result);
-  } catch (err) {
-    console.log(err);
-    next(err);
-  }
-})
 
 module.exports = router;

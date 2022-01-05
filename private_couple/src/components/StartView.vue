@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { startCourse, deleteStartCourse, getStartList } from '@/api/index';
+// import { replaceStartCourse } from '@/api/index';
 
 export default {
   data() {
@@ -23,12 +23,8 @@ export default {
   methods : {
     async startOneCourse() {
       const list = this.$store.state.startCourse;
-      console.log(list);
-      await deleteStartCourse();
-      await startCourse(list);
-      const {data} = await getStartList();
-      this.startList = data[0].start.course;
-      console.log("this.startList : ",this.startList);
+      this.startList = list;
+      console.log('this.startList: ', this.startList)
     },
   },
   created() {

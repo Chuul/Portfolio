@@ -46,17 +46,6 @@ export default {
         this.newItem = ""
       }
     },
-    created() {
-      console.log('addItem에서의 created');
-      this.getData();
-    },
-    mounted() {
-      console.log('addItem에서의 mounted');
-      // EventBus.$on('refresh', () => this.getData())
-    },
-    updated() {
-      console.log('addItem에서의 updated');
-    },
   }
 }
 </script>
