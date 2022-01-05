@@ -2,9 +2,7 @@
   <section class="course-cont">
     <h2>코스 진행중...</h2>
     <li class="list-cont" v-for="item in startList" :key="item.name">
-      <span class="checkBtn-cont" @click="checkedItem()"> 
-        <i class="checkBtn fas fa-check-circle"></i>
-      </span>
+      <i class="checkBtn far fa-check-circle" @click="toggleOneItem(item)" :class="{checkBtnChecked: item.checked}"></i>
       {{ item.name }}
       <div class="arrow-cont">
         <i class="fas fa-arrow-down"></i>
@@ -56,7 +54,7 @@ h2 {
   float: left;
   margin : 0.5em;
   color : rgba(124, 198, 255, 0.8);
-  cursor : pointer
+  cursor : pointer;
 }
 .course-cont {
   height: 80vh;

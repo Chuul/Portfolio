@@ -1,13 +1,26 @@
 <template>
   <section class="list-cont">
-    <li v-for="item in itemList" :key="item.name">
-      <i class="checkBtn far fa-check-circle" @click="toggleOneItem(item)" :class="{checkBtnChecked: item.checked}"></i>
-      <span>
-        {{ item.name }}
-      </span>
-      <i class="deleteBtn far fa-trash-alt" @click="deleteOneItem(item)"></i>
-      <i class="posBtn fas fa-map-marked-alt" @click="openPosForm(item)" :class="{checkBtnChecked: item.pos !== ''}"></i>
-      <i class="urlBtn far fa-window-restore" @click="openUrlForm(item)" :class="{checkBtnChecked: item.url !== ''}"></i>
+    <li v-for="item in getItemList" :key="item.name">
+      <i 
+        class="checkBtn far fa-check-circle" 
+        @click="toggleOneItem(item)" 
+        :class="{checkBtnChecked: item.checked}"
+      />
+      {{ item.name }}
+      <i 
+        class="deleteBtn far fa-trash-alt" 
+        @click="deleteOneItem(item)" 
+      />
+      <i 
+        class="posBtn fas fa-map-marked-alt" 
+        @click="openPosForm(item)" 
+        :class="{checkBtnChecked: item.pos !== ''}"
+      />
+      <i 
+        class="urlBtn far fa-window-restore" 
+        @click="openUrlForm(item)" 
+        :class="{checkBtnChecked: item.url !== ''}"
+      />
     </li>
     <Modal v-if="showUrlModal" @close="closeUrlForm()">
       <h2 slot="header">URL 입력</h2>
@@ -27,7 +40,7 @@
 </template>
 
 <script>
-import { getItemList, deleteItem, patchUrl, patchPos, toggleItem } from '@/api/index'
+import { getItemList, deleteItem, patchUrl, patchPos } from '@/api/index'
 import EventBus from '../utils/bus';
 import Modal from '@/components/common/Modal.vue';
 
@@ -45,15 +58,21 @@ export default {
       showPosModal: false,
     };
   },
+  computed: {
+    getItemList() {
+      return this.$store.state.itemListState;
+    }
+  },
   methods: {
-    async toggleOneItem(item) {
-      await toggleItem(item._id);
+    toggleOneItem(item) {
+      console.log('item: ', item);
+      this.$store.commit('toggleItem', item);
       this.getData();
     },
     async getData() {
       const { data } = await getItemList();
-      this.itemList = data;
-      this.$store.commit('fetchItemList', this.itemList);
+      // this.itemList = data;
+      this.$store.commit('fetchItemList', data);
     },
     async deleteOneItem(item) {
       await deleteItem(item._id);
@@ -95,11 +114,7 @@ export default {
     },
   },
   created() {
-    console.log('view list에서의 created');
     this.getData();
-  },
-  mounted() {
-    console.log('view list에서의 mounted');
   },
   updated() {
     EventBus.$on('refresh', () => this.getData());

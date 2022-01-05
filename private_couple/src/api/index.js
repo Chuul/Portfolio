@@ -20,11 +20,14 @@ function patchUrl(payload) {
 function patchPos(payload) {
   return axios.patch(baseUrl+'item'+`/pos/${payload.id}`, {data: {posText: payload.posText}});
 }
-function getCheckedItemList() {
+function getCheckedItemList() { 
   return axios.get(baseUrl+'item' + '/list');
 }
 function postCourse(course) {
   return axios.post(baseUrl+'course', course)
+}
+function changeChecked(name) {
+  return axios.patch(baseUrl+'course'+`/${name}`);
 }
 function getCourseList() {
   return axios.get(baseUrl+'course');
@@ -51,6 +54,7 @@ export {
   toggleItem,
   getCheckedItemList,
   postCourse,
+  changeChecked,
   getCourseList,
   deleteCourse,
   startCourse,

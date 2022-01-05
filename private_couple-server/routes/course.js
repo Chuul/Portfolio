@@ -6,7 +6,6 @@ const router = express.Router();
 router.route('/')
   .post(async(req, res, next) => {
     try {
-      console.log('req.body : ',req.body);
       const courses = await course.create({
         name: new Date(),
         course: req.body, 
@@ -20,7 +19,6 @@ router.route('/')
   .get(async(req, res, next) => {
     try {
       const list = await course.find({});
-      console.log('course!!!!!!: ', list);
       res.json(list);
     } catch (error) {
       console.log(error);
@@ -36,5 +34,20 @@ router.delete('/:name', async(req, res, next) => {
     next(err);
   }
 })
+// router.patch('/:name', async(req, res, next) => {
+//   try {
+//     const bool = await course.find(req.params.name);
+//     console.log('bool!!!!!: ', bool);
+//     const result = await item.updateOne({
+//       _id: bool._id
+//     }, {
+//       checked: !bool.checked
+//     });
+//     res.json(result);
+//   } catch (err) {
+//     console.log(err);
+//     next(err);
+//   }
+// })
 
 module.exports = router;

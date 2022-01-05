@@ -2,11 +2,11 @@
   <section class="create-cont">
     <button class="createBtn" @click="getCheckedData">코스생성</button>
     <draggable 
-      :list="checkedItemList" 
+      :list="creatingCourse" 
       :disabled="!enabled" 
       @start="dragging = true" 
       @end="dragging = false">
-      <li class="courseList" v-for="item in checkedItemList" :key="item.name">
+      <li class="courseList" v-for="item in getItemList" :key="item.name">
         <a class="linkText" :href="item.url" target="_blank">
           {{ item.name }}
         </a>
@@ -32,7 +32,7 @@
 <script>
 import draggable from 'vuedraggable';
 import Modal from '@/components/common/Modal.vue'
-import { getCheckedItemList, postCourse } from '@/api/index';
+import { postCourse, changeChecked } from '@/api/index';
 
 export default {
   components : {
@@ -41,22 +41,29 @@ export default {
   },
   data() {
     return {
-      checkedItemList: [],
+      // checkedItemList: [],
       enabled: true,
       dragging: false,
       showSuccess: false,
       showFail: false,
     }
   },
+  computed: {
+    getItemList() {
+      return this.$store.state.creatingCourse;
+    }
+  },
   methods : {
-    async getCheckedData() {
-      this.checkedItemList = [];
-      const { data } = await getCheckedItemList();
-      this.checkedItemList = data;
+    getCheckedData() {
+      this.$store.commit('createCourse');
     },
     async storeCourse() {
+      const idList=[];
       if(this.checkedItemList.length !== 0) {
-        console.log('this.checkedItemList : ', this.checkedItemList);
+        this.checkedItemList.forEach((item) => {
+          idList.push(item._id);
+        })
+        await changeChecked(idList);
         await postCourse(this.checkedItemList);
         this.showSuccess = true;
         this.checkedItemList = [];
