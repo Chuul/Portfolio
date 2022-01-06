@@ -41,8 +41,11 @@ router.patch('/comment/:id', async(req, res, next) => {
 })
 router.patch('/true/:id', async(req, res, next) => {
   try {
-    const result = await start.updateOne({'start._id': req.params.id}, 
-      {'$set': {'start.$.completed': true}});
+    const result = await start.updateOne({
+      'start._id': req.params.id
+    }, {
+      '$set': {'start.$.completed': true}
+    });
     res.json(result);
   } catch (err) {
     console.log(err);
@@ -53,6 +56,47 @@ router.patch('/false/:id', async(req, res, next) => {
   try {
     const result = await start.updateOne({'start._id': req.params.id}, 
       {'$set': {'start.$.completed': false}});
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+})
+router.delete('/:id', async(req, res, next) => {
+  try {
+    console.log('id!!!!!!!!!!: ', req.params.id);
+    const result = await start.updateOne({
+      'start._id': req.params.id
+    }, {
+      '$pull' : {"start" : {"_id": req.params.id}}
+    });
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+})
+
+router.patch('/url/:id', async(req, res, next) => {
+  try {
+    const result = await start.updateOne({
+      'start._id': req.params.id
+    }, {
+      '$set': {'start.$.url': req.body.data.urlText}
+    });
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+})
+router.patch('/pos/:id', async(req, res, next) => {
+  try {
+    const result = await start.updateOne({
+      'start._id': req.params.id
+    }, {
+      '$set': {'start.$.pos': req.body.data.posText}
+    });
     res.json(result);
   } catch (err) {
     console.log(err);

@@ -47,6 +47,15 @@ function toggleTrueItem(id) {
 function toggleFalseItem(id) {
   return axios.patch(baseUrl+'start'+`/false/${id}`, {data: {completed: false}});
 }
+function deleteStartItem(id) {
+  return axios.delete(baseUrl+'start'+`/${id}`);
+}
+function patcStarthUrl(payload) {
+  return axios.patch(baseUrl+'start'+`/url/${payload.id}`, {data: {urlText: payload.urlText}});
+}
+function patchStartPos(payload) {
+  return axios.patch(baseUrl+'start'+`/pos/${payload.id}`, {data: {posText: payload.posText}});
+}
 
 export { 
   getItemList, 
@@ -62,5 +71,8 @@ export {
   getStartList,
   patchComment,
   toggleTrueItem,
-  toggleFalseItem
+  toggleFalseItem,
+  deleteStartItem,
+  patcStarthUrl,
+  patchStartPos
 };
