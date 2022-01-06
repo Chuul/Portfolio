@@ -35,11 +35,17 @@ function deleteCourse(name) {
 function replaceStartCourse(list) {
   return axios.post(baseUrl+'start', list);
 }
-// function deleteStartCourse() {
-//   return axios.delete(baseUrl+'start/delete')
-// }
 function getStartList() {
   return axios.get(baseUrl+'start');
+}
+function patchComment(payload) {
+  return axios.patch(baseUrl+'start'+`/comment/${payload.id}`, {data: {comment: payload.commentText}});
+}
+function toggleTrueItem(id) {
+  return axios.patch(baseUrl+'start'+`/true/${id}`, {data: {completed: true}});
+}
+function toggleFalseItem(id) {
+  return axios.patch(baseUrl+'start'+`/false/${id}`, {data: {completed: false}});
 }
 
 export { 
@@ -53,5 +59,8 @@ export {
   getCourseList,
   deleteCourse,
   replaceStartCourse,
-  getStartList
+  getStartList,
+  patchComment,
+  toggleTrueItem,
+  toggleFalseItem
 };

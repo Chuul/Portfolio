@@ -50,7 +50,6 @@ export default {
   },
   data() {
     return {
-      itemList: [],
       urlText: "",
       posText: "",
       item: {},
@@ -85,6 +84,7 @@ export default {
       await patchUrl(obj);
       this.getData();
       this.urlText = "";
+      this.showUrlModal = true;
     },
     async patchOnePos() {
       const obj = {
@@ -94,6 +94,7 @@ export default {
       await patchPos(obj);
       this.getData();
       this.posText = "";
+      this.showPosModal = false;
     },
     openUrlForm(item) {
       this.showUrlModal = true;
@@ -104,11 +105,11 @@ export default {
       this.item = item;
     },
     closeUrlForm() {
-      this.showUrlModal = false
+      this.showUrlModal = false;
       this.urlText = "";
     },
     closePosForm() {
-      this.showPosModal = false
+      this.showPosModal = false;
       this.posText = "";
     },
   },

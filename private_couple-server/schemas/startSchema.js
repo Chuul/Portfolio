@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const startSchema = new Schema({
-  name: Number,
+  // name: Number,
   start: Object
 });
 

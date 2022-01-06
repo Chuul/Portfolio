@@ -65,6 +65,11 @@ export default {
         this.showFail = true;
       } else {
         let course = this.$store.state.checkedItems;
+        course.forEach( (item) => {
+          delete item.checked;
+          item.completed = false;
+          item.comment = "";
+        })
         await postCourse(course);
         this.checkedItemList = [];
         this.showSuccess = true;

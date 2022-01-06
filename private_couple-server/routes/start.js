@@ -9,7 +9,7 @@ router.route('/')
       const result = await start.remove({})
       res.json(result);
       const starts = await start.create({
-        name: new Date(),
+        // name: new Date(),
         start: req.body, 
       });
       res.status(201).json(starts)
@@ -21,7 +21,6 @@ router.route('/')
   .get(async(req, res, next) => {
     try {
       const list = await start.find({});
-      console.log('list!!!!!!!!!!!!!!!!!!: ',list);
       res.json(list);
     } catch (error) {
       console.log(error);
@@ -29,4 +28,35 @@ router.route('/')
     }
   })
 
+router.patch('/comment/:id', async(req, res, next) => {
+  try {
+    // const list = await start.find({});
+    const result = await start.updateOne({'start._id': req.params.id}, 
+      {'$set': {'start.$.comment': req.body.data.comment}});
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+})
+router.patch('/true/:id', async(req, res, next) => {
+  try {
+    const result = await start.updateOne({'start._id': req.params.id}, 
+      {'$set': {'start.$.completed': true}});
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+})
+router.patch('/false/:id', async(req, res, next) => {
+  try {
+    const result = await start.updateOne({'start._id': req.params.id}, 
+      {'$set': {'start.$.completed': false}});
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+})
 module.exports = router;
