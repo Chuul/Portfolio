@@ -7,6 +7,7 @@ const indexRouter = require('./routes/index')
 const itemRouter = require('./routes/item');
 const courseRouter = require('./routes/course');
 const startRouter = require('./routes/start');
+const lastRouter = require('./routes/last');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use('/', indexRouter);
 app.use('/item', itemRouter);
 app.use('/course', courseRouter);
 app.use('/start', startRouter);
+app.use('/last', lastRouter);
 
 app.use((req, res, next) => {
   const error =  new Error(`${req.method} ${req.url} 라우터가 없습니다.`);

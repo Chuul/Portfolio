@@ -1,37 +1,39 @@
 <template>
   <section class="course-cont">
     <h2>코스 진행중...</h2>
-    <li 
-      class="list-cont" 
-      v-for="(item, index) in startList" 
-      :key="item.name"
-    >
-      <div class="item-cont">
-        <i 
-          class="checkBtn far fa-check-circle" 
-          @click="openForm({item, index})" 
-          :class="{checkBtnCompleted: item.completed}" 
-        />
-        {{ item.name }}
-        <i 
-          class="deleteBtn far fa-trash-alt" 
-          @click="deleteOneItem(item)" 
-        />
-        <i 
-          class="posBtn fas fa-map-marked-alt" 
-          @click="openPosForm(item)" 
-          :class="{checkBtnChecked: item.pos !== ''}"
-        />
-        <i 
-          class="urlBtn far fa-window-restore" 
-          @click="openUrlForm(item)" 
-          :class="{checkBtnChecked: item.url !== ''}"
-        />
-      </div>
-      <div class="arrow-cont">
-        <i class="fas fa-arrow-down"></i>
-      </div>
-    </li>
+    <div class="main-cont">
+      <li 
+        class="list-cont" 
+        v-for="(item, index) in startList" 
+        :key="item.name">
+        <div class="item-cont">
+          <i 
+            class="checkBtn far fa-check-circle" 
+            @click="openForm({item, index})" 
+            :class="{checkBtnCompleted: item.completed}" 
+          />
+          {{ item.name }}
+          <i 
+            class="deleteBtn far fa-trash-alt" 
+            @click="deleteOneItem(item)" 
+          />
+          <i 
+            class="posBtn fas fa-map-marked-alt" 
+            @click="openPosForm(item)" 
+            :class="{checkBtnChecked: item.pos !== ''}"
+          />        <i 
+            class="urlBtn far fa-window-restore" 
+            @click="openUrlForm(item)" 
+            :class="{checkBtnChecked: item.url !== ''}"
+          />
+        </div>
+        <div class="arrow-cont">
+          <i class="fas fa-arrow-down"></i>
+        </div>
+      </li>
+    </div>
+    <button class="completBtn" @click="openCompleteForm()">코스 완료</button>
+    <!-- 모달창 -->
     <Modal v-if="showModal" @close="closeForm()">
       <h2 slot="header">코스 평가</h2>
       <form slot="body">  
@@ -54,6 +56,13 @@
         <button @click.prevent="patchOnePos()">입력</button>
       </form>
     </Modal>
+    <Modal v-if="showCompleteModal" @close="closeCompleteForm()">
+      <h2 slot="header">코스 평점</h2>
+      <form slot="body">
+        <input type="text" id="completeInput" v-model="completeText">
+        <button @click.prevent="patchOneComplete()">완료</button>
+      </form>
+    </Modal>
   </section>
 </template>
 
@@ -66,12 +75,14 @@ import {
   toggleFalseItem, 
   deleteStartItem, 
   patcStarthUrl, 
-  patchStartPos 
+  patchStartPos,
+  patchStartItem,
+  patchStartCourse
 } from '@/api/index';
 import Modal from '@/components/common/Modal.vue';
 
 export default {
-   components: {
+  components: {
     Modal
   },
   data() {
@@ -81,9 +92,11 @@ export default {
       commentText: "",
       urlText: "",
       posText: "",
+      completeText: "",
       showModal : false,
       showUrlModal: false,
       showPosModal: false,
+      showCompleteModal: false
     }
   },
   methods : {
@@ -99,22 +112,25 @@ export default {
     async getData() {
       const { data } = await getStartList();
       this.startList = data[0].start;
-      console.log('this.startList: ', this.startList);
     },
     async patchOneComment() {
+      const item = this.item;
       const obj = {
-        id: this.item._id,
+        id: item._id,
         commentText: this.commentText
       };
       await patchComment(obj);
-      const id = this.item._id;
+      const id = item._id;
       await toggleTrueItem(id);
+      delete item.completed;
+      delete item._id;
+      item.comment = this.commentText;
+      patchStartItem(item);
       this.commentText = "";
       this.showModal = false;
       this.getData();
     },
     async openForm(payload) {
-      console.log('payload : ', payload);
       if(payload.item.completed === true) {
         await toggleFalseItem(payload.item._id);
         this.getData();
@@ -147,6 +163,15 @@ export default {
       this.posText = "";
       this.showPosModal = false;
     },
+    async patchOneComplete() {
+      const course = {
+        list: this.startList,
+        completeText: this.completeText
+      }
+      await patchStartCourse(course);
+      this.showCompleteModal = false;
+      this.completeText = "";
+    },
     openUrlForm(item) {
       this.showUrlModal = true;
       this.item = item;
@@ -154,6 +179,14 @@ export default {
     openPosForm(item) {
       this.showPosModal = true;
       this.item = item;
+    },
+    openCompleteForm() {
+      this.showCompleteModal = true;
+      this.getData();
+    },
+    closeForm() {
+      this.showModal = false;
+      this.item = "";
     },
     closeUrlForm() {
       this.showUrlModal = false;
@@ -163,8 +196,8 @@ export default {
       this.showPosModal = false;
       this.posText = "";
     },
-    closeForm() {
-      this.showModal = false;
+    closeCompleteForm() {
+      this.showCompleteModal = false;
       this.item = "";
     },
   },
@@ -194,13 +227,21 @@ h2 {
   font-size: 2em;
   font-weight: 700;
 }
-.list-cont {
+.course-cont {
+  height: 80vh;
+  margin: 2em;
+  padding: 2em;
   text-align: center;
+  background: rgba(124, 198, 255, 0.11);
+}
+.main-cont li:last-child .arrow-cont {
+  display: none;
+}
+.list-cont {
   border-radius: 0.5em;
 }
 .item-cont {
-  text-align: center;
-  margin: 2em;
+  margin: 1.5em;
   padding : 1rem;
   border-radius: 0.5em;
   background: white;
@@ -215,16 +256,7 @@ h2 {
   color: #8763FB;
 }
 .checkBtnChecked {
-  color: #624ab1
-}
-.course-cont {
-  height: 80vh;
-  margin: 2em;
-  padding: 2em;
-  background: rgba(124, 198, 255, 0.247);
-}
-.list-cont:last-child .arrow-cont {
-  display: none;
+  color: red;
 }
 .arrow-cont {
   margin: 0.5em;
@@ -246,5 +278,18 @@ h2 {
   float: right;
   margin: 0.5em;
   cursor : pointer;
+}
+.completBtn {
+  margin: 1em 0;
+  background: rgba(124, 198, 255, 0.247);
+  border-style : none;
+  border-radius: 0.5em;
+  padding : 0.6em 1.5em;
+  font-size : 1em;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  color : rgb(86, 153, 253);
+  cursor : pointer;
+  box-shadow: 0.5em -0.2em 10px 1px rgba(143, 143, 143, 0.2);
 }
 </style>

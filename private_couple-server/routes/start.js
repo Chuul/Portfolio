@@ -64,7 +64,6 @@ router.patch('/false/:id', async(req, res, next) => {
 })
 router.delete('/:id', async(req, res, next) => {
   try {
-    console.log('id!!!!!!!!!!: ', req.params.id);
     const result = await start.updateOne({
       'start._id': req.params.id
     }, {

@@ -152,7 +152,6 @@ a:hover {
 li {
   list-style: none;
   text-align: center;
-  /* min-height: 50px; */
   height: 2em;
   line-height: 2em;
   margin: 1em 0;

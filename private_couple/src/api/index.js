@@ -56,6 +56,16 @@ function patcStarthUrl(payload) {
 function patchStartPos(payload) {
   return axios.patch(baseUrl+'start'+`/pos/${payload.id}`, {data: {posText: payload.posText}});
 }
+// last
+function patchStartItem(item) {
+  return axios.patch(baseUrl+'last/item', item);
+}
+function patchStartCourse(course) {
+  return axios.patch(baseUrl+'last/course', course);
+}
+function getLastList() {
+  return axios.get(baseUrl+'last');
+}
 
 export { 
   getItemList, 
@@ -74,5 +84,8 @@ export {
   toggleFalseItem,
   deleteStartItem,
   patcStarthUrl,
-  patchStartPos
+  patchStartPos,
+  patchStartItem,
+  patchStartCourse,
+  getLastList
 };

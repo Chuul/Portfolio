@@ -34,20 +34,5 @@ router.delete('/:name', async(req, res, next) => {
     next(err);
   }
 })
-// router.patch('/:name', async(req, res, next) => {
-//   try {
-//     const bool = await course.find(req.params.name);
-//     console.log('bool!!!!!: ', bool);
-//     const result = await item.updateOne({
-//       _id: bool._id
-//     }, {
-//       checked: !bool.checked
-//     });
-//     res.json(result);
-//   } catch (err) {
-//     console.log(err);
-//     next(err);
-//   }
-// })
 
 module.exports = router;

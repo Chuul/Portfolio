@@ -1,11 +1,11 @@
 <template>
-  <section class="courelist-cont">
+  <section class="list-cont">
     <li v-for="list in courseList" :key="list.course">
-      <div class="displayStroedList">
+      <div class="item-cont">
         <router-link to="/start">
           <i class="fas fa-heart-square" @click="startOneCourse(list)"></i>
         </router-link>
-        <li class="list-cont" v-for="item in list.course" :key="item.name">
+        <li class="name-cont" v-for="item in list.course" :key="item.name">
           {{ item.name }}
           <div class="arrow-cont">
             <i class="fas fa-arrow-down"></i>
@@ -66,7 +66,7 @@ export default {
 li {
   list-style: none;
 }
-.courelist-cont {
+.list-cont {
   height: 80vh;
   margin: 2em;
 }
@@ -75,7 +75,7 @@ li {
   color : rgba(124, 198, 255, 0.8);
   cursor : pointer
 }
-.displayStroedList {
+.item-cont {
   text-align: center;
   margin: 15px;
   padding : 1rem;
@@ -93,7 +93,7 @@ li {
   color : rgba(124, 198, 255, 0.8);
   cursor : pointer
 } */
-.list-cont:nth-last-child(3) .arrow-cont {
+.name-cont:nth-last-child(3) .arrow-cont {
   display: none;
 }
 .arrow-cont {
