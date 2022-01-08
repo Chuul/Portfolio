@@ -1,5 +1,6 @@
 <template>
   <section>
+    <KakaoMap></KakaoMap>
     <CreateViewAddItem></CreateViewAddItem>
     <CreateViewList></CreateViewList>
     <CreateViewAddCourse></CreateViewAddCourse>
@@ -7,12 +8,14 @@
 </template>
 
 <script>
+import KakaoMap from "@/components/common/Kakao/KakaoMaps.vue";
 import CreateViewAddItem from './CreateViewAddItem.vue'
 import CreateViewList from './CreateViewList.vue'
 import CreateViewAddCourse from './CreateViewAddCourse.vue'
 
 export default {  
   components : {
+    KakaoMap,
     CreateViewAddItem,
     CreateViewList,
     CreateViewAddCourse
