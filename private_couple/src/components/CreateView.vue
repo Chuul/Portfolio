@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import KakaoMap from "@/components/common/Kakao/KakaoMaps.vue";
+import KakaoMap from "@/components/common/API/KakaoMaps.vue";
 import CreateViewAddItem from './CreateViewAddItem.vue'
 import CreateViewList from './CreateViewList.vue'
 import CreateViewAddCourse from './CreateViewAddCourse.vue'

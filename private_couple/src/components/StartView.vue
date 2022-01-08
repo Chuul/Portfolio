@@ -1,6 +1,7 @@
 <template>
   <section class="course-cont">
     <h2>코스 진행중...</h2>
+    <KakaoMap></KakaoMap>
     <div class="main-cont">
       <li 
         class="list-cont" 
@@ -79,10 +80,12 @@ import {
   patchStartItem,
   patchStartCourse
 } from '@/api/index';
+import KakaoMap from "@/components/common/API/KakaoMapsStart.vue";
 import Modal from '@/components/common/Modal.vue';
 
 export default {
   components: {
+    KakaoMap,
     Modal
   },
   data() {
