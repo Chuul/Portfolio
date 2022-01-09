@@ -19,7 +19,9 @@ router.route('/')
         category: req.body.category,
         name: req.body.name,
         url: req.body.url,
-        pos: req.body.pos
+        pos: req.body.pos,
+        pos: req.body.pos,
+        pos_latlng: req.body.pos_latlng
       });
       res.status(201).json(items)
     } catch (err) {

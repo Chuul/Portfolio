@@ -18,7 +18,6 @@ export default {
     this.list = this.$store.state.startCourse;
   },
   mounted() {
-    console.log('kakaoMapState의 mounted');
     if (window.kakao && window.kakao.maps) {
       this.initMap();
     } else {
@@ -31,29 +30,60 @@ export default {
     }
   },
   methods: {
+    transPosition() {
+      let tmp = this;
+      console.log('created에서 실행한 transPosition');
+      for (var i = 0; i < this.list.length; i ++) {
+        if(this.list[i].pos !== "") {
+          var geocoder = new kakao.maps.services.Geocoder();
+  
+          var callback = function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+              let obj = {y: result[0].y, x: result[0].x}
+              tmp.transpos.push(obj)
+              console.log('transPosition의 temp.transpos: ', tmp.transpos)
+            }
+          };
+          geocoder.addressSearch(this.list[i].pos, callback);
+        }
+      }
+    },
     initMap() {
-      const list = this.$store.state.startCourse;
+      this.transPosition();
+      var tmp = this;
       var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
       mapOption = { 
-          center: new kakao.maps.LatLng(37.533017, 126.981094), // 지도의 중심좌표
-          level: 8 // 지도의 확대 레벨
+          center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+          level: 7 // 지도의 확대 레벨
       };
 
       var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
         
       // 마커를 표시할 위치입니다 
       var positions = [];
-      for(let i = 0 ; i < list.length ; i++) {
-        if(list[i].pos_latlang !== '') {
-          let xPos = Number(list[i].pos_latlng.x)
-          let yPos = Number(list[i].pos_latlng.y)
-          const obj = {
-            content: '<div>'+this.list[i].name+'</div>',
-            latlng: new kakao.maps.LatLng(yPos, xPos)
-          }
-          positions.push(obj);
-        }
+      console.log('tmp.transpos: ', tmp.transpos);
+      for(let i = 0 ; i <tmp.trnaspos.length ; i++) {
+        let obj = {content: '1', latlng:new kakao.maps.LatLng(tmp.transpos.y,tmp.transpos.x)}
+        positions.push(obj)
       }
+    //   var positions =  [
+    //     {
+    //         content: '<div>카카오</div>', 
+    //         latlng: new kakao.maps.LatLng(33.450705, 126.570677)
+    //     },
+    //     {
+    //         content: '<div>생태연못</div>', 
+    //         latlng: new kakao.maps.LatLng(33.450936, 126.569477)
+    //     },
+    //     {
+    //         content: '<div>텃밭</div>', 
+    //         latlng: new kakao.maps.LatLng(33.450879, 126.569940)
+    //     },
+    //     {
+    //         content: '<div>근린공원</div>',
+    //         latlng: new kakao.maps.LatLng(33.451393, 126.570738)
+    //     }
+    // ];
 
       for (var i = 0; i < positions.length; i ++) {
         // 마커를 생성합니다

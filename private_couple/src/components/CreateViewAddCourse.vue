@@ -53,11 +53,28 @@ export default {
     }
   },
   methods : {
+    transPosition() {
+      let list = this.$store.state.checkedItems;
+      for (let i = 0; i < list.length; i ++) {
+        if(list[i].pos !== "") {
+          var geocoder = new kakao.maps.services.Geocoder();
+
+          var callback = function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+              let obj = {y: result[0].y, x: result[0].x}
+              list[i].pos_latlng = obj;
+            }
+          };
+          geocoder.addressSearch(list[i].pos, callback);
+        }
+      }
+      this.checkedItemList = list;
+    },
     getCheckedItems() {
       if(this.$store.state.checkedItems.length === 0) {
         this.checkFail = true;
       } else {
-        this.checkedItemList = this.$store.state.checkedItems;
+        this.transPosition();
       }
     },
     async storeCourse() {

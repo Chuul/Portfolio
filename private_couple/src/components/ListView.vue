@@ -45,7 +45,6 @@ export default {
     },
     startOneCourse(list) {
       this.$store.commit('storeStartCourse', list.course);
-      // await replaceStartCourse(list.course);
     }
   },
   created() {

@@ -40,6 +40,7 @@ export default {
           checked : false, 
           url : '',
           pos : '',
+          pos_latlng : ''
         }
         await postItem(obj);
         EventBus.$emit('refresh');
