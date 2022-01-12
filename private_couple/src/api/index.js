@@ -2,6 +2,10 @@ import axios from 'axios';
 
 const baseUrl = 'http://localhost:8800/';
 
+// login
+function loginUser() {
+  return axios.post()
+}
 // item
 function postItem(item) {
   return axios.post(baseUrl+'item', item);
@@ -68,6 +72,7 @@ function getLastList() {
 }
 
 export { 
+  loginUser,
   getItemList, 
   postItem, 
   deleteItem, 

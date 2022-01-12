@@ -3,22 +3,21 @@
 </template>
 
 <script>
+import getStartList from '@/api/index'
+
 export default {
   name: "KakaoMap",
   data() {
     return {
       map: null,
       infowindow: null,
-      list: [],
-      transpos: [],
+      // list: [],
     };
   },
   created() {
-    console.log('kakaoMapState의 created');
     this.list = this.$store.state.startCourse;
   },
   mounted() {
-    console.log('kakaoMapState의 mounted');
     if (window.kakao && window.kakao.maps) {
       this.initMap();
     } else {
@@ -31,8 +30,15 @@ export default {
     }
   },
   methods: {
-    initMap() {
-      const list = this.$store.state.startCourse;
+    async initMap() {
+      let list = [];
+      let tmp = this.$store.state.startCourse;
+      if(tmp.length !== 0) {
+        list = tmp;
+      } else {
+        const { data } = await getStartList();
+        list = data[0].start;
+      }
       var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
       mapOption = { 
           center: new kakao.maps.LatLng(37.533017, 126.981094), // 지도의 중심좌표
