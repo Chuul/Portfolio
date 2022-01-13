@@ -1,36 +1,29 @@
 <template>
-  <div>
-    <h1>로그인페이지</h1>
-    <form @submit.prevent="submitForm">
-      <div>
-        <label for="username">id: </label>
-        <input id="username" type="text" v-model="username" />
-      </div>
-       <div>
-        <label for="password"></label>
-        <input id="password" type="text" v-model="password">
-      </div>
-      <button type="submit">로그인</button>
-    </form>
+  <div class="loginView_cont">
+    <h1>Date With You</h1>
+    <kakaoLogin></kakaoLogin>
   </div>
 </template>
 
 <script>
+import kakaoLogin from '@/components/common/API/KakaoLogin'
+
 export default {
-  methods: {
-    data() {
-      return {
-        username: '',
-        password: ''
-      }
-    },
-    submitForm() {
-      
-    }
+  components: {
+    kakaoLogin
   }
 }
 </script>
 
-<style>
-
+<style scoped>
+h1 {
+  font-family: 'Dongle', sans-serif;
+  font-weight: 700;
+  font-size: 3em;
+}
+.loginView_cont {
+  margin-top: 5em;
+  height: 65vh;
+  text-align: center;
+}
 </style>

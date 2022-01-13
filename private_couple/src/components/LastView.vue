@@ -1,5 +1,6 @@
 <template>
   <section class="last-cont">
+    <ToolBar></ToolBar>
     <div class="item-cont">
       <h3>이벤트</h3>
       <li v-for="item in itemList" :key="item">
@@ -30,9 +31,13 @@
 </template>
 
 <script>
+import ToolBar from '@/components/common/ToolBar.vue'
 import { getLastList } from '@/api/index'
 
 export default {
+  components: {
+    ToolBar
+  },
   data() {
     return {
       itemList : [],

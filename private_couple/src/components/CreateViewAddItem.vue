@@ -1,6 +1,6 @@
 <template>
-  <section class="addItem-cont">
-    <div class="select-cont">
+  <section class="addItem_cont">
+    <div class="select_cont">
       <select v-model="selected">
         <option disabled value="">--카테고리--</option>
         <option v-for="option in options" :key="option.text">
@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style scoped>
-.addItem-cont {
+.addItem_cont {
   margin : 0;
   text-align: center;
   height: 50px;
@@ -61,7 +61,7 @@ export default {
   background: rgba(124, 198, 255, 0.247);
   box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
 }
-.select-cont {
+.select_cont {
   height: 100%;
   float : left;
   margin-left : 1em;

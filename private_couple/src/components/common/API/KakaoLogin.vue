@@ -1,14 +1,14 @@
 <template>
-  <div>
+  <header class="login_cont">
     <a id="custom-login-btn">
       <img
         src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
-        width="222"
+        width="160"
         alt="카카오 로그인 버튼"
         @click="kakaoLogin()"
       />
     </a>
-  </div>
+  </header>
 </template>
 
 <script>    
@@ -48,6 +48,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+img {
+  cursor: pointer;
+  padding: 1em;
+}
 </style>

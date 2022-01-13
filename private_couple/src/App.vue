@@ -1,21 +1,15 @@
 <template>
   <main>
-		<KakaoLogin></KakaoLogin>
-    <ToolBar></ToolBar>
     <router-view></router-view>
     <InformationView></InformationView>
   </main>
 </template>
 
 <script>
-import ToolBar from './components/ToolBar.vue'
 import InformationView from './components/InformationView.vue'
-import KakaoLogin from './components/common/API/KakaoLogin.vue'
  
 export default {
   components: {
-		KakaoLogin,
-    ToolBar,
     InformationView
   }
 }

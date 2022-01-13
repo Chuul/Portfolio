@@ -1,5 +1,6 @@
 <template>
   <section class="list-cont">
+    <ToolBar></ToolBar>
     <li v-for="list in courseList" :key="list.course">
       <div class="item-cont">
         <router-link to="/start">
@@ -23,10 +24,14 @@
 </template>
 
 <script>
+import ToolBar from '@/components/common/ToolBar.vue'
 import { getCourseList, deleteCourse  } from '@/api/index';
 import EventBus from '../utils/bus';
 
 export default {
+  components: {
+    ToolBar
+  },
   data() {
     return {
       courseList: [],
