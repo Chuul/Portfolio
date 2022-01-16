@@ -18,8 +18,8 @@ export default {
 <style scoped>
 h1 {
   font-family: 'Dongle', sans-serif;
-  font-weight: 700;
-  font-size: 3em;
+  font-weight: 700; 
+  font-size: 3em; 
 }
 .loginView_cont {
   margin-top: 5em;

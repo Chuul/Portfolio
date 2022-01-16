@@ -8,6 +8,7 @@ const itemRouter = require('./routes/item');
 const courseRouter = require('./routes/course');
 const startRouter = require('./routes/start');
 const lastRouter = require('./routes/last');
+const loginRouter = require('./routes/login');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(morgan('dev'));
 app.use('/', indexRouter);
+app.use('/login', loginRouter);
 app.use('/item', itemRouter);
 app.use('/course', courseRouter);
 app.use('/start', startRouter);

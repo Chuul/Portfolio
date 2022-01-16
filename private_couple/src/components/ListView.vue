@@ -41,7 +41,11 @@ export default {
   },
   methods : {
     async getData() {
-      const { data } = await getCourseList();
+      const userData = {
+        email: this.$store.state.email,
+        username: this.$store.state.username,
+      }
+      const { data } = await getCourseList(userData);
       this.courseList = data;
     },
     async deleteOneCourse(list) {

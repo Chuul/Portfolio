@@ -12,38 +12,35 @@
 </template>
 
 <script>    
-import loginUser from '@/api/index.js';
 export default {
-  // mounted() {
-  //   window.Kakao.init('59950035b359511b00edf96f7c7e9261');
-  // },
+  data() {
+    return {
+      data: []
+    }
+  },
   methods : {
     kakaoLogin() {
       window.Kakao.Auth.login({
         scope: 'profile_nickname, account_email', 
-        success: this.getProfile 
+        success: this.getProfile
       });
-      // const params = {
-      //   redirectUri:'http://localhost:8800',
-      // }
-      // window.Kakao.Auth.authorize(params)
     },
+    // 성공할 경우, 파라미터를 자동으로 받아온다
     getProfile(authObj) {
       console.log('authObj: ', authObj);
       window.Kakao.API.request({
         url: '/v2/user/me',
-        success: res => {
-          const kakao_account = res.kakao_account;
-          this.login(kakao_account);
-          console.log('kakao_account: ', kakao_account);
+        success: async (res) => {
+          const userData = {
+            username: res.kakao_account.profile.nickname,
+            email: res.kakao_account.email
+          }
+          // await loginUser(userData);
+          await this.$store.dispatch('LOGIN', userData);
+          this.$router.push('/creating');
         }
       })
-      this.$router.push('/creating');
     },
-    async login(kakao_account) {
-      let email = kakao_account.email;
-      await loginUser(email);
-    }
   }
 }
 </script>

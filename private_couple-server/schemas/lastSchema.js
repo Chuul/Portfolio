@@ -5,7 +5,7 @@ const lastSchema = new Schema({
   // category : {
   //   type: String,
   // },
-  name : {
+  createdBy : {
     type: String,
     required: true,
     unique: true,

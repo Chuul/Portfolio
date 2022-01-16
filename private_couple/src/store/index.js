@@ -1,5 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+// import {
+//   getAuthFromCookie,
+//   getUserFromCookie,
+//   saveAuthToCookie,
+//   saveUserToCookie,
+// } from '@/utils/cookies';
+import { loginUser } from '@/api/index';
 
 Vue.use(Vuex);
 
@@ -8,6 +15,9 @@ export const store = new Vuex.Store({
     itemListState : [],
     checkedItems : [],
     startCourse: [],
+    username: '',
+    email: '',
+    // token: getAuthFromCookie() || '',
   },
   mutations: {
     fetchItemList(state, itemList) {
@@ -58,24 +68,16 @@ export const store = new Vuex.Store({
     storeStartCourse(state, list) {
       state.startCourse = list;
     },
-    // filterListItem(state, name) {
-    //   if(name == '전체') {
-    //     for(let x of state.addCourse) {
-    //       x.filtered = true;
-    //       localStorage.removeItem(x);
-    //       localStorage.setItem(x, JSON.stringify(x));
-    //     }
-    //   } else {
-    //     for(let x of state.addCourse) {
-    //       if(x.category !== name) {
-    //         x.filtered = false;
-    //       } else {
-    //         x.filtered = true;
-    //       }
-    //       localStorage.removeItem(x);
-    //       localStorage.setItem(x, JSON.stringify(x));
-    //     }
-    //   }
-    // },
+    setUserData(state, data) {
+      state.username = data.username;
+      state.email = data.email;
+    },
   },
+  actions : {
+    async LOGIN({ commit }, userData) {
+      const { data } = await loginUser(userData);
+      commit('setUserData', data);
+      return data;
+    },
+  }
 })

@@ -3,36 +3,39 @@ const start = require('../schemas/startSchema');
 
 const router = express.Router();
 
-router.route('/')
-  .post(async(req, res, next) => {
-    try {
-      const result = await start.remove({})
-      res.json(result);
-      const starts = await start.create({
-        // name: new Date(),
-        start: req.body, 
-      });
-      res.status(201).json(starts)
-    } catch (err) {
-      console.log(err);
-      next(err)
-    }
-  })
-  .get(async(req, res, next) => {
-    try {
-      const list = await start.find({});
-      res.json(list);
-    } catch (error) {
-      console.log(error);
-      next(err);
-    }
-  })
+router.post('/', async(req, res, next) => {
+  try {
+    const starts = await start.find({
+      createdBy: req.body.createdBy
+    });
+    res.json(starts);
+  } catch (error) {
+    console.log(error);
+    next(err);
+  }
+})
+router.post('/insert', async(req, res, next) => {
+  try {
+    const result = await start.remove({
+      createdBy: req.body.createdBy
+    })
+    res.json(result);
+    const starts = await start.create({
+      createdBy: req.body.createdBy,
+      course: req.body.course, 
+    });
+    res.status(201).json(starts)
+  } catch (err) {
+    console.log(err);
+    next(err)
+  }
+})
 
 router.patch('/comment/:id', async(req, res, next) => {
   try {
     // const list = await start.find({});
-    const result = await start.updateOne({'start._id': req.params.id}, 
-      {'$set': {'start.$.comment': req.body.data.comment}});
+    const result = await start.updateOne({'course._id': req.params.id}, 
+      {'$set': {'course.$.comment': req.body.data.comment}});
     res.json(result);
   } catch (err) {
     console.log(err);
@@ -42,9 +45,9 @@ router.patch('/comment/:id', async(req, res, next) => {
 router.patch('/true/:id', async(req, res, next) => {
   try {
     const result = await start.updateOne({
-      'start._id': req.params.id
+      'course._id': req.params.id
     }, {
-      '$set': {'start.$.completed': true}
+      '$set': {'course.$.completed': true}
     });
     res.json(result);
   } catch (err) {
@@ -54,8 +57,8 @@ router.patch('/true/:id', async(req, res, next) => {
 })
 router.patch('/false/:id', async(req, res, next) => {
   try {
-    const result = await start.updateOne({'start._id': req.params.id}, 
-      {'$set': {'start.$.completed': false}});
+    const result = await start.updateOne({'course._id': req.params.id}, 
+      {'$set': {'course.$.completed': false}});
     res.json(result);
   } catch (err) {
     console.log(err);
@@ -65,9 +68,9 @@ router.patch('/false/:id', async(req, res, next) => {
 router.delete('/:id', async(req, res, next) => {
   try {
     const result = await start.updateOne({
-      'start._id': req.params.id
+      'course._id': req.params.id
     }, {
-      '$pull' : {"start" : {"_id": req.params.id}}
+      '$pull' : {"course" : {"_id": req.params.id}}
     });
     res.json(result);
   } catch (err) {
@@ -79,9 +82,9 @@ router.delete('/:id', async(req, res, next) => {
 router.patch('/url/:id', async(req, res, next) => {
   try {
     const result = await start.updateOne({
-      'start._id': req.params.id
+      'course._id': req.params.id
     }, {
-      '$set': {'start.$.url': req.body.data.urlText}
+      '$set': {'course.$.url': req.body.data.urlText}
     });
     res.json(result);
   } catch (err) {
@@ -92,9 +95,9 @@ router.patch('/url/:id', async(req, res, next) => {
 router.patch('/pos/:id', async(req, res, next) => {
   try {
     const result = await start.updateOne({
-      'start._id': req.params.id
+      'course._id': req.params.id
     }, {
-      '$set': {'start.$.pos': req.body.data.posText}
+      '$set': {'course.$.pos': req.body.data.posText}
     });
     res.json(result);
   } catch (err) {

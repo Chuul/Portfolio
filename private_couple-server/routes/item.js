@@ -3,33 +3,34 @@ const item = require('../schemas/itemSchema');
 
 const router = express.Router();
 
-router.route('/')
-  .get(async(req, res, next) => {
-    try {
-      const items = await item.find({});
-      res.json(items);
-    } catch (err) {
-      console.log(err);
-      next(err);
-    }
-  })
-  .post(async(req, res, next) => {
-    try {
-      const items = await item.create({
-        category: req.body.category,
-        name: req.body.name,
-        url: req.body.url,
-        pos: req.body.pos,
-        pos: req.body.pos,
-        pos_latlng: req.body.pos_latlng
-      });
-      res.status(201).json(items)
-    } catch (err) {
-      console.log(err);
-      next(err)
-    }
-  })
-
+router.post('/', async(req, res, next) => {
+  try {
+    const items = await item.find({
+      createdBy: req.body.email
+    });
+    res.json(items);
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+})
+router.post('/insert', async(req, res, next) => {
+  try {
+    const items = await item.create({
+      createdBy: req.body.createdBy,
+      category: req.body.category,
+      name: req.body.name,
+      url: req.body.url,
+      pos: req.body.pos,
+      pos: req.body.pos,
+      pos_latlng: req.body.pos_latlng
+    });
+    res.status(201).json(items)
+  } catch (err) {
+    console.log(err);
+    next(err)
+  }
+})
 router.delete('/:id', async(req, res, next) => {
   try {
     const result = await item.remove({_id: req.params.id})
@@ -39,7 +40,6 @@ router.delete('/:id', async(req, res, next) => {
     next(err);
   }
 })
-
 router.patch('/url/:id', async(req, res, next) => {
   try {
     const result = await item.updateOne({
@@ -66,7 +66,6 @@ router.patch('/pos/:id', async(req, res, next) => {
     next(err);
   }
 })
-
 router.get('/list', async(req, res, next) => {
   try {
     const list = await item.find({checked: true});

@@ -1,6 +1,6 @@
 <template>
   <section class="list-cont">
-    <li v-for="item in getItemList" :key="item.name">
+    <li v-for="item in ItemList" :key="item.name">
       <i 
         class="checkBtn far fa-check-circle" 
         @click="toggleOneItem(item)" 
@@ -58,7 +58,7 @@ export default {
     };
   },
   computed: {
-    getItemList() {
+    ItemList() {
       return this.$store.state.itemListState;
     }
   },
@@ -68,7 +68,11 @@ export default {
       this.getData();
     },
     async getData() {
-      const { data } = await getItemList();
+      const userData = {
+        email: this.$store.state.email,
+        username: this.$store.state.username,
+      }
+      const { data } = await getItemList(userData);
       this.$store.commit('fetchItemList', data);
     },
     async deleteOneItem(item) {
@@ -84,7 +88,7 @@ export default {
       await patchUrl(obj);
       this.getData();
       this.urlText = "";
-      this.showUrlModal = true;
+      this.showUrlModal = false;
     },
     async patchOnePos() {
       const obj = {

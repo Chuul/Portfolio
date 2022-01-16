@@ -46,7 +46,10 @@ export default {
   },
   methods : {
     async getData() {
-      const { data } = await getLastList();
+      const userData = {
+        createdBy: this.$store.state.email
+      }
+      const { data } = await getLastList(userData);
       this.itemList = data[0].item;
       this.courseList = data[1].course;
     },

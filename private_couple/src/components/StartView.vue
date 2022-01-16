@@ -104,17 +104,29 @@ export default {
   },
   methods : {
     async startOneCourse() {
-      const list = this.$store.state.startCourse;
-      if(list.length === 0) {
+      const obj = {
+        createdBy: this.$store.state.email,
+        course: this.$store.state.startCourse
+      }
+      if(obj.course.length === 0) {
         this.getData();
       } else {
-        await replaceStartCourse(list);
-        this.startList = list;
+        await replaceStartCourse(obj);
+        this.startList = obj.course;
       }
     },
     async getData() {
-      const { data } = await getStartList();
-      this.startList = data[0].start;
+      const userData = {
+        createdBy: this.$store.state.email
+      }
+      const { data } = await getStartList(userData);
+      console.log('data: ', data);
+      this.startList = data[0].course;
+    },
+    setupItem(item) {
+      delete item.completed;
+      delete item._id;
+      item.comment = this.commentText;
     },
     async patchOneComment() {
       const item = this.item;
@@ -125,10 +137,12 @@ export default {
       await patchComment(obj);
       const id = item._id;
       await toggleTrueItem(id);
-      delete item.completed;
-      delete item._id;
-      item.comment = this.commentText;
-      patchStartItem(item);
+      this.setupItem(item)
+      const userData = {
+        createdBy: this.$store.state.email,
+        item: item
+      }
+      patchStartItem(userData);
       this.commentText = "";
       this.showModal = false;
       this.getData();

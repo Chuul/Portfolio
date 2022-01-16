@@ -77,17 +77,25 @@ export default {
         this.transPosition();
       }
     },
+    setupCourse(course) {
+      course.forEach( (item) => {
+        delete item.checked;
+        delete item.createdBy;
+        item.completed = false;
+        item.comment = "";
+      })
+    },
     async storeCourse() {
       if(this.$store.state.checkedItems === []) {
         this.showFail = true;
       } else {
         let course = this.$store.state.checkedItems;
-        course.forEach( (item) => {
-          delete item.checked;
-          item.completed = false;
-          item.comment = "";
-        })
-        await postCourse(course);
+        this.setupCourse(course);
+        const obj = {
+          createdBy : this.$store.state.email,
+          course : course,
+        }
+        await postCourse(obj);
         this.checkedItemList = [];
         this.showSuccess = true;
       }

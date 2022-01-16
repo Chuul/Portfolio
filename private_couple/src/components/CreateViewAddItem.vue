@@ -9,7 +9,7 @@
       </select>
     </div>
     <input type="text" v-model="newItem" @keyup.enter="addItem">
-    <div class="btn-cont" @click="addItem">
+    <div class="btn_cont" @click="addItem">
       <i class="addBtn fas fa-plus"></i>
     </div>
   </section>
@@ -35,6 +35,7 @@ export default {
     async addItem() {
       if(this.newItem !== '') {
         const obj = { 
+          createdBy: this.$store.state.email,
           category : this.selected, 
           name : this.newItem,
           checked : false, 
@@ -75,7 +76,7 @@ select {
   font-size: 1.5em;
   font-weight: 300;
 }
-.addItem-cont input {
+.addItem_cont input {
   text-align: center;
   width: 60%;
   height: 60%;
@@ -86,7 +87,7 @@ select {
   border-radius: 0.5em;
   cursor: text;
 }
-.btn-cont {
+.btn_cont {
   display: block;
   float : right;
   background: linear-gradient(to right, #6478FB, #8763FB);

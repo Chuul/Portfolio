@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const itemSchema = new Schema({
+  createdBy: {
+    type: String
+  },
   category : {
     type: String,
   },
