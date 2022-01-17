@@ -15,11 +15,10 @@ router.post('/', async(req, res, next) => {
   }
 })
 router.patch('/item', async(req, res, next) => {
-  console.log('req.body: ', req.body)
   const item = await last.find({
-    createdBy: req.body.createdBy
+    createdBy: req.body.createdBy,
   })
-  if(this.item === []) {
+  if(!item.length) {
     try {
       const lasts = await last.create({
         createdBy: req.body.createdBy,
@@ -32,7 +31,6 @@ router.patch('/item', async(req, res, next) => {
     }
   } else {
     try {
-      console.log('req.body!!!!!!!!!!!!:', req.body);
       const lasts = await last.updateOne({
         createdBy: req.body.createdBy
       }, { 
@@ -46,18 +44,35 @@ router.patch('/item', async(req, res, next) => {
 
   }
 })
-// router.patch('/course', async(req, res, next) => {
-//   try {
-//     const lasts = await last.updateOne({
-//       name: 'course',
-//     }, { 
-//       $push: {course: req.body}
-//     });
-//     res.status(201).json(lasts)
-//   } catch (err) {
-//     console.log(err);
-//     next(err)
-//   }
-// })
+router.patch('/course', async(req, res, next) => {
+  const item = await last.find({
+    createdBy: req.body.createdBy
+  })
+  if(!item.length) {
+    try {
+      const lasts = await last.create({
+        createdBy: req.body.createdBy,
+        course: req.body.course
+      })
+      res.status(201).json(lasts);
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  } else {
+    try {
+      const lasts = await last.updateOne({
+        createdBy: req.body.createdBy
+      }, { 
+        $push: {course: req.body.course}
+      });
+      res.status(201).json(lasts)
+    } catch (err) {
+      console.log(err);
+      next(err)
+    }
+
+  }
+})
 
 module.exports = router;

@@ -120,7 +120,6 @@ export default {
         createdBy: this.$store.state.email
       }
       const { data } = await getStartList(userData);
-      console.log('data: ', data);
       this.startList = data[0].course;
     },
     setupItem(item) {
@@ -181,11 +180,14 @@ export default {
       this.showPosModal = false;
     },
     async patchOneComplete() {
-      const course = {
-        list: this.startList,
-        completeText: this.completeText
+      const userData = {
+        createdBy: this.$store.state.email,
+        course: {
+          list: this.startList,
+          comment: this.completeText  
+        },
       }
-      await patchStartCourse(course);
+      await patchStartCourse(userData);
       this.showCompleteModal = false;
       this.completeText = "";
     },
@@ -219,15 +221,8 @@ export default {
     },
   },
   created() {
-    console.log('created');
     this.startOneCourse();
   },
-  mounted() {
-    console.log('mounted');
-  },
-  updated() {
-    console.log('updated');
-  }
 }
 </script>
 

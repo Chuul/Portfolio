@@ -57,6 +57,7 @@ export default {
   width: 10em;
   margin: 0px auto;
   padding: 2%;
+  text-align: center;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
@@ -67,7 +68,7 @@ export default {
 .modal-header {
   margin-top: 0;
   font-weight: 500;
-  color: #42b983;
+  color : rgba(124, 198, 255, 0.8);
 }
 
 .modal-body {

@@ -1,11 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-// import {
-//   getAuthFromCookie,
-//   getUserFromCookie,
-//   saveAuthToCookie,
-//   saveUserToCookie,
-// } from '@/utils/cookies';
 import { loginUser } from '@/api/index';
 
 Vue.use(Vuex);
@@ -17,7 +11,6 @@ export const store = new Vuex.Store({
     startCourse: [],
     username: '',
     email: '',
-    // token: getAuthFromCookie() || '',
   },
   mutations: {
     fetchItemList(state, itemList) {

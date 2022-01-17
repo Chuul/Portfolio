@@ -1,5 +1,6 @@
 <template>
   <section class="last-cont">
+    <Header></Header>
     <ToolBar></ToolBar>
     <div class="item-cont">
       <h3>이벤트</h3>
@@ -23,7 +24,7 @@
           </li>
         </div>
         <span>
-          {{ course.completeText }}
+          {{ course.comment }}
         </span>
       </li>
     </div>
@@ -31,11 +32,13 @@
 </template>
 
 <script>
+import Header from '@/components/common/Header.vue';
 import ToolBar from '@/components/common/ToolBar.vue'
 import { getLastList } from '@/api/index'
 
 export default {
   components: {
+    Header,
     ToolBar
   },
   data() {
@@ -51,7 +54,7 @@ export default {
       }
       const { data } = await getLastList(userData);
       this.itemList = data[0].item;
-      this.courseList = data[1].course;
+      this.courseList = data[0].course;
     },
   },
   created() {
@@ -72,8 +75,7 @@ h3 {
 }
 .last-cont {
   height: 80vh;
-  margin: 2em;
-  padding : 1em;
+  margin: 0 2em 2em 2em;
 }
 .item-cont {
   text-align: center;

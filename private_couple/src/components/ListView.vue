@@ -1,5 +1,6 @@
 <template>
   <section class="list-cont">
+    <Header></Header>
     <ToolBar></ToolBar>
     <li v-for="list in courseList" :key="list.course">
       <div class="item-cont">
@@ -24,12 +25,14 @@
 </template>
 
 <script>
+import Header from '@/components/common/Header.vue';
 import ToolBar from '@/components/common/ToolBar.vue'
 import { getCourseList, deleteCourse  } from '@/api/index';
 import EventBus from '../utils/bus';
 
 export default {
   components: {
+    Header,
     ToolBar
   },
   data() {
@@ -58,14 +61,9 @@ export default {
   },
   created() {
     this.getData();
-    console.log('listView에서 mounted');
-},
-  mounted() {
-    console.log('listView에서 mounted');
   },
   updated() {
     EventBus.$on('refresh', () => this.getData());
-    console.log('ListView에서의 updated');
   },
 }
 </script>
@@ -76,7 +74,7 @@ li {
 }
 .list-cont {
   height: 80vh;
-  margin: 2em;
+  margin: 0 2em 2em 2em;
 }
 .fa-heart-square {
   float: left;

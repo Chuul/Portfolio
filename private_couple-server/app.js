@@ -1,4 +1,5 @@
 const express = require('express');
+const history = require('connect-history-api-fallback');
 const path = require('path');
 const morgan = require('morgan');
 
@@ -14,6 +15,7 @@ const app = express();
 
 app.set('port', process.env.PORT || 8800);
 app.set('view engine', 'html');
+app.use(history());
 connect();
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());

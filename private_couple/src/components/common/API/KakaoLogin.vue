@@ -31,6 +31,7 @@ export default {
       window.Kakao.API.request({
         url: '/v2/user/me',
         success: async (res) => {
+          console.log('res: ', res);
           const userData = {
             username: res.kakao_account.profile.nickname,
             email: res.kakao_account.email

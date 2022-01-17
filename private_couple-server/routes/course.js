@@ -16,7 +16,6 @@ router.post('/', async(req, res, next) => {
 })
 router.post('/insert', async(req, res, next) => {
   try {
-    console.log('req.body!!!!!!!!!!!:', req.body)
     const courses = await course.create({
       name: new Date(),
       createdBy: req.body.createdBy,

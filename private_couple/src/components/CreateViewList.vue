@@ -122,7 +122,6 @@ export default {
   },
   updated() {
     EventBus.$on('refresh', () => this.getData());
-    console.log('view list에서의 updated');
   },
 }
 </script>

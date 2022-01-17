@@ -61,15 +61,14 @@ function patchStartPos(payload) {
   return axios.patch(baseUrl+'start'+`/pos/${payload.id}`, {data: {posText: payload.posText}});
 }
 // last
-function patchStartItem(userData) {
-  console.log('item: ', userData);
-  return axios.patch(baseUrl+'last/item', userData);
-}
-function patchStartCourse(course) {
-  return axios.patch(baseUrl+'last/course', course);
-}
 function getLastList(userData) {
   return axios.post(baseUrl+'last', userData);
+}
+function patchStartItem(userData) {
+  return axios.patch(baseUrl+'last/item', userData);
+}
+function patchStartCourse(userData) {
+  return axios.patch(baseUrl+'last/course', userData);
 }
 
 export { 
@@ -91,7 +90,7 @@ export {
   deleteStartItem,
   patcStarthUrl,
   patchStartPos,
+  getLastList,
   patchStartItem,
   patchStartCourse,
-  getLastList
 };

@@ -5,6 +5,7 @@ import CreateView from '@/components/CreateView'
 import ListView from '@/components/ListView.vue'
 import LastView from '@/components/LastView.vue'
 import StartView from '@/components/StartView.vue'
+import NotFoundView from '@/components/NotFoundView.vue'
 
 Vue.use(VueRouter);
 
@@ -28,12 +29,16 @@ export const router = new VueRouter({
       component : ListView
     },
     {
-      path : '/rating',
+      path : '/last',
       component : LastView
     },
     {
       path : '/start',
       component : StartView
-    }
+    },
+    {
+      path: '*',
+      component: NotFoundView
+    },
   ]
 })

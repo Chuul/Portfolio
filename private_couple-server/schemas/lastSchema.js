@@ -2,9 +2,6 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const lastSchema = new Schema({
-  // category : {
-  //   type: String,
-  // },
   createdBy : {
     type: String,
     required: true,
@@ -16,15 +13,6 @@ const lastSchema = new Schema({
   course: {
     type: Array
   }
-  // comment : {
-  //   type: String
-  // },
-  // url : {
-  //   type: String,
-  // },
-  // pos : {
-  //   type: String,
-  // },
 });
 
 module.exports = mongoose.model('last', lastSchema);
