@@ -27,17 +27,7 @@ export default {
     };
   },
   mounted() {
-    if (window.kakao && window.kakao.maps) {
-      this.initMap();
-      // this.searchFunc();
-    } else {
-      const script = document.createElement("script");
-      // global kakao 
-      script.onload = () => kakao.maps.load(this.initMap);
-      script.src =
-        "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=59950035b359511b00edf96f7c7e9261&libraries=services";
-      document.head.appendChild(script);
-    }
+    this.initMap();
   },
   methods: {
     // 지도를 띄우는 function

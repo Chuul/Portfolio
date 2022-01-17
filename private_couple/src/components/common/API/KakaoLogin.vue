@@ -26,12 +26,10 @@ export default {
       });
     },
     // 성공할 경우, 파라미터를 자동으로 받아온다
-    getProfile(authObj) {
-      console.log('authObj: ', authObj);
+    getProfile() {
       window.Kakao.API.request({
         url: '/v2/user/me',
         success: async (res) => {
-          console.log('res: ', res);
           const userData = {
             username: res.kakao_account.profile.nickname,
             email: res.kakao_account.email

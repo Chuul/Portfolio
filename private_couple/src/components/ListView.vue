@@ -27,7 +27,11 @@
 <script>
 import Header from '@/components/common/Header.vue';
 import ToolBar from '@/components/common/ToolBar.vue'
-import { getCourseList, deleteCourse  } from '@/api/index';
+import { 
+  getCourseList, 
+  deleteCourse, 
+  replaceStartCourse  
+} from '@/api/index';
 import EventBus from '../utils/bus';
 
 export default {
@@ -56,7 +60,12 @@ export default {
       this.getData();
     },
     startOneCourse(list) {
+      const userData = {
+          createdBy: this.$store.state.email,
+          course: list.course 
+        }
       this.$store.commit('storeStartCourse', list.course);
+      replaceStartCourse(userData);
     }
   },
   created() {

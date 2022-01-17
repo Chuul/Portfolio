@@ -3,45 +3,25 @@
 </template>
 
 <script>
-import getStartList from '@/api/index'
-
 export default {
   name: "KakaoMap",
   data() {
     return {
       map: null,
       infowindow: null,
-      // list: [],
     };
   },
   created() {
     this.list = this.$store.state.startCourse;
   },
   mounted() {
-    if (window.kakao && window.kakao.maps) {
-      this.initMap();
-    } else {
-      const script = document.createElement("script");
-      // global kakao 
-      script.onload = () => kakao.maps.load(this.initMap);
-      script.src =
-        "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=59950035b359511b00edf96f7c7e9261&libraries=services";
-      document.head.appendChild(script);
-    }
+    this.initMap();
   },
   methods: {
     async initMap() {
-      let list = [];
-      let tmp = this.$store.state.startCourse;
-      if(tmp.length !== 0) {
-        list = tmp;
-      } else {
-        const { data } = await getStartList();
-        list = data[0].start;
-      }
       var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
       mapOption = { 
-          center: new kakao.maps.LatLng(37.533017, 126.981094), // 지도의 중심좌표
+        center: new kakao.maps.LatLng(37.533017, 126.981094), // 지도의 중심좌표
           level: 8 // 지도의 확대 레벨
       };
 
@@ -49,6 +29,8 @@ export default {
         
       // 마커를 표시할 위치입니다 
       var positions = [];
+      let list = this.$store.state.startCourse;
+      console.log('list: ', list);
       for(let i = 0 ; i < list.length ; i++) {
         if(list[i].pos_latlang !== '') {
           let xPos = Number(list[i].pos_latlng.x)

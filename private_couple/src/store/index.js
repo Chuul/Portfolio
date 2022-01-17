@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { loginUser } from '@/api/index';
+import { loginUser, getStartCourse } from '@/api/index';
+import persistedstate from 'vuex-persistedstate';
 
 Vue.use(Vuex);
 
@@ -65,6 +66,9 @@ export const store = new Vuex.Store({
       state.username = data.username;
       state.email = data.email;
     },
+    setStartCourse(state, data) {
+      state.startCourse = data.course;
+    },
   },
   actions : {
     async LOGIN({ commit }, userData) {
@@ -72,5 +76,15 @@ export const store = new Vuex.Store({
       commit('setUserData', data);
       return data;
     },
-  }
+    async START({ commit }, userData) {
+      const { data } = await getStartCourse(userData);
+      commit('setStartCourse', data[0]);
+      return data 
+    },
+  },
+  plugins: [
+    persistedstate({
+      paths: ['username', 'email', 'startCourse']
+    })
+  ]
 })

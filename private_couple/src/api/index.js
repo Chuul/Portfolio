@@ -36,7 +36,8 @@ function deleteCourse(name) {
   return axios.delete(baseUrl+'course'+`/${name}`)
 }
 // start
-function getStartList(userData) {
+function getStartCourse(userData) {
+  console.log('여기');
   return axios.post(baseUrl+'start', userData);
 }
 function replaceStartCourse(userData) {
@@ -83,7 +84,7 @@ export {
   getCourseList,
   deleteCourse,
   replaceStartCourse,
-  getStartList,
+  getStartCourse,
   patchComment,
   toggleTrueItem,
   toggleFalseItem,

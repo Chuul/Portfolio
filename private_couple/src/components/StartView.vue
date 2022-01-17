@@ -69,8 +69,7 @@
 
 <script>
 import { 
-  replaceStartCourse, 
-  getStartList, 
+  // replaceStartCourse, 
   patchComment, 
   toggleTrueItem, 
   toggleFalseItem, 
@@ -102,25 +101,26 @@ export default {
       showCompleteModal: false
     }
   },
+  computed: {
+
+  },
   methods : {
-    async startOneCourse() {
-      const obj = {
-        createdBy: this.$store.state.email,
-        course: this.$store.state.startCourse
-      }
-      if(obj.course.length === 0) {
-        this.getData();
-      } else {
-        await replaceStartCourse(obj);
-        this.startList = obj.course;
-      }
+    startOneCourse() {
+      this.startList = this.$store.state.startCourse;
+      // let course = this.$store.state.startCourse
+      // console.log('course: ', course);
+      // if(course.length === 0) {
+      //   this.getData();
+      // } else {
+      //   this.startList = course;
+      // }
     },
     async getData() {
       const userData = {
         createdBy: this.$store.state.email
       }
-      const { data } = await getStartList(userData);
-      this.startList = data[0].course;
+      const response = await this.$store.dispatch('START', userData);
+      this.startList = response[0].course;
     },
     setupItem(item) {
       delete item.completed;
