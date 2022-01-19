@@ -19,15 +19,15 @@
       </li> 
     </draggable>
     <button class="storeBtn" @click="storeCourse">코스 저장</button>
-    <Modal v-if="checkFail" @close="closeCheck">
+    <!-- Modal -->
+    <Modal v-if="showCheck" @close="closeCheck">
       <h2 slot="header">최소 1개 이상의 아이템을 선택해주세요</h2>
     </Modal>
     <Modal v-if="showSuccess" @close="closeSuccess">
       <h2 slot="header">코스 저장 완료</h2>
     </Modal>
     <Modal v-if="showFail" @close="closeFail">
-      <h2 slot="header">코스 저장 실패</h2>
-      <div slot="body">코스 생성 후 저장해주세요</div>
+      <h2 slot="header">코스 생성 후 저장해주세요</h2>
     </Modal>
   </section>
 </template>
@@ -47,14 +47,14 @@ export default {
       checkedItemList: [],
       enabled: true,
       dragging: false,
-      checkFail: false,
+      showCheck: false,
       showSuccess: false,
       showFail: false,
     }
   },
   methods : {
-    transPosition() {
-      let list = this.$store.state.checkedItems;
+    // 지번 주소를 좌표값으로 바꾸는 함수(카카오 API 참조)
+    transPosition(list) {
       for (let i = 0; i < list.length; i ++) {
         if(list[i].pos !== "") {
           var geocoder = new kakao.maps.services.Geocoder();
@@ -70,11 +70,13 @@ export default {
       }
       this.checkedItemList = list;
     },
+    // 위에서 체크된 아이템을 분기 처리하는 함수
     getCheckedItems() {
-      if(this.$store.state.checkedItems.length === 0) {
-        this.checkFail = true;
+      let checkedList = this.$store.state.checkedItems;
+      if(checkedList.length === 0) {
+        this.showCheck = true;
       } else {
-        this.transPosition();
+        this.transPosition(checkedList);
       }
     },
     setupCourse(course) {
@@ -82,26 +84,28 @@ export default {
         delete item.checked;
         delete item.createdBy;
         item.completed = false;
-        item.comment = "";
+        item.comment = " ";
       })
+      const obj = {
+        createdBy : this.$store.state.email,
+        course : course,
+      }
+      return obj;
     },
     async storeCourse() {
-      if(this.$store.state.checkedItems === []) {
+      let list = this.checkedItemList;
+      if(list.length === 0) {
         this.showFail = true;
       } else {
-        let course = this.$store.state.checkedItems;
-        this.setupCourse(course);
-        const obj = {
-          createdBy : this.$store.state.email,
-          course : course,
-        }
+        let obj = this.setupCourse(list);
+        console.log('return된 obj: ', obj);
         await postCourse(obj);
         this.checkedItemList = [];
         this.showSuccess = true;
       }
     },
     closeCheck() {
-      this.checkFail = false;
+      this.showCheck = false;
     },
     closeSuccess() {
       this.showSuccess = false;
