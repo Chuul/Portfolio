@@ -72,11 +72,11 @@ export default {
     },
     // 위에서 체크된 아이템을 분기 처리하는 함수
     getCheckedItems() {
-      let checkedList = this.$store.state.checkedItems;
-      if(checkedList.length === 0) {
+      let list = this.$store.state.checkedList;
+      if(list.length === 0) {
         this.showCheck = true;
       } else {
-        this.transPosition(checkedList);
+        this.transPosition(list);
       }
     },
     setupCourse(course) {

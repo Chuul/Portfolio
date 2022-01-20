@@ -1,6 +1,6 @@
 <template>
   <section class="course-cont">
-    <h2>코스 진행중...</h2>
+    <h2>진행중...</h2>
     <KakaoMap></KakaoMap>
     <div class="main-cont">
       <li 

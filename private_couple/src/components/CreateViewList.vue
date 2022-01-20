@@ -1,38 +1,39 @@
 <template>
-  <section class="list-cont">
+  <section class="list_cont">
     <li v-for="item in ItemList" :key="item.name">
       <i 
-        class="checkBtn far fa-check-circle" 
+        class="toggle_Btn far fa-check-circle" 
         @click="toggleOneItem(item)" 
-        :class="{checkBtnChecked: item.checked}"
+        :class="{checked_Btn: item.checked}"
       />
       {{ item.name }}
       <i 
-        class="deleteBtn far fa-trash-alt" 
+        class="basic_Btn far fa-trash-alt" 
         @click="deleteOneItem(item)" 
       />
       <i 
-        class="posBtn fas fa-map-marked-alt" 
+        class="basic_Btn fas fa-map-marked-alt" 
         @click="openPosForm(item)" 
-        :class="{checkBtnChecked: item.pos !== ''}"
+        :class="{checked_Btn: item.pos.length>0}"
       />
       <i 
-        class="urlBtn far fa-window-restore" 
+        class="basic_Btn far fa-window-restore" 
         @click="openUrlForm(item)" 
-        :class="{checkBtnChecked: item.url !== ''}"
+        :class="{checked_Btn: item.url.length>0}"
       />
     </li>
+    <!-- Modal -->
     <Modal v-if="showUrlModal" @close="closeUrlForm()">
       <h2 slot="header">URL 입력</h2>
       <form slot="body">  
-        <input type="text" id="urlInput" v-model="urlText">
+        <input type="text" id="urlInput" v-model="textArea">
         <button @click.prevent="patchOneUrl()">입력</button>
       </form>
     </Modal>
     <Modal v-if="showPosModal" @close="closePosForm()">
       <h2 slot="header">Position 입력</h2>
       <form slot="body">
-        <input type="text" id="posInput" v-model="posText">
+        <input type="text" id="posInput" v-model="textArea">
         <button @click.prevent="patchOnePos()">입력</button>
       </form>
     </Modal>
@@ -40,8 +41,6 @@
 </template>
 
 <script>
-import { getItemList, deleteItem, patchUrl, patchPos } from '@/api/index'
-import EventBus from '../utils/bus';
 import Modal from '@/components/common/Modal.vue';
 
 export default {
@@ -50,8 +49,7 @@ export default {
   },
   data() {
     return {
-      urlText: "",
-      posText: "",
+      textArea: "",
       item: {},
       showUrlModal: false,
       showPosModal: false,
@@ -59,47 +57,36 @@ export default {
   },
   computed: {
     ItemList() {
-      return this.$store.state.itemListState;
-    }
+      return this.$store.state.itemList;
+    },
   },
   methods: {
     toggleOneItem(item) {
-      this.$store.commit('toggleItem', item);
-      this.getData();
+      this.$store.commit('TOGGLE_ITEM', item);
+      this.$store.dispatch('FETCH_ITEM_LIST');
     },
-    async getData() {
-      const userData = {
-        email: this.$store.state.email,
-        username: this.$store.state.username,
-      }
-      const { data } = await getItemList(userData);
-      this.$store.commit('fetchItemList', data);
+    deleteOneItem(item) {
+      this.$store.dispatch('DELETE_ITEM', item);
     },
-    async deleteOneItem(item) {
-      await deleteItem(item._id);
-      this.$store.commit('deleteCheckedItems', item.name)
-      this.getData();
-    },
-    async patchOneUrl() {
+    setObj() {
       const obj = {
         id: this.item._id,
-        urlText: this.urlText
+        textArea: this.textArea
       };
-      await patchUrl(obj);
-      this.getData();
-      this.urlText = "";
+      this.textArea = "";
+      return obj;
+    },
+    patchOneUrl() {
+      const obj = this.setObj();
+      this.$store.dispatch('PATCH_ITEM_URL', obj)
       this.showUrlModal = false;
     },
-    async patchOnePos() {
-      const obj = {
-        id: this.item._id,
-        posText: this.posText
-      };
-      await patchPos(obj);
-      this.getData();
-      this.posText = "";
+    patchOnePos() {
+      const obj = this.setObj();
+      this.$store.dispatch('PATCH_ITEM_POS', obj)
       this.showPosModal = false;
     },
+    // Modal창 on/off
     openUrlForm(item) {
       this.showUrlModal = true;
       this.item = item;
@@ -110,46 +97,21 @@ export default {
     },
     closeUrlForm() {
       this.showUrlModal = false;
-      this.urlText = "";
+      this.textArea = "";
     },
     closePosForm() {
       this.showPosModal = false;
-      this.posText = "";
+      this.textArea = "";
     },
   },
   created() {
-    this.getData();
-  },
-  updated() {
-    EventBus.$on('refresh', () => this.getData());
+    this.$store.dispatch('FETCH_ITEM_LIST');
   },
 }
 </script>
 
 <style scoped>
-a {
-  font-family: 'Noto Sans KR', sans-serif;
-  font-weight: 500;
-}
-a::after {
-  display: inline-block;
-  content : '';
-  width: 1px;
-  height: 0.8em;
-  margin : 0 1em;
-  background : black;
-}
-a:last-child::after {
-  display: none;
-}
-a:active {
-  color : rgba(124, 198, 255, 0.8);
-}
-a:hover {
-  color : rgba(124, 198, 255, 0.8);
-  cursor : pointer;
-}
-.list-cont {
+.list_cont {
   margin : 0;
 }
 li {
@@ -166,31 +128,19 @@ li {
   border-radius: 0.5em;
   box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
 }
-.checkBtn {
+.toggle_Btn {
   float: left;
   margin : 0.5em;
   color : rgba(124, 198, 255, 0.8);
   cursor : pointer;
 }
-.checkBtnChecked {
+.basic_Btn {
+  float: right;
+  margin: 0.5em;
+  color : rgba(124, 198, 255, 0.8);
+  cursor : pointer;
+}
+.checked_Btn {
   color: #8763FB;
-}
-.urlBtn {
-  color: #e1e1fd;
-  float: right;
-  margin: 0.5em;
-  cursor : pointer;
-}
-.posBtn {
-  color: #e1e1fdc5;
-  float: right;
-  margin: 0.5em;
-  cursor : pointer;
-}
-.deleteBtn {
-  color: #e1e1fdc5;
-  float: right;
-  margin: 0.5em;
-  cursor : pointer;
 }
 </style>

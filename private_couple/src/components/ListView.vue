@@ -1,23 +1,22 @@
 <template>
-  <section class="list-cont">
+  <section class="list_cont">
     <Header></Header>
     <ToolBar></ToolBar>
-    <li v-for="list in courseList" :key="list.course">
-      <div class="item-cont">
+    <li v-for="list in CourseList" :key="list.course">
+      <div class="item_cont">
+        <!-- StartView 진입 -->
         <router-link to="/start">
           <i class="fas fa-heart-square" @click="startOneCourse(list)"></i>
         </router-link>
-        <li class="name-cont" v-for="item in list.course" :key="item.name">
+        <!-- // -->
+        <li class="name_cont" v-for="item in list.course" :key="item.name">
           {{ item.name }}
-          <div class="arrow-cont">
+          <div class="arrow_cont">
             <i class="fas fa-arrow-down"></i>
           </div>
         </li>
-        <span class="remove-cont" @click="deleteOneCourse(list)">
+        <span class="remove_cont" @click="deleteOneCourse(list)">
           <i class="far fa-trash-alt"></i>
-        </span>
-        <span class="moveListBtn">  
-          <i class="far fa-line-height"></i>
         </span>
       </div>
     </li>
@@ -27,52 +26,27 @@
 <script>
 import Header from '@/components/common/Header.vue';
 import ToolBar from '@/components/common/ToolBar.vue'
-import { 
-  getCourseList, 
-  deleteCourse, 
-  replaceStartCourse  
-} from '@/api/index';
-import EventBus from '../utils/bus';
 
 export default {
   components: {
     Header,
     ToolBar
   },
-  data() {
-    return {
-      courseList: [],
-      enabled: true,
-      dragging: false,
+  computed: {
+    CourseList() {
+      return this.$store.state.courseList;
     }
   },
   methods : {
-    async getData() {
-      const userData = {
-        email: this.$store.state.email,
-        username: this.$store.state.username,
-      }
-      const { data } = await getCourseList(userData);
-      this.courseList = data;
-    },
-    async deleteOneCourse(list) {
-      await deleteCourse(list.name);
-      this.getData();
-    },
     startOneCourse(list) {
-      const userData = {
-          createdBy: this.$store.state.email,
-          course: list.course 
-        }
-      this.$store.commit('storeStartCourse', list.course);
-      replaceStartCourse(userData);
+      this.$store.dispatch('START_COURSE', list)
+    },
+    deleteOneCourse(list) {
+      this.$store.dispatch('DELETE_COURSE', list.name);
     }
   },
   created() {
-    this.getData();
-  },
-  updated() {
-    EventBus.$on('refresh', () => this.getData());
+    this.$store.dispatch('FETCH_COURSE_LIST');
   },
 }
 </script>
@@ -81,7 +55,7 @@ export default {
 li {
   list-style: none;
 }
-.list-cont {
+.list_cont {
   height: 80vh;
   margin: 0 2em 2em 2em;
 }
@@ -90,7 +64,7 @@ li {
   color : rgba(124, 198, 255, 0.8);
   cursor : pointer
 }
-.item-cont {
+.item_cont {
   text-align: center;
   margin: 15px;
   padding : 1rem;
@@ -98,35 +72,11 @@ li {
   border-radius: 0.5em;
   box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
 }
-.moveListBtn {
-  float : right;
-  margin-right: 1em;
-}
-/* .checkBtn {
-  float: left;
-  margin : 0.5em;
-  color : rgba(124, 198, 255, 0.8);
-  cursor : pointer
-} */
-.name-cont:nth-last-child(3) .arrow-cont {
+.name_cont:nth-last-child(2) .arrow_cont {
   display: none;
 }
-.arrow-cont {
+.arrow_cont {
   margin: 0.5em;
-}
-.linkText {
-  color : #ee27bc;
-  font-weight: bold;
-}
-.moveListBtn {
-  float : right;
-  margin-right: 1em;
-}
-.moveListBtn i {
-  color: rgb(86, 153, 253);
-}
-.moveListBtn i:hover {
-  cursor: pointer;
 }
 .fa-trash-alt {
   width: 1em;

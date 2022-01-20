@@ -16,9 +16,6 @@
 </template>
 
 <script>
-import { postItem } from '../api/index';
-import EventBus from '../utils/bus';
-
 export default {
   data() {
     return {
@@ -32,7 +29,7 @@ export default {
     }
   },
   methods : {
-    async addItem() {
+    addItem() {
       if(this.newItem !== '') {
         const obj = { 
           createdBy: this.$store.state.email,
@@ -43,8 +40,7 @@ export default {
           pos : '',
           pos_latlng : ''
         }
-        await postItem(obj);
-        EventBus.$emit('refresh');
+        this.$store.dispatch('ADD_ITEM', obj);
         this.newItem = ""
       }
     },

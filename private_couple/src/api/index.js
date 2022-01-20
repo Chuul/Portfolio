@@ -17,10 +17,10 @@ function deleteItem(id) {
   return axios.delete(baseUrl+'item'+`/${id}`);
 }
 function patchUrl(payload) {
-  return axios.patch(baseUrl+'item'+`/url/${payload.id}`, {data: {urlText: payload.urlText}});
+  return axios.patch(baseUrl+'item'+`/url/${payload.id}`, {data: {urlText: payload.textArea}});
 }
 function patchPos(payload) {
-  return axios.patch(baseUrl+'item'+`/pos/${payload.id}`, {data: {posText: payload.posText}});
+  return axios.patch(baseUrl+'item'+`/pos/${payload.id}`, {data: {posText: payload.textArea}});
 }
 function getCheckedItemList() { 
   return axios.get(baseUrl+'item' + '/list');
