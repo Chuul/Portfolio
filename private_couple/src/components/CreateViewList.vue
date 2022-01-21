@@ -57,16 +57,16 @@ export default {
   },
   computed: {
     ItemList() {
+      // console.log('this.$store.state.itemList: ', this.$store.state.itemList)
       return this.$store.state.itemList;
     },
   },
   methods: {
     toggleOneItem(item) {
-      this.$store.commit('TOGGLE_ITEM', item);
-      this.$store.dispatch('FETCH_ITEM_LIST');
+      this.$store.dispatch('TOGGLE_ITEM', item);
     },
     deleteOneItem(item) {
-      this.$store.dispatch('DELETE_ITEM', item);
+      this.$store.dispatch('DELETE_ITEM', item._id);
     },
     setObj() {
       const obj = {

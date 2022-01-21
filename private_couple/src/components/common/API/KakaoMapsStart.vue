@@ -30,7 +30,6 @@ export default {
       // 마커를 표시할 위치입니다 
       var positions = [];
       let list = this.$store.state.startCourse;
-      console.log('list: ', list);
       for(let i = 0 ; i < list.length ; i++) {
         if(list[i].pos_latlang !== '') {
           let xPos = Number(list[i].pos_latlng.x)

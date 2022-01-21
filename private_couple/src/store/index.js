@@ -7,6 +7,7 @@ import {
   deleteItem,
   patchUrl,
   patchPos,
+  postCourse,
   getCourseList,
   deleteCourse,
   replaceStartCourse,
@@ -46,7 +47,7 @@ export const store = new Vuex.Store({
         state.itemList = list;
       }
     },
-    TOGGLE_ITEM(state, item) {
+    SET_TOGGLE_ITEM(state, item) {
       let list = state.itemList;
       // state.checkedList에 I/O
       function toggleChecked(item) {
@@ -72,12 +73,29 @@ export const store = new Vuex.Store({
         }
       }
     },
-    DELETE_ITEM(state, itemName) {
-      for(let i = 0 ; i < state.checkedList.length ; i++) {
-        if(state.checkedList[i].name === itemName) {
-          state.checkedList.splice(i,1);
+    SET_ITEM_URL(state, obj) {
+      for(let i = 0 ; i < state.itemList.length ; i++) {
+        if(state.itemList[i]._id === obj.id) {
+          state.itemList[i].url = obj.textArea;
+          return
         }
-      } 
+      }
+    },
+    SET_ITEM_POS(state, obj) {
+      for(let i = 0 ; i < state.itemList.length ; i++) {
+        if(state.itemList[i]._id === obj.id) {
+          state.itemList[i].pos = obj.textArea;
+          return
+        }
+      }
+    },
+    SPLICE_ITEM(state, id) {
+      for(let i = 0 ; i < state.itemList.length ; i++) {
+        if(state.itemList[i]._id === id) {
+          state.itemList.splice(i,1);
+          return;
+        }
+      }
     },
     // ListView
     SET_COURSE_LIST(state, list) {
@@ -111,18 +129,24 @@ export const store = new Vuex.Store({
       await postItem(obj);
       dispatch('FETCH_ITEM_LIST');
     },
-    async PATCH_ITEM_URL({ dispatch }, obj) {
-      await patchUrl(obj);
-      dispatch('FETCH_ITEM_LIST');
-    },
-    async PATCH_ITEM_POS({ dispatch }, obj) {
-      await patchPos(obj);
-      dispatch('FETCH_ITEM_LIST');
-    },
-    async DELETE_ITEM(context, item) {
-      await deleteItem(item._id);
-      context.commit('DELETE_CHECKED_ITEM', item.name);
+    TOGGLE_ITEM(context, item) {
+      context.commit('SET_TOGGLE_ITEM', item)
       context.dispatch('FETCH_ITEM_LIST');
+    },
+    PATCH_ITEM_URL({ commit }, obj) {
+      commit('SET_ITEM_URL', obj);
+      patchUrl(obj);
+    },
+    PATCH_ITEM_POS({ commit }, obj) {
+      commit('SET_ITEM_POS', obj);
+      patchPos(obj);
+    },
+    DELETE_ITEM({ commit }, id) {
+      commit('SPLICE_ITEM', id);
+      deleteItem(id);
+    },
+    STORE_COURSE(context, list) {
+      postCourse(list);
     },
     // ListView
     async FETCH_COURSE_LIST(context) {

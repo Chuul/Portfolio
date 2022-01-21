@@ -1,24 +1,37 @@
 <template>
-  <section class="create-cont">
-    <button class="createBtn" @click="getCheckedItems">코스생성</button>
+  <section class="create_cont">
+    <button class="create_Btn" @click="getCheckedItems">코스생성</button>
     <draggable 
       :list="checkedItemList" 
       :disabled="!enabled" 
       @start="dragging = true" 
-      @end="dragging = false">
-      <li class="courseList" v-for="item in checkedItemList" :key="item.name">
-        <a class="linkText" :href="item.url" target="_blank">
+      @end="dragging = false"
+    >
+      <li 
+        v-for="item in checkedItemList" 
+        class="courseList" 
+        :key="item.name"
+      >
+        <a 
+          v-if="item.url"
+          :href="item.url" 
+          class="linkText"
+          target="_blank"
+        >
           {{ item.name }}
         </a>
-        <span class="moveBtn-cont">
+        <a v-else>
+          {{ item.name }}
+        </a>
+        <span class="move_Btn_cont">
           <i class="fas fa-bars"></i>
         </span>
-        <div class="arrowBtn-cont">
+        <div class="arrow_Btn_cont">
           <i class=" fal fa-arrow-alt-down"></i>
         </div>
       </li> 
     </draggable>
-    <button class="storeBtn" @click="storeCourse">코스 저장</button>
+    <button class="store_Btn" @click="storeCourse">코스 저장</button>
     <!-- Modal -->
     <Modal v-if="showCheck" @close="closeCheck">
       <h2 slot="header">최소 1개 이상의 아이템을 선택해주세요</h2>
@@ -35,7 +48,6 @@
 <script>
 import draggable from 'vuedraggable';
 import Modal from '@/components/common/Modal.vue'
-import { postCourse } from '@/api/index';
 
 export default {
   components : {
@@ -70,7 +82,7 @@ export default {
       }
       this.checkedItemList = list;
     },
-    // 위에서 체크된 아이템을 분기 처리하는 함수
+    // 위에서 체크된 아이템을 조건에 맞게 처리하는 함수
     getCheckedItems() {
       let list = this.$store.state.checkedList;
       if(list.length === 0) {
@@ -79,6 +91,7 @@ export default {
         this.transPosition(list);
       }
     },
+    // 코스에 들어가는 아이템 정리하는 함수
     setupCourse(course) {
       course.forEach( (item) => {
         delete item.checked;
@@ -90,6 +103,7 @@ export default {
         createdBy : this.$store.state.email,
         course : course,
       }
+      this.checkedItemList = [];
       return obj;
     },
     async storeCourse() {
@@ -98,9 +112,7 @@ export default {
         this.showFail = true;
       } else {
         let obj = this.setupCourse(list);
-        console.log('return된 obj: ', obj);
-        await postCourse(obj);
-        this.checkedItemList = [];
+        this.$store.dispatch('STORE_COURSE', obj);
         this.showSuccess = true;
       }
     },
@@ -118,10 +130,10 @@ export default {
 </script>
 
 <style scoped>
-.create-cont {
+.create_cont {
   text-align: center;
 }
-.createBtn {
+.create_Btn {
   margin: 1em 0;
   background: rgba(124, 198, 255, 0.247);
   border-style : none;
@@ -155,27 +167,27 @@ li {
   color : #ee27bc;
   font-weight: bold;
 }
-.moveBtn-cont {
+.move_Btn_cont {
   float : right;
   margin-right: 1em;
 }
-.moveBtn-cont i {
+.move_Btn_cont i {
   color: #e1e1fdc5;
 }
-.moveBtn-cont i:hover {
-  color: #e1e1fdc5;
+.move_Btn_cont i:hover {
+  color: #8763FB;
   cursor: pointer;
 }
-.arrowBtn-cont {
+.arrow_Btn_cont {
   text-align: center;
 }
-.arrowBtn-cont i {
+.arrow_Btn_cont i {
   color : rgb(86, 153, 253);
 }
-li:last-child .arrowBtn-cont {
+li:last-child .arrow_Btn_cont {
   display: none;
 }
-.storeBtn {
+.store_Btn {
   margin: 1em 0;
   background: rgba(124, 198, 255, 0.247);
   border-style : none;
