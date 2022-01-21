@@ -48,6 +48,7 @@ router.patch('/course', async(req, res, next) => {
   const item = await last.find({
     createdBy: req.body.createdBy
   })
+  res.json(item);
   if(!item.length) {
     try {
       const lasts = await last.create({

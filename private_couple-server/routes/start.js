@@ -33,21 +33,13 @@ router.post('/insert', async(req, res, next) => {
 
 router.patch('/comment/:id', async(req, res, next) => {
   try {
-    // const list = await start.find({});
-    const result = await start.updateOne({'course._id': req.params.id}, 
-      {'$set': {'course.$.comment': req.body.data.comment}});
-    res.json(result);
-  } catch (err) {
-    console.log(err);
-    next(err);
-  }
-})
-router.patch('/true/:id', async(req, res, next) => {
-  try {
     const result = await start.updateOne({
       'course._id': req.params.id
     }, {
-      '$set': {'course.$.completed': true}
+      '$set': {
+        'course.$.comment': req.body.data.comment, 
+        'course.$.completed': true
+      }
     });
     res.json(result);
   } catch (err) {

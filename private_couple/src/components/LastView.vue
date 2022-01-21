@@ -1,26 +1,29 @@
 <template>
-  <section class="last-cont">
+  <section class="last_cont">
     <Header></Header>
     <ToolBar></ToolBar>
-    <div class="item-cont">
+    <div class="item_cont">
       <h3>이벤트</h3>
-      <li v-for="item in itemList" :key="item">
-        <span class="item-name">
+      <li v-for="item in ItemList" :key="item">
+        <span class="item_name">
           {{ item.name }}
         </span>
         <span v-if="item.comment !== ''">
           {{ item.comment }}
         </span>
-        <span v-else></span>
       </li>
     </div>
-    <div class="course-cont">
+    <div class="course_cont">
       <h3>코스</h3>
-      <li v-for="course in courseList" :key="course">
-        <div class="course-item-cont">
-          <li class="course-item" v-for="item in course.list" :key="item.name">
+      <li v-for="course in CourseList" :key="course.list">
+        <div class="course_item_cont">
+          <li 
+            v-for="item in course.list"
+            class="course_item" 
+            :key="item.name"
+          >
             {{ item.name }}
-            <i class="fas fa-arrow-right"></i>
+            <i class="fas fa-arrow-right" />
           </li>
         </div>
         <span>
@@ -34,31 +37,22 @@
 <script>
 import Header from '@/components/common/Header.vue';
 import ToolBar from '@/components/common/ToolBar.vue'
-import { getLastList } from '@/api/index'
 
 export default {
   components: {
     Header,
     ToolBar
   },
-  data() {
-    return {
-      itemList : [],
-      courseList : []
-    }
-  },
-  methods : {
-    async getData() {
-      const userData = {
-        createdBy: this.$store.state.email
-      }
-      const { data } = await getLastList(userData);
-      this.itemList = data[0].item;
-      this.courseList = data[0].course;
+  computed : {
+    ItemList() {
+      return this.$store.state.lastItemList
+    },
+    CourseList() {
+      return this.$store.state.lastCourseList
     },
   },
   created() {
-    this.getData();
+    this.$store.dispatch('FETCH_LAST_LIST');
   },
 }
 </script>
@@ -73,11 +67,11 @@ h3 {
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: 500;
 }
-.last-cont {
+.last_cont {
   height: 80vh;
   margin: 0 2em 2em 2em;
 }
-.item-cont {
+.item_cont {
   text-align: center;
   margin: 15px;
   padding : 1rem;
@@ -85,7 +79,10 @@ h3 {
   border-radius: 0.5em;
   box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
 }
-.course-cont {
+.item_name {
+  float: left
+}
+.course_cont {
   text-align: center;
   margin: 15px;
   padding : 1rem;
@@ -93,20 +90,14 @@ h3 {
   border-radius: 0.5em;
   box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
 }
-.item-name {
-  float: left
-}
-.course-name {
-  float: left
-}
-.course-item-cont {
+.course_item_cont {
   display: inline;
   float: left;
 }
-.course-item-cont li:last-child i {
+.course_item_cont li:last-child i {
   display: none;
 }
-.course-item {
+.course_item {
   display: inline;
 }
 </style>

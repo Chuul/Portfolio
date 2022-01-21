@@ -6,7 +6,17 @@
         @click="toggleOneItem(item)" 
         :class="{checked_Btn: item.checked}"
       />
-      {{ item.name }}
+      <a 
+        v-if="item.url"
+        :href="item.url" 
+        class="linkText"
+        target="_blank"
+      >
+        {{ item.name }}
+      </a>
+      <a v-else>
+        {{ item.name }}
+      </a>
       <i 
         class="basic_Btn far fa-trash-alt" 
         @click="deleteOneItem(item)" 
@@ -57,7 +67,6 @@ export default {
   },
   computed: {
     ItemList() {
-      // console.log('this.$store.state.itemList: ', this.$store.state.itemList)
       return this.$store.state.itemList;
     },
   },
@@ -127,6 +136,10 @@ li {
   background: white;
   border-radius: 0.5em;
   box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
+}
+.linkText {
+  color : #ee27bc;
+  font-weight: bold;
 }
 .toggle_Btn {
   float: left;

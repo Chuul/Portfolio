@@ -106,7 +106,7 @@ export default {
       this.checkedItemList = [];
       return obj;
     },
-    async storeCourse() {
+    storeCourse() {
       let list = this.checkedItemList;
       if(list.length === 0) {
         this.showFail = true;

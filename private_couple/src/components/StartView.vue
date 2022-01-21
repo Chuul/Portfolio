@@ -1,31 +1,43 @@
 <template>
-  <section class="course-cont">
+  <section class="course_cont">
     <h2>진행중...</h2>
     <KakaoMap></KakaoMap>
-    <div class="main-cont">
+    <div class="main_cont">
       <li 
-        class="list-cont" 
-        v-for="(item, index) in startList" 
-        :key="item.name">
-        <div class="item-cont">
+        class="list_cont" 
+        v-for="item in StartList" 
+        :key="item.name"
+      >
+        <div class="item_cont">
           <i 
-            class="checkBtn far fa-check-circle" 
-            @click="openForm({item, index})" 
-            :class="{checkBtnCompleted: item.completed}" 
+            class="toggle_Btn far fa-check-circle" 
+            @click="openForm(item)" 
+            :class="{checked_Btn: item.completed}" 
           />
-          {{ item.name }}
+          <a 
+            v-if="item.url"
+            :href="item.url" 
+            class="linkText"
+            target="_blank"
+          >
+            {{ item.name }}
+          </a>
+          <a v-else>
+            {{ item.name }}
+          </a>
           <i 
-            class="deleteBtn far fa-trash-alt" 
+            class="basic_Btn far fa-trash-alt" 
             @click="deleteOneItem(item)" 
           />
-          <i 
-            class="posBtn fas fa-map-marked-alt" 
+          <i
+            class="basic_Btn fas fa-map-marked-alt" 
             @click="openPosForm(item)" 
-            :class="{checkBtnChecked: item.pos !== ''}"
-          />        <i 
-            class="urlBtn far fa-window-restore" 
+            :class="{checked_Btn: item.pos.length>0}"
+          />        
+          <i 
+            class="basic_Btn far fa-window-restore" 
             @click="openUrlForm(item)" 
-            :class="{checkBtnChecked: item.url !== ''}"
+            :class="{checked_Btn: item.url.length>0}"
           />
         </div>
         <div class="arrow-cont">
@@ -33,52 +45,41 @@
         </div>
       </li>
     </div>
-    <button class="completBtn" @click="openCompleteForm()">코스 완료</button>
+    <button class="complete_Btn" @click="openCompleteForm()">코스 완료</button>
     <!-- 모달창 -->
     <Modal v-if="showModal" @close="closeForm()">
       <h2 slot="header">코스 평가</h2>
       <form slot="body">  
         <label for="comment">한줄평 </label>
-        <input type="text" id="comment" v-model="commentText">
-        <button @click.prevent="patchOneComment()">평가완료</button>
+        <input type="text" id="comment" v-model="textArea">
+        <button @click.prevent="patchItemComment()">평가완료</button>
       </form>
     </Modal>
     <Modal v-if="showUrlModal" @close="closeUrlForm()">
       <h2 slot="header">URL 입력</h2>
       <form slot="body">  
-        <input type="text" id="urlInput" v-model="urlText">
+        <input type="text" id="urlInput" v-model="textArea">
         <button @click.prevent="patchOneUrl()">입력</button>
       </form>
     </Modal>
     <Modal v-if="showPosModal" @close="closePosForm()">
       <h2 slot="header">Position 입력</h2>
       <form slot="body">
-        <input type="text" id="posInput" v-model="posText">
+        <input type="text" id="posInput" v-model="textArea">
         <button @click.prevent="patchOnePos()">입력</button>
       </form>
     </Modal>
     <Modal v-if="showCompleteModal" @close="closeCompleteForm()">
       <h2 slot="header">코스 평점</h2>
       <form slot="body">
-        <input type="text" id="completeInput" v-model="completeText">
-        <button @click.prevent="patchOneComplete()">완료</button>
+        <input type="text" id="completeInput" v-model="textArea">
+        <button @click.prevent="endStartCourse()">완료</button>
       </form>
     </Modal>
   </section>
 </template>
 
 <script>
-import { 
-  // replaceStartCourse, 
-  patchComment, 
-  toggleTrueItem, 
-  toggleFalseItem, 
-  deleteStartItem, 
-  patcStarthUrl, 
-  patchStartPos,
-  patchStartItem,
-  patchStartCourse
-} from '@/api/index';
 import KakaoMap from "@/components/common/API/KakaoMapsStart.vue";
 import Modal from '@/components/common/Modal.vue';
 
@@ -89,12 +90,8 @@ export default {
   },
   data() {
     return {
-      startList: [],
       item: {},
-      commentText: "",
-      urlText: "",
-      posText: "",
-      completeText: "",
+      textArea: "",
       showModal : false,
       showUrlModal: false,
       showPosModal: false,
@@ -102,95 +99,53 @@ export default {
     }
   },
   computed: {
-
+    StartList() {
+      return this.$store.state.startList;
+    }
   },
   methods : {
-    startOneCourse() {
-      this.startList = this.$store.state.startCourse;
-      // let course = this.$store.state.startCourse
-      // console.log('course: ', course);
-      // if(course.length === 0) {
-      //   this.getData();
-      // } else {
-      //   this.startList = course;
-      // }
-    },
-    async getData() {
-      const userData = {
-        createdBy: this.$store.state.email
-      }
-      const response = await this.$store.dispatch('START', userData);
-      this.startList = response[0].course;
-    },
-    setupItem(item) {
-      delete item.completed;
-      delete item._id;
-      item.comment = this.commentText;
-    },
-    async patchOneComment() {
-      const item = this.item;
-      const obj = {
-        id: item._id,
-        commentText: this.commentText
-      };
-      await patchComment(obj);
-      const id = item._id;
-      await toggleTrueItem(id);
-      this.setupItem(item)
-      const userData = {
-        createdBy: this.$store.state.email,
-        item: item
-      }
-      patchStartItem(userData);
-      this.commentText = "";
-      this.showModal = false;
-      this.getData();
-    },
-    async openForm(payload) {
-      if(payload.item.completed === true) {
-        await toggleFalseItem(payload.item._id);
-        this.getData();
+    openForm(item) {
+      if(item.completed === true) {
+        this.$store.dispatch('FALSE_ITEM', item._id);
       } else {
         this.showModal = true;
-        this.item = payload.item;
+        this.item = item;
       }
     },
-     async deleteOneItem(item) {
-      await deleteStartItem(item._id);
-      this.getData();
+    patchItemComment() {
+      const item = this.item;
+      item.comment = this.textArea;
+      this.$store.dispatch('PATCH_ITEM_COMMENT', item);
+      this.textArea = "";
+      this.showModal = false;
     },
-    async patchOneUrl() {
+    deleteOneItem(item) {
+      this.$store.dispatch('DELETE_START', item._id);
+    },
+    setObj() {
       const obj = {
         id: this.item._id,
-        urlText: this.urlText
+        textArea: this.textArea
       };
-      await patcStarthUrl(obj);
-      this.getData();
-      this.urlText = "";
-      this.showUrlModal = true;
+      this.textArea = "";
+      return obj;
     },
-    async patchOnePos() {
-      const obj = {
-        id: this.item._id,
-        posText: this.posText
-      };
-      await patchStartPos(obj);
-      this.getData();
-      this.posText = "";
+    patchOneUrl() {
+      const obj = this.setObj();
+      this.$store.dispatch('PATCH_START_URL', obj)
+      this.showUrlModal = false;
+    },
+    patchOnePos() {
+      const obj = this.setObj();
+      this.$store.dispatch('PATCH_START_POS', obj)
       this.showPosModal = false;
     },
-    async patchOneComplete() {
-      const userData = {
-        createdBy: this.$store.state.email,
-        course: {
-          list: this.startList,
-          comment: this.completeText  
-        },
-      }
-      await patchStartCourse(userData);
+    endStartCourse() {
+      this.$store.dispatch('STORE_START', this.textArea );
       this.showCompleteModal = false;
-      this.completeText = "";
+      this.textArea = "";
     },
+    // Modal창 on/off
     openUrlForm(item) {
       this.showUrlModal = true;
       this.item = item;
@@ -201,7 +156,6 @@ export default {
     },
     openCompleteForm() {
       this.showCompleteModal = true;
-      this.getData();
     },
     closeForm() {
       this.showModal = false;
@@ -209,11 +163,11 @@ export default {
     },
     closeUrlForm() {
       this.showUrlModal = false;
-      this.urlText = "";
+      this.textArea = "";
     },
     closePosForm() {
       this.showPosModal = false;
-      this.posText = "";
+      this.textArea = "";
     },
     closeCompleteForm() {
       this.showCompleteModal = false;
@@ -221,7 +175,10 @@ export default {
     },
   },
   created() {
-    this.startOneCourse();
+    if(this.$store.state.startList.length > 0) {
+      return;
+    }
+    this.$store.dispatch('FETCH_START_LIST');
   },
 }
 </script>
@@ -239,59 +196,48 @@ h2 {
   font-size: 2em;
   font-weight: 700;
 }
-.course-cont {
+.course_cont {
   height: 80vh;
   margin: 2em;
   padding: 2em;
   text-align: center;
   background: rgba(124, 198, 255, 0.11);
 }
-.main-cont li:last-child .arrow-cont {
+.main_cont li:last-child .arrow-cont {
   display: none;
 }
-.list-cont {
+.list_cont {
   border-radius: 0.5em;
 }
-.item-cont {
+.linkText {
+  color : #ee27bc;
+  font-weight: bold;
+}
+.item_cont {
   margin: 1.5em;
   padding : 1rem;
   border-radius: 0.5em;
   background: white;
 }
-.checkBtn {
+.toggle_Btn {
   float: left;
   margin : 0.5em;
   color : rgba(124, 198, 255, 0.8);
   cursor : pointer;
 }
-.checkBtnCompleted {
-  color: #8763FB;
+.basic_Btn {
+  float: right;
+  margin: 0.5em;
+  color : rgba(124, 198, 255, 0.8);
+  cursor : pointer;
 }
-.checkBtnChecked {
-  color: red;
+.checked_Btn {
+  color: #8763FB;
 }
 .arrow-cont {
   margin: 0.5em;
 }
-.urlBtn {
-  color: #e1e1fd;
-  float: right;
-  margin: 0.5em;
-  cursor : pointer;
-}
-.posBtn {
-  color: #e1e1fdc5;
-  float: right;
-  margin: 0.5em;
-  cursor : pointer;
-}
-.deleteBtn {
-  color: #e1e1fdc5;
-  float: right;
-  margin: 0.5em;
-  cursor : pointer;
-}
-.completBtn {
+.complete_Btn {
   margin: 1em 0;
   background: rgba(124, 198, 255, 0.247);
   border-style : none;

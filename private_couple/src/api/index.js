@@ -36,18 +36,14 @@ function deleteCourse(name) {
   return axios.delete(baseUrl+'course'+`/${name}`)
 }
 // start
-function getStartCourse(userData) {
-  console.log('여기');
+function getStartList(userData) {
   return axios.post(baseUrl+'start', userData);
 }
-function replaceStartCourse(userData) {
+function replaceStartList(userData) {
   return axios.post(baseUrl+'start' + '/insert', userData);
 }
 function patchComment(payload) {
-  return axios.patch(baseUrl+'start'+`/comment/${payload.id}`, {data: {comment: payload.commentText}});
-}
-function toggleTrueItem(id) {
-  return axios.patch(baseUrl+'start'+`/true/${id}`, {data: {completed: true}});
+  return axios.patch(baseUrl+'start'+`/comment/${payload.id}`, {data: {comment: payload.comment}});
 }
 function toggleFalseItem(id) {
   return axios.patch(baseUrl+'start'+`/false/${id}`, {data: {completed: false}});
@@ -55,11 +51,11 @@ function toggleFalseItem(id) {
 function deleteStartItem(id) {
   return axios.delete(baseUrl+'start'+`/${id}`);
 }
-function patcStarthUrl(payload) {
-  return axios.patch(baseUrl+'start'+`/url/${payload.id}`, {data: {urlText: payload.urlText}});
+function patchStartUrl(payload) {
+  return axios.patch(baseUrl+'start'+`/url/${payload.id}`, {data: {urlText: payload.textArea}});
 }
 function patchStartPos(payload) {
-  return axios.patch(baseUrl+'start'+`/pos/${payload.id}`, {data: {posText: payload.posText}});
+  return axios.patch(baseUrl+'start'+`/pos/${payload.id}`, {data: {posText: payload.textArea}});
 }
 // last
 function getLastList(userData) {
@@ -68,7 +64,8 @@ function getLastList(userData) {
 function patchStartItem(userData) {
   return axios.patch(baseUrl+'last/item', userData);
 }
-function patchStartCourse(userData) {
+function patchStartList(userData) {
+  console.log('userData: ',userData)
   return axios.patch(baseUrl+'last/course', userData);
 }
 
@@ -83,15 +80,14 @@ export {
   postCourse,
   getCourseList,
   deleteCourse,
-  replaceStartCourse,
-  getStartCourse,
+  replaceStartList,
+  getStartList,
   patchComment,
-  toggleTrueItem,
   toggleFalseItem,
   deleteStartItem,
-  patcStarthUrl,
+  patchStartUrl,
   patchStartPos,
   getLastList,
   patchStartItem,
-  patchStartCourse,
+  patchStartList,
 };
