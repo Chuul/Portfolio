@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const itemSchema = new Schema({
   createdBy: {
-    type: String
+    type: String,
+    required: true
   },
   category : {
     type: String,
@@ -12,6 +13,9 @@ const itemSchema = new Schema({
     type: String,
     required: true,
     unique: true,
+  },
+  checked : {
+    type: Boolean
   },
   url : {
     type: String,

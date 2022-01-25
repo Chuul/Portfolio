@@ -94,9 +94,8 @@ export default {
     // 코스에 들어가는 아이템 정리하는 함수
     setupCourse(course) {
       course.forEach( (item) => {
-        delete item.checked;
         delete item.createdBy;
-        item.completed = false;
+        item.checked = false;
         item.comment = " ";
       })
       const obj = {

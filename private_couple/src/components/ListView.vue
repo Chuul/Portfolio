@@ -1,7 +1,5 @@
 <template>
   <section class="list_cont">
-    <Header></Header>
-    <ToolBar></ToolBar>
     <li v-for="list in CourseList" :key="list.course">
       <div class="item_cont">
         <!-- StartView 진입 -->
@@ -24,14 +22,7 @@
 </template>
 
 <script>
-import Header from '@/components/common/Header.vue';
-import ToolBar from '@/components/common/ToolBar.vue'
-
 export default {
-  components: {
-    Header,
-    ToolBar
-  },
   computed: {
     CourseList() {
       return this.$store.state.courseList;
@@ -39,7 +30,7 @@ export default {
   },
   methods : {
     startOneCourse(list) {
-      this.$store.dispatch('START_COURSE', list)
+      this.$store.dispatch('START_COURSE', list);
     },
     deleteOneCourse(list) {
       this.$store.dispatch('DELETE_COURSE', list.name);

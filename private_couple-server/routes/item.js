@@ -20,6 +20,7 @@ router.post('/insert', async(req, res, next) => {
       createdBy: req.body.createdBy,
       category: req.body.category,
       name: req.body.name,
+      checked: req.body.checked,
       url: req.body.url,
       pos: req.body.pos,
       pos: req.body.pos,

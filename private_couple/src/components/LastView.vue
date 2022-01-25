@@ -1,7 +1,5 @@
 <template>
   <section class="last_cont">
-    <Header></Header>
-    <ToolBar></ToolBar>
     <div class="item_cont">
       <h3>이벤트</h3>
       <li v-for="item in ItemList" :key="item">
@@ -35,14 +33,8 @@
 </template>
 
 <script>
-import Header from '@/components/common/Header.vue';
-import ToolBar from '@/components/common/ToolBar.vue'
 
 export default {
-  components: {
-    Header,
-    ToolBar
-  },
   computed : {
     ItemList() {
       return this.$store.state.lastItemList

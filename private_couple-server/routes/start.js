@@ -38,7 +38,7 @@ router.patch('/comment/:id', async(req, res, next) => {
     }, {
       '$set': {
         'course.$.comment': req.body.data.comment, 
-        'course.$.completed': true
+        'course.$.checked': true
       }
     });
     res.json(result);
@@ -50,7 +50,7 @@ router.patch('/comment/:id', async(req, res, next) => {
 router.patch('/false/:id', async(req, res, next) => {
   try {
     const result = await start.updateOne({'course._id': req.params.id}, 
-      {'$set': {'course.$.completed': false}});
+      {'$set': {'course.$.checked': false}});
     res.json(result);
   } catch (err) {
     console.log(err);

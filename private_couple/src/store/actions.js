@@ -40,6 +40,7 @@ const ADD_ITEM = async({ dispatch }, obj) => {
   dispatch('FETCH_ITEM_LIST');
 }
 const TOGGLE_ITEM = (context, item) => {
+  console.log('action TOGGLE_ITEM');
   context.commit('SET_TOGGLE_ITEM', item)
   context.dispatch('FETCH_ITEM_LIST');
 }

@@ -1,5 +1,5 @@
 <template>
-  <nav class="router-cont">
+  <nav class="router_cont">
     <router-link to="/creating">코스생성</router-link>  
     <router-link to="/list">코스목록</router-link>   
     <router-link to="/last">이전코스</router-link>  
@@ -13,11 +13,11 @@ export default {
 </script>
 
 <style scoped>
-.router-cont {
+.router_cont {
   text-align: center;
   margin : 0 2em 2em 2em;
 }
-.router-cont .router-link-exact-active {
+.router_cont .router-link-exact-active {
   color : rgb(31, 152, 245);
 }
 a {

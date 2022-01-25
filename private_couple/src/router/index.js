@@ -18,23 +18,28 @@ export const router = new VueRouter({
     },
     {
       path : '/login',
-      component : LoginView
+      component : LoginView,
+      name: 'login'
     },
     {
       path : '/creating',
-      component : CreateView
+      component : CreateView,
+      name : 'creating'
     },
     {
       path : '/list',
-      component : ListView
+      component : ListView,
+      name: 'list'
     },
     {
       path : '/last',
-      component : LastView
+      component : LastView,
+      name: 'last'
     },
     {
       path : '/start',
-      component : StartView
+      component : StartView,
+      name: 'start'
     },
     {
       path: '*',

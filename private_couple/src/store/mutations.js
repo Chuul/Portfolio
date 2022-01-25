@@ -22,10 +22,10 @@ const SET_TOGGLE_ITEM = (state, item) => {
   let list = state.itemList;
   // state.checkedList에 I/O
   function toggleChecked(item) {
-    let list = state.checkedList;
-    for(let i = 0 ; i < list.length ; i++) {
-      if(list[i].name === item.name) {
-        list.splice(i,1);
+    let checkList = state.checkedList;
+    for(let i = 0 ; i < checkList.length ; i++) {
+      if(checkList[i].name === item.name) {
+        checkList.splice(i,1);
         return;
       }
     }
@@ -37,9 +37,11 @@ const SET_TOGGLE_ITEM = (state, item) => {
       if(list[i].checked === true) {
         list[i].checked = false;
         toggleChecked(list[i]);
+        console.log('list[i].checked: ', list[i].checked)
       } else {
         list[i].checked = true;
         state.checkedList.push(item);
+        console.log('list[i].checked: ', list[i].checked)
       }
     }
   }

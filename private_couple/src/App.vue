@@ -1,16 +1,24 @@
 <template>
   <main>
-    <router-view></router-view>
-    <InformationView></InformationView>
+		<Header></Header>
+		<ToolBar></ToolBar>
+		<transition name="fade">
+			<router-view></router-view>
+		</transition>
+    <InfoView></InfoView>
   </main>
 </template>
 
 <script>
-import InformationView from './components/InformationView.vue'
+import Header from '@/components/common/Header.vue';
+import ToolBar from '@/components/common/ToolBar.vue';
+import InfoView from './components/InfoView.vue'
  
 export default {
   components: {
-    InformationView
+		Header,
+		ToolBar,
+    InfoView
   }
 }
 </script>
@@ -19,7 +27,6 @@ export default {
 body {
 	background-color: #F6F6F6;
 }
-
 /* reset CSS */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -66,5 +73,11 @@ table {
 }
 a {
   text-decoration: none;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
