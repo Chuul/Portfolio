@@ -8,25 +8,27 @@ export default {
   data() {
     return {
       list: [],
+      firstLatlng: {},
       map: null,
       infowindow: null,
     };
   },
   created() {
-    this.list = this.$store.state.LatLng;
+    this.list = this.$store.state.startList;
+    this.firstLatlng = this.$store.state.LatLng;
+    console.log('this.list: ', this.list);
+    console.log('this.firstLatlng', this.firstLatlng)
   },
   mounted() {
-    this.initMap();
+    // this.initMap();
   },
   methods: {
     initMap() {
       // 지도를 표시할 div 
       var mapContainer = document.getElementById('map') 
 
-      const first_latlng = this.list[0].pos_latlng;
-      
       var mapOption = { 
-        center: new kakao.maps.LatLng(first_latlng.y, first_latlng.x), // 지도의 중심좌표
+        center: new kakao.maps.LatLng(this.firstLatlng.y, this.firstLatlng.x), // 지도의 중심좌표
         level: 8 // 지도의 확대 레벨
       };
 

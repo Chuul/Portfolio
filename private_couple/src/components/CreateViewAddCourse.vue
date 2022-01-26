@@ -2,13 +2,13 @@
   <section class="create_cont">
     <button class="create_Btn" @click="getCheckedItems">코스생성</button>
     <draggable 
-      :list="checkedItemList" 
+      :list="localCheckedList" 
       :disabled="!enabled" 
       @start="dragging = true" 
       @end="dragging = false"
     >
       <li 
-        v-for="item in checkedItemList" 
+        v-for="item in localCheckedList" 
         class="courseList" 
         :key="item.name"
       >
@@ -56,7 +56,7 @@ export default {
   },
   data() {
     return {
-      checkedItemList: [],
+      localCheckedList: [],
       enabled: true,
       dragging: false,
       showCheck: false,
@@ -66,29 +66,30 @@ export default {
   },
   methods : {
     // 지번 주소를 좌표값으로 바꾸는 함수(카카오 API 참조)
-    transPosition(list) {
-      for (let i = 0; i < list.length; i ++) {
-        if(list[i].pos !== "") {
-          var geocoder = new kakao.maps.services.Geocoder();
+    // transPosition(list) {
+    //   for (let i = 0; i < list.length; i ++) {
+    //     if(list[i].pos !== "") {
+    //       var geocoder = new kakao.maps.services.Geocoder();
 
-          var callback = function(result, status) {
-            if (status === kakao.maps.services.Status.OK) {
-              let obj = {y: result[0].y, x: result[0].x}
-              list[i].pos_latlng = obj;
-            }
-          };
-          geocoder.addressSearch(list[i].pos, callback);
-        }
-      }
-      this.checkedItemList = list;
-    },
+    //       var callback = function(result, status) {
+    //         if (status === kakao.maps.services.Status.OK) {
+    //           let obj = {y: result[0].y, x: result[0].x}
+    //           list[i].pos_latlng = obj;
+    //         }
+    //       };
+    //       geocoder.addressSearch(list[i].pos, callback);
+    //     }
+    //   }
+    //   this.localCheckedList = list;
+    // },
     // 위에서 체크된 아이템을 조건에 맞게 처리하는 함수
     getCheckedItems() {
       let list = this.$store.state.checkedList;
       if(list.length === 0) {
         this.showCheck = true;
       } else {
-        this.transPosition(list);
+        this.localCheckedList = list;
+        // this.transPosition(list);
       }
     },
     // 코스에 들어가는 아이템 정리하는 함수
@@ -98,20 +99,16 @@ export default {
         item.checked = false;
         item.comment = " ";
       })
-      const obj = {
-        createdBy : this.$store.state.email,
-        course : course,
-      }
-      this.checkedItemList = [];
-      return obj;
+      return course;
     },
     storeCourse() {
-      let list = this.checkedItemList;
+      let list = this.localCheckedList;
       if(list.length === 0) {
         this.showFail = true;
       } else {
         let obj = this.setupCourse(list);
         this.$store.dispatch('STORE_COURSE', obj);
+        this.localCheckedList = [];
         this.showSuccess = true;
       }
     },

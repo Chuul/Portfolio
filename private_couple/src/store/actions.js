@@ -40,13 +40,13 @@ const ADD_ITEM = async({ dispatch }, obj) => {
   dispatch('FETCH_ITEM_LIST');
 }
 const TOGGLE_ITEM = (context, item) => {
-  console.log('action TOGGLE_ITEM');
   context.commit('SET_TOGGLE_ITEM', item)
   context.dispatch('FETCH_ITEM_LIST');
 }
-const PATCH_ITEM_URL = ({ commit }, obj) => {
-  commit('SET_ITEM_URL', obj);
+const PATCH_ITEM_URL = (context, obj) => {
+  context.commit('SET_ITEM_URL', obj);
   patchUrl(obj);
+  context.dispatch('FETCH_ITEM_LIST');
 }
 const PATCH_ITEM_POS = ({ commit }, obj) => {
   commit('SET_ITEM_POS', obj);
@@ -57,7 +57,12 @@ const DELETE_ITEM = ({ commit }, id) => {
   deleteItem(id);
 }
 const STORE_COURSE = (context, list) => {
-  postCourse(list);
+  const obj = {
+    createdBy : context.state.email,
+    course : list,
+  }
+  postCourse(obj);
+  context.commit('SET_ITEM_FALSE', obj.course);
 }
 // ListView
 const FETCH_COURSE_LIST = async(context) => {

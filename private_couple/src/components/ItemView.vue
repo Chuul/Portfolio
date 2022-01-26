@@ -9,7 +9,7 @@
         class="toggle_Btn far fa-check-circle" 
         @click="toggleOneItem(item)" 
         :class="{checked_Btn: item.checked}"
-        />
+      />
       <a 
         v-if="item.url"
         :href="item.url" 
@@ -28,12 +28,12 @@
       <i
         class="basic_Btn fas fa-map-marked-alt" 
         @click="openPosForm(item)" 
-        :class="{checked_Btn: item.pos.length !== 0}"
+        :class="{checked_Btn: item.pos.length>0}"
       />  
       <i 
+        :class="{checked_Btn: item.url.length>0}"
         class="basic_Btn far fa-window-restore" 
         @click="openUrlForm(item)" 
-        :class="{checked_Btn: item.furl.length !== 0}"
       />
       <template v-if="!routeName">
         <div class="arrow_cont">

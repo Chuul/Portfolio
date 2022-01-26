@@ -21,10 +21,10 @@ const SET_ITEM_LIST = (state, list) => {
 const SET_TOGGLE_ITEM = (state, item) => {
   let list = state.itemList;
   // state.checkedList에 I/O
-  function toggleChecked(item) {
+  function toggleChecked(itemName) {
     let checkList = state.checkedList;
     for(let i = 0 ; i < checkList.length ; i++) {
-      if(checkList[i].name === item.name) {
+      if(checkList[i].name === itemName) {
         checkList.splice(i,1);
         return;
       }
@@ -36,12 +36,10 @@ const SET_TOGGLE_ITEM = (state, item) => {
     if(item.name === list[i].name) {
       if(list[i].checked === true) {
         list[i].checked = false;
-        toggleChecked(list[i]);
-        console.log('list[i].checked: ', list[i].checked)
+        toggleChecked(list[i].name);
       } else {
         list[i].checked = true;
         state.checkedList.push(item);
-        console.log('list[i].checked: ', list[i].checked)
       }
     }
   }
@@ -70,6 +68,16 @@ const SPLICE_ITEM = (state, id) => {
     }
   }
 }
+const SET_ITEM_FALSE = (state, course) => {
+  for(let i = 0 ; i < course.length ; i++) {
+    for(let j = 0 ; j < state.itemList.length ; j++) {
+      if(state.itemList[j].name === course[i].name) {
+        state.itemList[j].checked = false;
+      }
+    }
+  }
+  state.checkedList = [];
+}
 // ListView
 const SET_COURSE_LIST = (state, list) => {
   state.courseList = list;
@@ -77,16 +85,16 @@ const SET_COURSE_LIST = (state, list) => {
 const SET_START_COURSE = (state, list) => {
   state.startList = list;
 
-  // 아이템 이름, 좌표값 state 저장
-  let obj = [];
-  list.forEach( (item) => {
-    const data = {
-      name: item.name,
-      pos_latlng: item.pos_latlng 
-    }
-    obj.push(data);
-  })
-  state.LatLng = obj;
+  // // 아이템 이름, 좌표값 state 저장
+  // let obj = [];
+  // list.forEach( (item) => {
+  //   const data = {
+  //     name: item.name,
+  //     pos_latlng: item.pos_latlng 
+  //   }
+  //   obj.push(data);
+  // })
+  // state.LatLng = obj;
 }
 // StartView
 const SET_START_LIST = (state, data) => {
@@ -129,6 +137,7 @@ export {
   SET_ITEM_URL,
   SET_ITEM_POS,
   SPLICE_ITEM,
+  SET_ITEM_FALSE,
   SET_COURSE_LIST,
   SET_START_COURSE,
   SET_START_LIST,
