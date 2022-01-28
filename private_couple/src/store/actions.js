@@ -82,8 +82,8 @@ const START_COURSE = async(context, list) => {
     createdBy: context.state.email,
     course: list.course 
   }
-  replaceStartList(userData);
   context.commit('SET_START_COURSE', list.course);
+  replaceStartList(userData);
 }
 // StartView
 const FETCH_START_LIST = async( context )=> {
@@ -91,7 +91,7 @@ const FETCH_START_LIST = async( context )=> {
     createdBy: context.state.email
   }
   const { data } = await getStartList(userData);
-  context.commit('SET_START_LIST', data[0].course);
+  context.commit('SET_START_COURSE', data[0].course);
   return;
 }
 const START = async({ commit }, userData) => {

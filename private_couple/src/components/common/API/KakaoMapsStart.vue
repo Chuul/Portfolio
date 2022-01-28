@@ -7,28 +7,32 @@ export default {
   name: "KakaoMap",
   data() {
     return {
-      list: [],
-      firstLatlng: {},
+      startList: [],
       map: null,
       infowindow: null,
     };
   },
   created() {
-    this.list = this.$store.state.startList;
-    this.firstLatlng = this.$store.state.LatLng;
-    console.log('this.list: ', this.list);
-    console.log('this.firstLatlng', this.firstLatlng)
+    this.startList = this.$store.state.startList;
   },
   mounted() {
-    // this.initMap();
+    this.initMap();
   },
   methods: {
     initMap() {
-      // 지도를 표시할 div 
-      var mapContainer = document.getElementById('map') 
+      var mapContainer = document.getElementById('map') // 지도를 표시할 div 
+
+      // var firstLatLng = {};
+      // for(let i = 0 ; i < this.startList[i].length ; i++) {
+      //   if(this.startList[i].pos_latlang !== "") {
+      //     this.firstLatLng = this.startList[i].pos_latlang;
+      //     return 
+      //   }
+      // }
+      // if(firstLatLng === {}) firstLatLng = {x: 37.533017, y: 126.981094}  
 
       var mapOption = { 
-        center: new kakao.maps.LatLng(this.firstLatlng.y, this.firstLatlng.x), // 지도의 중심좌표
+        center: new kakao.maps.LatLng(37.533017, 126.981094), // 지도의 중심좌표
         level: 8 // 지도의 확대 레벨
       };
 
@@ -36,13 +40,13 @@ export default {
         
       // 마커를 표시할 위치입니다 
       var positions = [];
-      let list = this.list;
-      for(let i = 0 ; i < list.length ; i++) {
-        if(list[i].pos_latlng !== '') {
-          let xPos = Number(list[i].pos_latlng.x)
-          let yPos = Number(list[i].pos_latlng.y)
+      // let list = this.$store.state.startList;
+      for(let i = 0 ; i < this.startList.length ; i++) {
+        if(this.startList[i].pos_latlang !== '') {
+          let xPos = Number(this.startList[i].pos_latlng.x)
+          let yPos = Number(this.startList[i].pos_latlng.y)
           const obj = {
-            content: '<div>'+list[i].name+'</div>',
+            content: '<div>'+this.startList[i].name+'</div>',
             latlng: new kakao.maps.LatLng(yPos, xPos)
           }
           positions.push(obj);

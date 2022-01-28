@@ -66,30 +66,29 @@ export default {
   },
   methods : {
     // 지번 주소를 좌표값으로 바꾸는 함수(카카오 API 참조)
-    // transPosition(list) {
-    //   for (let i = 0; i < list.length; i ++) {
-    //     if(list[i].pos !== "") {
-    //       var geocoder = new kakao.maps.services.Geocoder();
+    transPosition(list) {
+      for (let i = 0; i < list.length; i ++) {
+        if(list[i].pos !== "") {
+          var geocoder = new kakao.maps.services.Geocoder();
 
-    //       var callback = function(result, status) {
-    //         if (status === kakao.maps.services.Status.OK) {
-    //           let obj = {y: result[0].y, x: result[0].x}
-    //           list[i].pos_latlng = obj;
-    //         }
-    //       };
-    //       geocoder.addressSearch(list[i].pos, callback);
-    //     }
-    //   }
-    //   this.localCheckedList = list;
-    // },
+          var callback = function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+              let obj = {y: result[0].y, x: result[0].x}
+              list[i].pos_latlng = obj;
+            }
+          };
+          geocoder.addressSearch(list[i].pos, callback);
+        }
+      }
+      this.localCheckedList = list;
+    },
     // 위에서 체크된 아이템을 조건에 맞게 처리하는 함수
     getCheckedItems() {
       let list = this.$store.state.checkedList;
       if(list.length === 0) {
         this.showCheck = true;
       } else {
-        this.localCheckedList = list;
-        // this.transPosition(list);
+        this.transPosition(list);
       }
     },
     // 코스에 들어가는 아이템 정리하는 함수

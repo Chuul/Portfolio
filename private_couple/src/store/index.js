@@ -14,7 +14,6 @@ export const store = new Vuex.Store({
     checkedList : [],
     courseList : [],
     startList : [],
-    LatLng : [],
     lastItemList : [],
     lastCourseList : []
   },
@@ -22,7 +21,7 @@ export const store = new Vuex.Store({
   actions,
   plugins: [
     persistedstate({
-      paths: ['username', 'email', 'LatLng']
+      paths: ['username', 'email', 'startList']
     })
   ]
 })

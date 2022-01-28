@@ -1,5 +1,5 @@
 <template>
-  <div id="map">
+  <div id="map_main">
     <div id="menu_wrap" class="bg_white">
       <div class="option">
         <div>
@@ -26,13 +26,17 @@ export default {
       markers : []
     };
   },
+  created() {
+    console.log('코스생성에서 created');
+  },
   mounted() {
+    console.log('코스생성에서 mounted')
     this.initMap();
   },
   methods: {
     // 지도를 띄우는 function
     initMap() {
-      let container = document.getElementById("map");
+      let container = document.getElementById("map_main");
       let options = {
         center: new kakao.maps.LatLng(37.533430, 126.981279),
         level: 8,
@@ -208,15 +212,15 @@ export default {
 </script>
 
 <style scoped>
-#map a, #map a:hover, #map a:active{
+#map_main a, #map_main a:hover, #map_main a:active{
   color:#000;
   text-decoration: none;
 }
-#map * {
+#map_main * {
   font-family:'Malgun Gothic',dotum,'돋움',sans-serif;
   font-size:12px;
 }
-#map {
+#map_main {
   height: 400px;
   position:relative;
   overflow:hidden;

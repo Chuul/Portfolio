@@ -84,22 +84,8 @@ const SET_COURSE_LIST = (state, list) => {
 }
 const SET_START_COURSE = (state, list) => {
   state.startList = list;
-
-  // // 아이템 이름, 좌표값 state 저장
-  // let obj = [];
-  // list.forEach( (item) => {
-  //   const data = {
-  //     name: item.name,
-  //     pos_latlng: item.pos_latlng 
-  //   }
-  //   obj.push(data);
-  // })
-  // state.LatLng = obj;
 }
 // StartView
-const SET_START_LIST = (state, data) => {
-  state.startList = data;
-}
 const SET_START_URL = (state, obj) => {
   for(let i = 0 ; i < state.startList.length ; i++) {
     if(state.startList[i]._id === obj.id) {
@@ -140,7 +126,6 @@ export {
   SET_ITEM_FALSE,
   SET_COURSE_LIST,
   SET_START_COURSE,
-  SET_START_LIST,
   SET_START_URL,
   SET_START_POS,
   SPLICE_START,
