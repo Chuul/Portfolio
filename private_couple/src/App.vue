@@ -1,46 +1,114 @@
 <template>
-  <main>
-		<Header></Header>
+	<main>
+		<HeaderView></HeaderView>
 		<ToolBar></ToolBar>
 		<transition name="fade">
 			<router-view></router-view>
 		</transition>
-    <InfoView></InfoView>
-  </main>
+		<InfoView></InfoView>
+	</main>
 </template>
 
 <script>
-import Header from '@/components/common/Header.vue';
+import HeaderView from '@/components/common/HeaderView.vue';
 import ToolBar from '@/components/common/ToolBar.vue';
-import InfoView from './components/InfoView.vue'
- 
+import InfoView from './components/InfoView.vue';
+
 export default {
-  components: {
-		Header,
+	components: {
+		HeaderView,
 		ToolBar,
-    InfoView
-  }
-}
+		InfoView,
+	},
+};
 </script>
 
 <style>
 body {
-	background-color: #F6F6F6;
+	background-color: #f6f6f6;
 }
 /* reset CSS */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -49,21 +117,34 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
 	display: block;
 }
 body {
 	line-height: 1;
 }
-ol, ul {
+ol,
+ul {
 	list-style: none;
 }
-blockquote, q {
+blockquote,
+q {
 	quotes: none;
 }
-blockquote:before, blockquote:after,
-q:before, q:after {
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
 	content: '';
 	content: none;
 }
@@ -72,12 +153,13 @@ table {
 	border-spacing: 0;
 }
 a {
-  text-decoration: none;
+	text-decoration: none;
 }
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity 0.5s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
+	opacity: 0;
 }
 </style>
