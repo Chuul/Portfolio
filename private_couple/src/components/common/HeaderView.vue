@@ -33,7 +33,9 @@ export default {
 				return;
 			}
 			window.Kakao.Auth.logout();
+			this.$store.commit('LOGOUT_USER');
 			this.$router.push('/login');
+			this.closeModal();
 		},
 		openModal() {
 			this.showModal = true;
