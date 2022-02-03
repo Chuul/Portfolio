@@ -14,15 +14,6 @@ import CreateViewList from './CreateViewList.vue';
 import CreateViewAddCourse from './CreateViewAddCourse.vue';
 
 export default {
-	created() {
-		console.log('최상위 created');
-	},
-	mounted() {
-		console.log('최상위 mounted');
-	},
-	updated() {
-		console.log('최상위 updated');
-	},
 	components: {
 		KakaoMap,
 		CreateViewAddItem,

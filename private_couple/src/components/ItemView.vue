@@ -87,7 +87,6 @@ export default {
 	computed: {
 		ItemList() {
 			if (this.$route.name === 'creating') {
-				console.log('creating computed: ', this.$store.state.itemList);
 				return this.$store.state.itemList;
 			} else if (this.$route.name === 'start') {
 				return this.$store.state.startList;

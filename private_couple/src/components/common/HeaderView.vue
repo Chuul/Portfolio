@@ -1,19 +1,25 @@
 <template>
-	<div class="header_cont">
-		<span class="user_cont">{{ fetchName }}님</span>
-		<i class="logout_btn fas fa-sign-out-alt" @click="openModal" />
+	<div :class="isLogin">
+		<div class="header_cont">
+			<i class="start_Btn fas fa-play-circle" @click="goStartView"></i>
+			<span class="user_cont">{{ fetchName }}님</span>
+			<i class="logout_btn fas fa-sign-out-alt" @click="openModal" />
+		</div>
 		<Modal v-if="showModal" @close="closeModal()">
 			<h2 slot="header">로그아웃 하시겠습니까?</h2>
 			<button slot="body" @click.prevent="kakaoLogout()">확인</button>
 		</Modal>
+		<ToolBar></ToolBar>
 	</div>
 </template>
 
 <script>
+import ToolBar from '@/components/common/ToolBar.vue';
 import Modal from '@/components/common/ModalView.vue';
 
 export default {
 	components: {
+		ToolBar,
 		Modal,
 	},
 	data() {
@@ -22,11 +28,17 @@ export default {
 		};
 	},
 	computed: {
+		isLogin() {
+			return this.$store.state.email === '' ? 'login_cont' : null;
+		},
 		fetchName() {
 			return this.$store.state.username;
 		},
 	},
 	methods: {
+		goStartView() {
+			this.$router.push('/start');
+		},
 		kakaoLogout() {
 			if (!window.Kakao.Auth.getAccessToken()) {
 				console.log('Not logged in.');
@@ -49,8 +61,19 @@ export default {
 
 <style scoped>
 .header_cont {
+	display: flex;
+	align-items: center;
 	margin: 0.5em;
-	text-align: end;
+}
+.start_Btn {
+	margin: 10px 0 10px 10px;
+	margin-right: auto;
+	font-size: 2rem;
+	color: rgba(124, 198, 255, 0.8);
+	cursor: pointer;
+}
+.login_cont {
+	display: none;
 }
 .user_cont {
 	margin-right: 1em;

@@ -34,6 +34,7 @@
 			</li>
 		</div>
 		<button class="complete_Btn" @click="openCompleteForm()">코스 완료</button>
+		<i class="back_btn fas fa-arrow-circle-left" @click="backStartView()"></i>
 		<!-- 모달창 -->
 		<Modal v-if="showModal" @close="closeForm()">
 			<h2 slot="header">코스 평가</h2>
@@ -131,6 +132,10 @@ export default {
 			this.$store.dispatch('STORE_START', this.textArea);
 			this.showCompleteModal = false;
 			this.textArea = '';
+			this.$router.push('/list');
+		},
+		backStartView() {
+			this.$router.push('/list');
 		},
 		// Modal창 on/off
 		openUrlForm(item) {
@@ -237,5 +242,12 @@ h2 {
 	color: rgb(86, 153, 253);
 	cursor: pointer;
 	box-shadow: 0.5em -0.2em 10px 1px rgba(143, 143, 143, 0.2);
+}
+.back_btn {
+	display: block;
+	float: left;
+	font-size: 2rem;
+	color: rgba(124, 198, 255, 0.8);
+	cursor: pointer;
 }
 </style>

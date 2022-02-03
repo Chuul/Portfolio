@@ -31,11 +31,7 @@ export default {
 			markers: [],
 		};
 	},
-	created() {
-		console.log('코스생성에서 created');
-	},
 	mounted() {
-		console.log('코스생성에서 mounted');
 		this.initMap();
 	},
 	methods: {

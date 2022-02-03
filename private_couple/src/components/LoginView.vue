@@ -1,6 +1,6 @@
 <template>
 	<div class="loginView_cont">
-		<h1>Date With You</h1>
+		<h1>Make Our Own Course</h1>
 		<kakaoLogin></kakaoLogin>
 	</div>
 </template>
@@ -22,8 +22,9 @@ h1 {
 	font-size: 3em;
 }
 .loginView_cont {
-	margin-top: 5em;
-	height: 65vh;
-	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 </style>

@@ -1,17 +1,18 @@
 <template>
-	<footer class="info-cont">
-		<strong class="tit-company">Chul Company</strong>
-		<dl class="info-list">
-			<dt>회사명</dt>
-			<dd>(주)철이</dd>
-			<dt>대표</dt>
+	<footer class="info_cont">
+		<strong class="app_title">Private Course</strong>
+		<dl class="info_list">
+			<dt>제작</dt>
 			<dd>이희철</dd>
-			<dt>사업자 번호</dt>
-			<dd>000-0000-0000</dd>
-			<dd>웹 제작</dd>
-			<dt>주소</dt>
-			<dd>대전광역시</dd>
-			<small class="txt-copy">CopyRight &copy;Chuul. All rights Reserved</small>
+			<dt>이메일</dt>
+			<dd>bethejs30@gmail.com</dd>
+			<a
+				class="gitRepo"
+				href="https://github.com/Chuul/Private-Course"
+				target="_blank"
+				>Visit Github Repository</a
+			>
+			<small class="txt_copy">CopyRight &copy;Chuul. All rights Reserved</small>
 		</dl>
 	</footer>
 </template>
@@ -21,36 +22,39 @@ export default {};
 </script>
 
 <style scoped>
-.info-cont {
+.info_cont {
 	overflow: hidden;
 	background: rgba(124, 198, 255, 0.247);
 }
-.tit-company {
+.app_title {
 	display: block;
-	font-size: 1.5em;
-	height: 4em;
-	line-height: 4em;
+	font-size: 1.5rem;
+	height: 3em;
+	line-height: 3em;
 	padding: 0 1em;
 	border-bottom: 1px solid #c4c4c4e5;
 	font-weight: 700;
 }
-.info-list {
+.info_list {
 	display: block;
-	padding: 1em 1em;
+	padding: 0 1em;
 	float: left;
 }
-.info-list dt,
-dd {
+.info_list dt,
+dd,
+a {
 	display: inline-block;
 }
-.info-list dt {
+.info_list dt,
+a {
 	font-weight: 700;
 	margin-right: 5px;
 }
-.info-list dd {
+.info_list dd {
 	font-weight: 400;
+	margin-left: 5px;
 }
-.info-list dd::after {
+.info_list dd::after {
 	display: inline-block;
 	content: '';
 	width: 1px;
@@ -58,11 +62,15 @@ dd {
 	margin: 0 1em;
 	background: black;
 }
-.info-list dd:last-child::after {
+.info_list dd:last-child::after {
 	display: none;
 }
-.txt-copy {
-	display: inline-block;
-	padding: 1em 0;
+.gitRepo:hover {
+	color: #8763fb;
+	cursor: pointer;
+}
+.txt_copy {
+	display: block;
+	padding: 2em 0;
 }
 </style>
