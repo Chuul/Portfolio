@@ -11,9 +11,13 @@ export default {};
 </script>
 
 <style scoped>
+router-link {
+	display: block;
+}
 .router_cont {
-	text-align: center;
-	margin: 0 2em 2em 2em;
+	display: flex;
+	justify-content: center;
+	margin-bottom: 1em;
 }
 .router_cont .router-link-exact-active {
 	color: rgb(31, 152, 245);

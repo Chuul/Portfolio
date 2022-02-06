@@ -36,8 +36,21 @@ const FETCH_ITEM_LIST = async context => {
 	context.commit('SET_ITEM_LIST', data);
 };
 const ADD_ITEM = async ({ dispatch }, obj) => {
-	await postItem(obj);
-	dispatch('FETCH_ITEM_LIST');
+	try {
+		const response = await postItem(obj);
+		dispatch('FETCH_ITEM_LIST');
+		return response;
+	} catch (error) {
+		return error.response.data.message;
+	}
+	// await postItem(obj)
+	// 	.then(response => {
+	// 		dispatch('FETCH_ITEM_LIST');
+	// 		return response;
+	// 	})
+	// 	.catch(error => {
+	// 		console.log('error: ', error);
+	// 	});
 };
 const TOGGLE_ITEM = (context, item) => {
 	context.commit('SET_TOGGLE_ITEM', item);

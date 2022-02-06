@@ -29,6 +29,12 @@ router.post('/insert', async(req, res, next) => {
     res.status(201).json(items)
   } catch (err) {
     console.log(err);
+    if(err.code === 11000) {
+      res.status(400).send({ message: '아이템이 중복됩니다.', err });
+    } 
+    else {
+      res.status(400).send({ message: 'Something wrong', err });
+    }
     next(err)
   }
 })

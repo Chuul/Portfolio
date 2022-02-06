@@ -249,10 +249,11 @@ export default {
 	font-size: 12px;
 }
 #map_main {
-	height: 400px;
+	height: 0;
+	padding-bottom: 100%;
 	position: relative;
 	overflow: hidden;
-	margin-bottom: 20px;
+	margin-bottom: 1rem;
 	border-radius: 0.5em;
 	box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
 	z-index: 1;

@@ -25,7 +25,7 @@ export default {
 		};
 	},
 	methods: {
-		addItem() {
+		async addItem() {
 			if (this.newItem !== '') {
 				const obj = {
 					createdBy: this.$store.state.email,
@@ -36,8 +36,13 @@ export default {
 					pos: '',
 					pos_latlng: '',
 				};
-				this.$store.dispatch('ADD_ITEM', obj);
-				this.newItem = '';
+				const response = await this.$store.dispatch('ADD_ITEM', obj);
+				if (typeof response === 'string') {
+					this.newItem = response;
+					setTimeout(() => {
+						this.newItem = '';
+					}, 3000);
+				}
 			}
 		},
 	},
