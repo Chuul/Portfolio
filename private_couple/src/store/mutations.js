@@ -120,6 +120,11 @@ const SET_LAST_LIST = (state, data) => {
 	state.lastItemList = data[0].item;
 	state.lastCourseList = data[0].course;
 };
+// Error
+const SET_ERROR = (state, data) => {
+	console.log('data: ', data);
+	state.errorMessage = data;
+};
 
 export {
 	LOGOUT_USER,
@@ -136,4 +141,5 @@ export {
 	SET_START_POS,
 	SPLICE_START,
 	SET_LAST_LIST,
+	SET_ERROR,
 };

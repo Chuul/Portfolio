@@ -16,6 +16,7 @@ export const store = new Vuex.Store({
 		startList: [],
 		lastItemList: [],
 		lastCourseList: [],
+		errorMessage: '',
 	},
 	mutations,
 	actions,

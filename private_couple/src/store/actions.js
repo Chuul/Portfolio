@@ -22,52 +22,89 @@ import {
 
 // LoginView
 const LOGIN = async ({ commit }, userData) => {
-	const { data } = await loginUser(userData);
-	commit('SET_USER_DATA', data);
-	return data;
+	try {
+		const { data } = await loginUser(userData);
+		commit('SET_USER_DATA', data);
+		return data;
+	} catch (error) {
+		console.log(error);
+	}
 };
 // CreateView
 const FETCH_ITEM_LIST = async context => {
-	const userData = {
-		email: context.state.email,
-		username: context.state.username,
-	};
-	const { data } = await getItemList(userData);
-	context.commit('SET_ITEM_LIST', data);
-};
-const ADD_ITEM = async ({ dispatch }, obj) => {
 	try {
-		const response = await postItem(obj);
-		dispatch('FETCH_ITEM_LIST');
-		return response;
+		const userData = {
+			email: context.state.email,
+			username: context.state.username,
+		};
+		const { data } = await getItemList(userData);
+		context.commit('SET_ITEM_LIST', data);
+		return data;
 	} catch (error) {
+		context.commit('SET_ERROR', error.response.data.message);
 		return error.response.data.message;
 	}
-	// await postItem(obj)
+};
+const ADD_ITEM = async (context, payload) => {
+	const obj = {
+		createdBy: context.state.email,
+		category: payload.category,
+		name: payload.name,
+		checked: false,
+		url: '',
+		pos: '',
+		pos_latlng: '',
+	};
+	try {
+		const response = await postItem(obj);
+		console.log('response: ', response);
+		context.dispatch('FETCH_ITEM_LIST');
+		return response;
+	} catch (error) {
+		console.log('error: ', error.response.data.message);
+		return error.response.data.message;
+	}
+	// postItem(obj)
 	// 	.then(response => {
-	// 		dispatch('FETCH_ITEM_LIST');
+	// 		console.log('response in action : ', response);
+	// 		context.dispatch('FETCH_ITEM_LIST');
 	// 		return response;
 	// 	})
 	// 	.catch(error => {
-	// 		console.log('error: ', error);
+	// 		console.log('error in action: ', error);
+	// 		return error.response.data.message;
 	// 	});
 };
-const TOGGLE_ITEM = (context, item) => {
+const TOGGLE_ITEM = async (context, item) => {
 	context.commit('SET_TOGGLE_ITEM', item);
 	context.dispatch('FETCH_ITEM_LIST');
 };
-const PATCH_ITEM_URL = (context, obj) => {
-	context.commit('SET_ITEM_URL', obj);
-	patchUrl(obj);
-	context.dispatch('FETCH_ITEM_LIST');
+const PATCH_ITEM_URL = async ({ commit }, obj) => {
+	try {
+		commit('SET_ITEM_URL', obj);
+		patchUrl(obj);
+	} catch (error) {
+		console.log(error);
+		return error;
+	}
 };
-const PATCH_ITEM_POS = ({ commit }, obj) => {
-	commit('SET_ITEM_POS', obj);
-	patchPos(obj);
+const PATCH_ITEM_POS = async ({ commit }, obj) => {
+	try {
+		commit('SET_ITEM_POS', obj);
+		patchPos(obj);
+	} catch (error) {
+		console.log(error);
+		return error;
+	}
 };
-const DELETE_ITEM = ({ commit }, id) => {
-	commit('SPLICE_ITEM', id);
-	deleteItem(id);
+const DELETE_ITEM = async ({ commit }, id) => {
+	try {
+		commit('SPLICE_ITEM', id);
+		deleteItem(id);
+	} catch (error) {
+		console.log(error);
+		return error;
+	}
 };
 const STORE_COURSE = (context, list) => {
 	const obj = {
@@ -75,7 +112,7 @@ const STORE_COURSE = (context, list) => {
 		course: list,
 	};
 	postCourse(obj);
-	context.commit('SET_ITEM_FALSE', obj.course);
+	context.commit('SET_ITEM_FALSE', list);
 };
 // ListView
 const FETCH_COURSE_LIST = async context => {
@@ -83,12 +120,20 @@ const FETCH_COURSE_LIST = async context => {
 		email: context.state.email,
 		username: context.state.username,
 	};
-	const { data } = await getCourseList(userData);
-	context.commit('SET_COURSE_LIST', data);
+	try {
+		const { data } = await getCourseList(userData);
+		context.commit('SET_COURSE_LIST', data);
+	} catch (error) {
+		console.log(error);
+	}
 };
 const DELETE_COURSE = async (context, item) => {
-	await deleteCourse(item);
-	context.dispatch('FETCH_COURSE_LIST');
+	try {
+		deleteCourse(item);
+		context.dispatch('FETCH_COURSE_LIST');
+	} catch (error) {
+		console.log(error);
+	}
 };
 const START_COURSE = async (context, list) => {
 	const userData = {
@@ -103,14 +148,21 @@ const FETCH_START_LIST = async context => {
 	const userData = {
 		createdBy: context.state.email,
 	};
-	const { data } = await getStartList(userData);
-	context.commit('SET_START_COURSE', data[0].course);
-	return;
+	try {
+		const { data } = await getStartList(userData);
+		context.commit('SET_START_COURSE', data[0].course);
+	} catch (error) {
+		console.log(error);
+	}
 };
 const START = async ({ commit }, userData) => {
-	const { data } = await getStartList(userData);
-	commit('setStartList', data[0]);
-	return data;
+	try {
+		const { data } = await getStartList(userData);
+		commit('setStartList', data[0]);
+		return data;
+	} catch (error) {
+		console.log(error);
+	}
 };
 const FALSE_ITEM = async ({ dispatch }, id) => {
 	await toggleFalseItem(id);
@@ -157,11 +209,15 @@ const STORE_START = (context, comment) => {
 };
 // LastView
 const FETCH_LAST_LIST = async context => {
-	const userData = {
-		createdBy: context.state.email,
-	};
-	const { data } = await getLastList(userData);
-	context.commit('SET_LAST_LIST', data);
+	try {
+		const userData = {
+			createdBy: context.state.email,
+		};
+		const { data } = await getLastList(userData);
+		context.commit('SET_LAST_LIST', data);
+	} catch (error) {
+		console.log(error);
+	}
 };
 export {
 	LOGIN,

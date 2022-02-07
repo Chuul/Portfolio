@@ -8,6 +8,9 @@ router.post('/', async(req, res, next) => {
     const starts = await start.find({
       createdBy: req.body.createdBy
     });
+    if (!starts) {
+      return res.status(400).json({ message: '데이터를 찾을 수 없습니다' });
+    }
     res.json(starts);
   } catch (error) {
     console.log(error);
@@ -16,7 +19,7 @@ router.post('/', async(req, res, next) => {
 })
 router.post('/insert', async(req, res, next) => {
   try {
-    const result = await start.remove({
+    const result = await start.deleteOne({
       createdBy: req.body.createdBy
     })
     res.json(result);
@@ -35,12 +38,16 @@ router.patch('/comment/:id', async(req, res, next) => {
   try {
     const result = await start.updateOne({
       'course._id': req.params.id
-    }, {
+    }, 
+    {
       '$set': {
         'course.$.comment': req.body.data.comment, 
         'course.$.checked': true
       }
     });
+    if (!result) {
+      return res.status(400).json({ message: '데이터를 업데이트할 수 없습니다' });
+    }
     res.json(result);
   } catch (err) {
     console.log(err);
@@ -49,8 +56,15 @@ router.patch('/comment/:id', async(req, res, next) => {
 })
 router.patch('/false/:id', async(req, res, next) => {
   try {
-    const result = await start.updateOne({'course._id': req.params.id}, 
-      {'$set': {'course.$.checked': false}});
+    const result = await start.updateOne({
+      'course._id': req.params.id
+    }, 
+    {
+      '$set': {'course.$.checked': false}
+    });
+    if (!result) {
+      return res.status(400).json({ message: '데이터를 업데이트할 수 없습니다' });
+    }
     res.json(result);
   } catch (err) {
     console.log(err);
@@ -64,6 +78,9 @@ router.delete('/:id', async(req, res, next) => {
     }, {
       '$pull' : {"course" : {"_id": req.params.id}}
     });
+    if (!result) {
+      return res.status(400).json({ message: '데이터를 업데이트할 수 없습니다' });
+    }
     res.json(result);
   } catch (err) {
     console.log(err);
@@ -78,6 +95,9 @@ router.patch('/url/:id', async(req, res, next) => {
     }, {
       '$set': {'course.$.url': req.body.data.urlText}
     });
+    if (!result) {
+      return res.status(400).json({ message: '데이터를 업데이트할 수 없습니다' });
+    }
     res.json(result);
   } catch (err) {
     console.log(err);
@@ -91,6 +111,9 @@ router.patch('/pos/:id', async(req, res, next) => {
     }, {
       '$set': {'course.$.pos': req.body.data.posText}
     });
+    if (!result) {
+      return res.status(400).json({ message: '데이터를 업데이트할 수 없습니다' });
+    }
     res.json(result);
   } catch (err) {
     console.log(err);

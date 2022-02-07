@@ -27,21 +27,19 @@ export default {
 	methods: {
 		async addItem() {
 			if (this.newItem !== '') {
-				const obj = {
-					createdBy: this.$store.state.email,
+				const payload = {
 					category: this.selected,
 					name: this.newItem,
-					checked: false,
-					url: '',
-					pos: '',
-					pos_latlng: '',
 				};
-				const response = await this.$store.dispatch('ADD_ITEM', obj);
+				const response = await this.$store.dispatch('ADD_ITEM', payload);
+				console.log('response in addItem: ', response);
 				if (typeof response === 'string') {
 					this.newItem = response;
 					setTimeout(() => {
 						this.newItem = '';
-					}, 3000);
+					}, 1500);
+				} else {
+					this.newItem = '';
 				}
 			}
 		},

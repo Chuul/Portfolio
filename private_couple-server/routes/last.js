@@ -8,6 +8,9 @@ router.post('/', async(req, res, next) => {
     const lasts = await last.find({
       createdBy: req.body.createdBy
     });
+    if (!lasts) {
+      return res.status(400).json({ message: '데이터를 찾을 수 없습니다' });
+    }
     res.json(lasts);
   } catch (err) {
     console.log(err);

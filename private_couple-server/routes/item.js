@@ -8,10 +8,15 @@ router.post('/', async(req, res, next) => {
     const items = await item.find({
       createdBy: req.body.email
     });
+    if (!items) {
+      return res.status(400).json({ message: '데이터를 찾을 수 없습니다' });
+    }
     res.json(items);
   } catch (err) {
     console.log(err);
-    next(err);
+    return res.status(500).json({
+      message: '알 수 없는 오류 (오류문의 "bethejs30@gmail.com")', err
+    })
   }
 })
 router.post('/insert', async(req, res, next) => {
@@ -26,21 +31,22 @@ router.post('/insert', async(req, res, next) => {
       pos: req.body.pos,
       pos_latlng: req.body.pos_latlng
     });
-    res.status(201).json(items)
+    res.status(201).json(items);
   } catch (err) {
     console.log(err);
     if(err.code === 11000) {
-      res.status(400).send({ message: '아이템이 중복됩니다.', err });
+      return res.status(400).json({ message: '아이템이 중복됩니다', err });
     } 
-    else {
-      res.status(400).send({ message: 'Something wrong', err });
-    }
-    next(err)
+    next(err);
   }
 })
 router.delete('/:id', async(req, res, next) => {
   try {
-    const result = await item.remove({_id: req.params.id})
+    const result = await item.deleteOne({_id: req.params.id});
+    if (!result) {
+      console.log('여기');
+      return res.status(400).json({ message: 'DB에서 데이터를 삭제할 수 없습니다' });
+    }
     res.json(result);
   } catch (err) {
     console.log(err);
@@ -54,6 +60,9 @@ router.patch('/url/:id', async(req, res, next) => {
     }, {
       url: req.body.data.urlText
     });
+    if (!result) {
+      return res.status(400).json({ message: '데이터를 업데이트 할 수 없습니다' });
+    }
     res.json(result);
   } catch (err) {
     console.log(err);
@@ -67,6 +76,9 @@ router.patch('/pos/:id', async(req, res, next) => {
     }, {
       pos: req.body.data.posText
     });
+    if (!result) {
+      return res.status(400).json({ message: '데이터를 업데이트 할 수 없습니다' });
+    }
     res.json(result);
   } catch (err) {
     console.log(err);
@@ -76,6 +88,9 @@ router.patch('/pos/:id', async(req, res, next) => {
 router.get('/list', async(req, res, next) => {
   try {
     const list = await item.find({checked: true});
+    if (!list) {
+      return res.status(400).json({ message: '데이터를 찾을 수 없습니다' });
+    }
     res.json(list);
   } catch (err) {
     console.log(err);

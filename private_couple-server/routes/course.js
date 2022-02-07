@@ -8,9 +8,12 @@ router.post('/', async(req, res, next) => {
     const courses = await course.find({
       createdBy: req.body.email
     });
+    if (!courses) {
+      return res.status(400).json({ message: '데이터를 찾을 수 없습니다' });
+    }
     res.json(courses);
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
     next(err);
   }
 })
@@ -24,12 +27,15 @@ router.post('/insert', async(req, res, next) => {
     res.status(201).json(courses)
   } catch (err) {
     console.log(err);
-    next(err)
+    next(err);
   }
 })
 router.delete('/:name', async(req, res, next) => {
   try {
-    const result = await course.remove({name: req.params.name})
+    const result = await course.deleteOne({name: req.params.name})
+    if (!result) {
+      return res.status(400).json({ message: '데이터를 삭제할 수 없습니다' });
+    }
     res.json(result);
   } catch (err) {
     console.log(err);
