@@ -25,6 +25,6 @@ export default {
 
 <style>
 section {
-	margin: 0 2em;
+	margin: 0 1rem;
 }
 </style>

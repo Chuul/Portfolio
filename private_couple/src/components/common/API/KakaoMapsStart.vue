@@ -1,5 +1,5 @@
 <template>
-	<div id="map" style="width: 100%; height: 350px"></div>
+	<div id="map" style="width: 100%"></div>
 </template>
 
 <script>
@@ -22,14 +22,14 @@ export default {
 		initMap() {
 			var mapContainer = document.getElementById('map'); // 지도를 표시할 div
 
-			// var firstLatLng = {};
-			// for(let i = 0 ; i < this.startList[i].length ; i++) {
-			//   if(this.startList[i].pos_latlang !== "") {
-			//     this.firstLatLng = this.startList[i].pos_latlang;
-			//     return
-			//   }
-			// }
-			// if(firstLatLng === {}) firstLatLng = {x: 37.533017, y: 126.981094}
+			var firstLatLng = {};
+			for (let i = 0; i < this.startList[i].length; i++) {
+				if (this.startList[i].pos_latlang !== '') {
+					this.firstLatLng = this.startList[i].pos_latlang;
+					return;
+				}
+			}
+			if (firstLatLng === {}) firstLatLng = { x: 37.533017, y: 126.981094 };
 
 			var mapOption = {
 				center: new kakao.maps.LatLng(37.533017, 126.981094), // 지도의 중심좌표
@@ -83,3 +83,22 @@ export default {
 	},
 };
 </script>
+
+<style scoped>
+#map * {
+	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+	border-radius: 0.5rem;
+}
+#map {
+	height: 0;
+	padding-bottom: 40%;
+}
+/* 반응형 - 모바일 */
+@media (max-width: 430px) {
+	#map {
+		font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+		border-radius: 0.5rem;
+		padding-bottom: 100%;
+	}
+}
+</style>

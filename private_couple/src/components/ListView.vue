@@ -48,7 +48,7 @@ li {
 }
 .list_cont {
 	height: 80vh;
-	margin: 0 2em 2em 2em;
+	margin: 0 1rem;
 }
 .fa-heart-square {
 	float: left;

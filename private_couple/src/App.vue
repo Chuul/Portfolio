@@ -21,6 +21,13 @@ export default {
 </script>
 
 <style>
+body {
+	margin: 0;
+	background-color: #f6f6f6;
+}
+a {
+	text-decoration: none;
+}
 main > section,
 div.loginView_cont {
 	min-height: 80vh;
@@ -31,5 +38,12 @@ div.loginView_cont {
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
 	opacity: 0;
+}
+
+/* 반응형-모바일 */
+@media all and (max-width: 430px) {
+	html {
+		font-size: 80%;
+	}
 }
 </style>

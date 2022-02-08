@@ -56,7 +56,7 @@ h3 {
 }
 .last_cont {
 	height: 80vh;
-	margin: 0 2em 2em 2em;
+	margin: 0 1rem;
 }
 .item_cont {
 	text-align: center;

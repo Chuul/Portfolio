@@ -4,12 +4,7 @@
 			<div class="option">
 				<div>
 					<form>
-						<input
-							type="text"
-							id="keyword"
-							size="15"
-							placeholder="키워드 입력"
-						/>
+						<input type="text" id="keyword" size="15" placeholder="키워드" />
 						<button @click.prevent="searchFunc">검색하기</button>
 					</form>
 				</div>
@@ -126,14 +121,14 @@ export default {
 			function getListItem(index, places) {
 				var el = document.createElement('li'),
 					itemStr =
-						'<span style="float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;background-position: 0 -' +
+						'<span style="float:left;position:absolute;width:36px; height:37px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;background-position: 0 -' +
 						(10 + index * 46) +
 						'px;}" class="markerbg marker_' +
 						(index + 1) +
 						'"></span>' +
 						'<div style=""border-bottom:1px solid rgba(53, 53, 53, 0.993);overflow: hidden;min-height: 65px;>' +
-						'<div class="info" style="padding:10px 0 10px 55px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;cursor:pointer;">' +
-						'<h5 style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;padding-bottom: 2px;">' +
+						'<div class="info" style="padding:0 0 10px 35px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;cursor:pointer;">' +
+						'<h5 style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;padding-bottom: 2px;margin:0.4rem 0 0 10px;">' +
 						places.place_name +
 						'</h5>';
 				if (places.road_address_name) {
@@ -238,19 +233,13 @@ export default {
 </script>
 
 <style scoped>
-#map_main a,
-#map_main a:hover,
-#map_main a:active {
-	color: #000;
-	text-decoration: none;
-}
 #map_main * {
 	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
 	font-size: 12px;
 }
 #map_main {
 	height: 0;
-	padding-bottom: 100%;
+	padding-bottom: 70%;
 	position: relative;
 	overflow: hidden;
 	margin-bottom: 1rem;
@@ -258,11 +247,10 @@ export default {
 	box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
 	z-index: 1;
 }
-.button-group {
-	margin: 10px 0px;
-}
-button {
-	margin: 0 3px;
+#placesList {
+	list-style: none;
+	padding: 0;
+	margin-top: 0;
 }
 #menu_wrap {
 	position: absolute;
@@ -289,15 +277,7 @@ button {
 	border-top: 2px solid #5f5f5f;
 	margin: 3px 0;
 }
-#menu_wrap .option {
-	text-align: center;
-}
-#menu_wrap .option p {
-	margin: 10px 0;
-}
-#menu_wrap .option button {
-	margin-left: 5px;
-}
+/* 페이지 표시 */
 #pagination {
 	margin: 10px auto;
 	text-align: center;
@@ -309,6 +289,27 @@ button {
 #pagination .on {
 	font-weight: bold;
 	cursor: default;
-	color: #777;
+	color: red;
+}
+/* 반응형 처리 - 모바일 */
+@media (max-width: 430px) {
+	#map_main {
+		padding-bottom: 120%;
+	}
+	#menu_wrap {
+		position: absolute;
+		top: 65%;
+		left: 0;
+		bottom: 0;
+		width: 90%;
+		margin: 10px;
+		padding: 5px;
+		overflow-y: auto;
+		background: rgba(255, 255, 255, 0.7);
+		border-bottom: #5f5f5f;
+		z-index: 2;
+		font-size: 12px;
+		border-radius: 10px;
+	}
 }
 </style>

@@ -64,9 +64,9 @@ export default {
 	display: flex;
 	align-items: center;
 	margin: 0.5em;
+	padding-top: 0.5em;
 }
 .start_Btn {
-	margin: 10px 0 10px 10px;
 	margin-right: auto;
 	font-size: 2rem;
 	color: rgba(124, 198, 255, 0.8);
@@ -84,5 +84,14 @@ export default {
 }
 Modal button {
 	border: none;
+}
+/* 반응형 - 모바일 */
+@media (max-width: 430px) {
+	.start_Btn {
+		margin-right: auto;
+		font-size: 1.5rem;
+		color: rgba(124, 198, 255, 0.8);
+		cursor: pointer;
+	}
 }
 </style>

@@ -4,37 +4,39 @@
 		<KakaoMap></KakaoMap>
 		<div class="main_cont">
 			<li class="list_cont" v-for="item in StartList" :key="item.name">
-				<div class="item_cont">
-					<i
-						class="toggle_Btn far fa-check-circle"
-						@click="openForm(item)"
-						:class="{ checked_Btn: item.checked }"
-					/>
-					<a v-if="item.url" :href="item.url" class="linkText" target="_blank">
-						{{ item.name }}
-					</a>
-					<a v-else>
-						{{ item.name }}
-					</a>
-					<i class="basic_Btn far fa-trash-alt" @click="deleteOneItem(item)" />
-					<i
-						class="basic_Btn fas fa-map-marked-alt"
-						@click="openPosForm(item)"
-						:class="{ checked_Btn: item.pos.length > 0 }"
-					/>
-					<i
-						class="basic_Btn far fa-window-restore"
-						@click="openUrlForm(item)"
-						:class="{ checked_Btn: item.url.length > 0 }"
-					/>
-				</div>
+				<!-- <div class="item_cont"> -->
+				<i
+					class="toggle_Btn far fa-check-circle"
+					@click="openForm(item)"
+					:class="{ checked_Btn: item.checked }"
+				/>
+				<a v-if="item.url" :href="item.url" class="linkText" target="_blank">
+					{{ item.name }}
+				</a>
+				<a v-else>
+					{{ item.name }}
+				</a>
+				<i class="basic_Btn far fa-trash-alt" @click="deleteOneItem(item)" />
+				<i
+					class="basic_Btn fas fa-map-marked-alt"
+					@click="openPosForm(item)"
+					:class="{ checked_Btn: item.pos.length > 0 }"
+				/>
+				<i
+					class="basic_Btn far fa-window-restore"
+					@click="openUrlForm(item)"
+					:class="{ checked_Btn: item.url.length > 0 }"
+				/>
+				<!-- </div>
 				<div class="arrow-cont">
 					<i class="fas fa-arrow-down"></i>
-				</div>
+				</div> -->
 			</li>
 		</div>
 		<button class="complete_Btn" @click="openCompleteForm()">코스 완료</button>
-		<i class="back_btn fas fa-arrow-circle-left" @click="backStartView()"></i>
+		<div>
+			<i class="back_btn fas fa-arrow-circle-left" @click="backStartView()"></i>
+		</div>
 		<!-- 모달창 -->
 		<Modal v-if="showModal" @close="closeForm()">
 			<h2 slot="header">코스 평가</h2>
@@ -188,29 +190,28 @@ h2 {
 	font-family: 'Dongle', sans-serif;
 	font-size: 2em;
 	font-weight: 700;
+	margin: 0;
 }
 .course_cont {
-	height: 80vh;
-	margin: 2em;
-	padding: 2em;
+	margin: 0 1rem 1rem 1rem;
+	padding: 0 1.3rem 1.3rem 1.3rem;
+	border-radius: 0.5em;
 	text-align: center;
 	background: rgba(124, 198, 255, 0.11);
+	box-shadow: 0.5em -0.2em 10px 1px rgba(143, 143, 143, 0.2);
 }
 .main_cont li:last-child .arrow-cont {
 	display: none;
 }
 .list_cont {
+	margin: 1rem 0;
+	padding: 1rem;
 	border-radius: 0.5em;
+	background: white;
 }
 .linkText {
 	color: #ee27bc;
 	font-weight: bold;
-}
-.item_cont {
-	margin: 1.5em;
-	padding: 1rem;
-	border-radius: 0.5em;
-	background: white;
 }
 .toggle_Btn {
 	float: left;
@@ -244,8 +245,7 @@ h2 {
 	box-shadow: 0.5em -0.2em 10px 1px rgba(143, 143, 143, 0.2);
 }
 .back_btn {
-	display: block;
-	float: left;
+	display: flex;
 	font-size: 2rem;
 	color: rgba(124, 198, 255, 0.8);
 	cursor: pointer;
