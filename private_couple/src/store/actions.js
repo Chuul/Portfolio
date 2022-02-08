@@ -35,7 +35,6 @@ const FETCH_ITEM_LIST = async context => {
 	try {
 		const userData = {
 			email: context.state.email,
-			username: context.state.username,
 		};
 		const { data } = await getItemList(userData);
 		context.commit('SET_ITEM_LIST', data);

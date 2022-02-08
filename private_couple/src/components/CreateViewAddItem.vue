@@ -34,7 +34,6 @@ export default {
 				this.$store
 					.dispatch('ADD_ITEM', payload)
 					.then(response => {
-						console.log('response in addItem: ', response);
 						if (typeof response === 'string') {
 							this.newItem = response;
 							setTimeout(() => {
@@ -45,7 +44,7 @@ export default {
 						}
 					})
 					.catch(error => {
-						console.log('error in addItem: ', error);
+						console.log(error);
 					});
 			}
 		},
