@@ -18,9 +18,9 @@ export const router = new VueRouter({
 			name: 'login',
 		},
 		{
-			path: '/creating',
+			path: '/item',
 			component: () => import('@/components/CreateView'),
-			name: 'creating',
+			name: 'item',
 		},
 		{
 			path: '/list',

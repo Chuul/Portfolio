@@ -55,7 +55,7 @@ export default {};
 }
 
 .modal-container {
-	width: 10em;
+	width: 10rem;
 	margin: 0px auto;
 	padding: 2%;
 	text-align: center;

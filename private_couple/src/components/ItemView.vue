@@ -86,7 +86,7 @@ export default {
 	},
 	computed: {
 		ItemList() {
-			if (this.$route.name === 'creating') {
+			if (this.$route.name === 'item') {
 				return this.$store.state.itemList;
 			} else if (this.$route.name === 'start') {
 				return this.$store.state.startList;
@@ -95,12 +95,12 @@ export default {
 			}
 		},
 		routeName() {
-			return this.$route.name === 'creating' ? true : false;
+			return this.$route.name === 'item' ? true : false;
 		},
 	},
 	methods: {
 		toggleOneItem(item) {
-			if (this.$route.name === 'creating') {
+			if (this.$route.name === 'item') {
 				this.$store.dispatch('TOGGLE_ITEM', item);
 			} else if (this.$route.name === 'start') {
 				if (item.checked === true) {
@@ -119,7 +119,7 @@ export default {
 			this.showModal = false;
 		},
 		deleteOneItem(item) {
-			if (this.$route.name === 'creating') {
+			if (this.$route.name === 'item') {
 				this.$store.dispatch('DELETE_ITEM', item._id);
 			} else if (this.$route.name === 'start') {
 				this.$store.dispatch('DELETE_START', item._id);
@@ -135,7 +135,7 @@ export default {
 		},
 		patchOneUrl() {
 			const obj = this.setObj();
-			if (this.$route.name === 'creating') {
+			if (this.$route.name === 'item') {
 				this.$store.dispatch('PATCH_ITEM_URL', obj);
 			} else if (this.$route.name === 'start') {
 				this.$store.dispatch('PATCH_START_URL', obj);
@@ -144,7 +144,7 @@ export default {
 		},
 		patchOnePos() {
 			const obj = this.setObj();
-			if (this.$route.name === 'creating') {
+			if (this.$route.name === 'item') {
 				this.$store.dispatch('PATCH_ITEM_POS', obj);
 			} else if (this.$route.name === 'start') {
 				this.$store.dispatch('PATCH_START_POS', obj);
@@ -187,7 +187,7 @@ export default {
 	},
 	created() {
 		const name = this.$route.name;
-		if (name === 'creating') {
+		if (name === 'item') {
 			this.$store.dispatch('FETCH_ITEM_LIST');
 		} else if (name === 'start') {
 			if (this.$store.state.startList.length > 0) {

@@ -21,17 +21,19 @@
 			<a v-else>
 				{{ item.name }}
 			</a>
-			<i class="basic_Btn far fa-trash-alt" @click="deleteOneItem(item)" />
-			<i
-				class="basic_Btn fas fa-map-marked-alt"
-				@click="openPosForm(item)"
-				:class="{ checked_Btn: item.pos.length > 0 }"
-			/>
-			<i
-				class="basic_Btn far fa-window-restore"
-				@click="openUrlForm(item)"
-				:class="{ checked_Btn: item.url.length > 0 }"
-			/>
+			<span class="btn_cont">
+				<i class="basic_Btn far fa-trash-alt" @click="deleteOneItem(item)" />
+				<i
+					class="basic_Btn fas fa-map-marked-alt"
+					@click="openPosForm(item)"
+					:class="{ checked_Btn: item.pos.length > 0 }"
+				/>
+				<i
+					class="basic_Btn far fa-window-restore"
+					@click="openUrlForm(item)"
+					:class="{ checked_Btn: item.url.length > 0 }"
+				/>
+			</span>
 		</li>
 		<template v-if="this.$route.name == 'start'">
 			<button class="complete_Btn" @click="openCompleteForm()">
@@ -82,7 +84,7 @@ import Modal from '@/components/common/ModalView.vue';
 export default {
 	computed: {
 		CommonList() {
-			if (this.$route.name === 'creating') {
+			if (this.$route.name === 'item') {
 				return this.$store.state.itemList;
 			} else {
 				return this.$store.state.startList;
@@ -91,7 +93,7 @@ export default {
 	},
 	created() {
 		const name = this.$route.name;
-		if (name === 'creating') {
+		if (name === 'item') {
 			this.$store.dispatch('FETCH_ITEM_LIST');
 		} else if (name === 'start') {
 			if (this.$store.state.startList.length > 0) {
@@ -136,7 +138,7 @@ export default {
 			this.showModal = false;
 		},
 		deleteOneItem(item) {
-			if (this.$route.name === 'creating') {
+			if (this.$route.name === 'item') {
 				this.$store.dispatch('DELETE_ITEM', item._id);
 			} else {
 				this.$store.dispatch('DELETE_START', item._id);
@@ -152,7 +154,7 @@ export default {
 		},
 		patchOneUrl() {
 			const obj = this.setObj();
-			if (this.$route.name === 'creating') {
+			if (this.$route.name === 'item') {
 				this.$store.dispatch('PATCH_ITEM_URL', obj);
 			} else {
 				this.$store.dispatch('PATCH_START_URL', obj);
@@ -161,7 +163,7 @@ export default {
 		},
 		patchOnePos() {
 			const obj = this.setObj();
-			if (this.$route.name === 'creating') {
+			if (this.$route.name === 'item') {
 				this.$store.dispatch('PATCH_ITEM_POS', obj);
 			} else {
 				this.$store.dispatch('PATCH_START_POS', obj);
@@ -221,16 +223,16 @@ export default {
 .list_cont {
 	list-style: none;
 	text-align: center;
-	height: 2em;
-	line-height: 2em;
-	margin: 1em 0;
-	padding: 0 1em;
+	height: 2rem;
+	line-height: 2rem;
+	margin: 1rem 0;
+	padding: 0 1rem;
 	font-family: 'Dongle', sans-serif;
-	font-size: 1.5em;
+	font-size: 1.5rem;
 	font-weight: 300;
 	background: white;
-	border-radius: 0.5em;
-	box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
+	border-radius: 0.5rem;
+	box-shadow: 0.5rem -0.3rem 10px 1px rgba(143, 143, 143, 0.2);
 }
 .linkText {
 	color: #ee27bc;
@@ -238,13 +240,13 @@ export default {
 }
 .toggle_Btn {
 	float: left;
-	margin: 0.5em;
+	margin: 0.5rem;
 	color: rgba(124, 198, 255, 0.8);
 	cursor: pointer;
 }
 .basic_Btn {
 	float: right;
-	margin: 0.5em;
+	margin: 0.5rem;
 	color: rgba(124, 198, 255, 0.8);
 	cursor: pointer;
 }
@@ -253,22 +255,56 @@ export default {
 }
 /* start */
 .complete_Btn {
-	margin: 1em 0;
+	margin: 1rem 0;
 	background: rgba(124, 198, 255, 0.247);
 	border-style: none;
-	border-radius: 0.5em;
-	padding: 0.6em 1.5em;
-	font-size: 1em;
+	border-radius: 0.5rem;
+	padding: 0.6rem 1.5rem;
+	font-size: 1rem;
 	font-family: 'Noto Sans KR', sans-serif;
 	font-weight: 500;
 	color: rgb(86, 153, 253);
 	cursor: pointer;
-	box-shadow: 0.5em -0.2em 10px 1px rgba(143, 143, 143, 0.2);
+	box-shadow: 0.5rem -0.2rem 10px 1px rgba(143, 143, 143, 0.2);
 }
 .back_btn {
 	display: flex;
 	font-size: 2rem;
 	color: rgba(124, 198, 255, 0.8);
 	cursor: pointer;
+}
+
+/* 반응형 - PC */
+@media (min-width: 1024px) {
+	.main_cont {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	}
+	.list_cont {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 48%;
+		margin: 0.35rem 0;
+		padding: 0.3rem 0.2rem;
+		line-height: initial;
+		height: initial;
+	}
+	.list_cont > a {
+		width: 50%;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+	.list_cont i {
+		font-size: 1rem;
+	}
+	.toggle_Btn {
+		margin: 0.2rem;
+	}
+	.basic_Btn {
+		margin: 0.2rem;
+	}
 }
 </style>

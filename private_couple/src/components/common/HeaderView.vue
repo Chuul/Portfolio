@@ -2,14 +2,16 @@
 	<div :class="isLogin">
 		<div class="header_cont">
 			<i class="start_Btn fas fa-play-circle" @click="goStartView"></i>
-			<span class="user_cont">{{ fetchName }}님</span>
-			<i class="logout_btn fas fa-sign-out-alt" @click="openModal" />
+			<ToolBar></ToolBar>
+			<span class="logout_cont">
+				<span class="user_cont">{{ fetchName }}님</span>
+				<i class="logout_btn fas fa-sign-out-alt" @click="openModal" />
+			</span>
 		</div>
 		<Modal v-if="showModal" @close="closeModal()">
 			<h2 slot="header">로그아웃 하시겠습니까?</h2>
 			<button slot="body" @click.prevent="kakaoLogout()">확인</button>
 		</Modal>
-		<ToolBar></ToolBar>
 	</div>
 </template>
 
@@ -63,11 +65,10 @@ export default {
 .header_cont {
 	display: flex;
 	align-items: center;
-	margin: 0.5em;
-	padding-top: 0.5em;
+	margin: 0.5rem;
+	padding-top: 0.5rem;
 }
 .start_Btn {
-	margin-right: auto;
 	font-size: 2rem;
 	color: rgba(124, 198, 255, 0.8);
 	cursor: pointer;
@@ -76,7 +77,7 @@ export default {
 	display: none;
 }
 .user_cont {
-	margin-right: 1em;
+	margin-right: 1rem;
 }
 .logout_btn {
 	color: rgba(124, 198, 255, 0.8);
@@ -84,6 +85,18 @@ export default {
 }
 Modal button {
 	border: none;
+}
+
+/* 반응형 - PC */
+@media (min-width: 1024px) {
+	.header_cont {
+		margin: 0.2rem 1rem 1rem;
+		padding-top: 0.2rem;
+		font-size: 1rem;
+	}
+	.start_Btn {
+		font-size: 1rem;
+	}
 }
 /* 반응형 - 모바일 */
 @media (max-width: 430px) {

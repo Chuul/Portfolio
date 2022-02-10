@@ -239,12 +239,12 @@ export default {
 }
 #map_main {
 	height: 0;
-	padding-bottom: 70%;
+	padding-bottom: 30%;
 	position: relative;
 	overflow: hidden;
-	margin-bottom: 1rem;
-	border-radius: 0.5em;
-	box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
+	margin: 0 1rem 1rem 0;
+	border-radius: 0.5rem;
+	box-shadow: 0.5rem -0.3rem 10px 1px rgba(143, 143, 143, 0.2);
 	z-index: 1;
 }
 #placesList {
@@ -291,25 +291,23 @@ export default {
 	cursor: default;
 	color: red;
 }
-/* 반응형 처리 - 모바일 */
+/* 반응형 - PC */
+@media (min-width: 1024px) {
+	#map_main {
+		width: 47%;
+		height: inherit;
+	}
+}
+/* 반응형 - 모바일 */
 @media (max-width: 430px) {
 	#map_main {
 		padding-bottom: 120%;
 	}
 	#menu_wrap {
-		position: absolute;
-		top: 65%;
-		left: 0;
-		bottom: 0;
+		bottom: 65%;
 		width: 90%;
 		margin: 10px;
-		padding: 5px;
-		overflow-y: auto;
-		background: rgba(255, 255, 255, 0.7);
-		border-bottom: #5f5f5f;
-		z-index: 2;
-		font-size: 12px;
-		border-radius: 10px;
+		padding: 8px;
 	}
 }
 </style>

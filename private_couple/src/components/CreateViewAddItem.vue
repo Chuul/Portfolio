@@ -55,7 +55,9 @@ export default {
 <style scoped>
 .addItem_cont {
 	margin: 0;
+	justify-content: space-between;
 	text-align: center;
+	align-items: center;
 	height: 50px;
 	line-height: 50px;
 	border-radius: 0.5em;
@@ -78,7 +80,6 @@ select {
 }
 .addItem_cont input {
 	text-align: center;
-	width: 60%;
 	height: 60%;
 	font-family: 'Dongle', sans-serif;
 	font-weight: 300;
@@ -97,5 +98,11 @@ select {
 }
 .addBtn {
 	color: white;
+}
+/* 반응형 - PC */
+@media (min-width: 1024px) {
+	.addItem_cont input {
+		width: 55%;
+	}
 }
 </style>

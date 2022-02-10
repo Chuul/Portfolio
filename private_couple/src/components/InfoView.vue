@@ -71,6 +71,6 @@ a {
 }
 .txt_copy {
 	display: block;
-	padding: 2em 0;
+	padding: 1em 0;
 }
 </style>
