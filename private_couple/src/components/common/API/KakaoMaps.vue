@@ -2,12 +2,10 @@
 	<div id="map_main">
 		<div id="menu_wrap" class="bg_white">
 			<div class="option">
-				<div>
-					<form>
-						<input type="text" id="keyword" size="15" placeholder="키워드" />
-						<button @click.prevent="searchFunc">검색하기</button>
-					</form>
-				</div>
+				<form>
+					<input type="text" id="keyword" size="15" placeholder="키워드" />
+					<button @click.prevent="searchFunc">검색</button>
+				</form>
 			</div>
 			<hr />
 			<ul id="placesList"></ul>
@@ -241,7 +239,7 @@ export default {
 	height: 0;
 	padding-bottom: 30%;
 	position: relative;
-	overflow: hidden;
+	overflow: auto;
 	margin: 0 1rem 1rem 0;
 	border-radius: 0.5rem;
 	box-shadow: 0.5rem -0.3rem 10px 1px rgba(143, 143, 143, 0.2);
@@ -267,6 +265,18 @@ export default {
 	font-size: 12px;
 	border-radius: 10px;
 }
+.option {
+	text-align: center;
+}
+.option input,
+button {
+	border-style: none;
+	border-radius: 10px;
+}
+.option button {
+	background: rgba(124, 198, 255, 0.247);
+	color: #5699fd;
+}
 .bg_white {
 	background: #fff;
 }
@@ -274,7 +284,7 @@ export default {
 	display: block;
 	height: 1px;
 	border: 0;
-	border-top: 2px solid #5f5f5f;
+	border-top: 2px solid #5699fda8;
 	margin: 3px 0;
 }
 /* 페이지 표시 */
@@ -292,10 +302,19 @@ export default {
 	color: red;
 }
 /* 반응형 - PC */
+@media (min-width: 1260px) {
+	.option input {
+		margin: 0 7px 7px 0;
+	}
+}
 @media (min-width: 1024px) {
 	#map_main {
 		width: 47%;
 		height: inherit;
+	}
+	.option input {
+		text-align: center;
+		margin-bottom: 7px;
 	}
 }
 /* 반응형 - 모바일 */

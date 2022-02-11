@@ -7,7 +7,7 @@
 			@start="dragging = true"
 			@end="dragging = false"
 		>
-			<li v-for="item in localCheckedList" class="courseList" :key="item.name">
+			<li v-for="item in localCheckedList" class="course_list" :key="item.name">
 				<a v-if="item.url" :href="item.url" class="linkText" target="_blank">
 					{{ item.name }}
 				</a>
@@ -22,7 +22,9 @@
 				</div>
 			</li>
 		</draggable>
-		<button class="store_Btn" @click="storeCourse">코스 저장</button>
+		<button v-if="showBtn" class="store_Btn" @click="storeCourse">
+			코스 저장
+		</button>
 		<!-- Modal -->
 		<Modal v-if="showCheck" @close="closeCheck">
 			<h2 slot="header">최소 1개 이상의 아이템을 선택해주세요</h2>
@@ -50,6 +52,7 @@ export default {
 			localCheckedList: [],
 			enabled: true,
 			dragging: false,
+			showBtn: false,
 			showCheck: false,
 			showSuccess: false,
 			showFail: false,
@@ -79,6 +82,7 @@ export default {
 			if (list.length === 0) {
 				this.showCheck = true;
 			} else {
+				this.showBtn = true;
 				this.transPosition(list);
 			}
 		},
@@ -91,14 +95,15 @@ export default {
 			});
 			return course;
 		},
-		storeCourse() {
+		async storeCourse() {
 			let list = this.localCheckedList;
 			if (list.length === 0) {
 				this.showFail = true;
 			} else {
 				let obj = this.setupCourse(list);
-				this.$store.dispatch('STORE_COURSE', obj);
+				await this.$store.dispatch('STORE_COURSE', obj);
 				this.localCheckedList = [];
+				this.showBtn = false;
 				this.showSuccess = true;
 			}
 		},
@@ -132,22 +137,17 @@ export default {
 	cursor: pointer;
 	box-shadow: 0.5em -0.2em 10px 1px rgba(143, 143, 143, 0.2);
 }
-li {
-	margin-top: 1em;
+.course_list {
+	margin-bottom: 2.2rem;
 	list-style: none;
-	min-height: 50px;
-	height: 50px;
-	line-height: 50px;
-	padding: 0 0.9eem;
+	height: 3rem;
+	line-height: 3rem;
 	background: white;
 	border-radius: 0.5em;
 	font-family: 'Dongle', sans-serif;
-	font-size: 1.5em;
+	font-size: 1.5rem;
 	font-weight: 300;
 	box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
-}
-.courseList {
-	margin-bottom: 3rem;
 }
 .linkText {
 	color: #ee27bc;
@@ -181,9 +181,27 @@ li:last-child .arrow_Btn_cont {
 	padding: 0.6em 1.5em;
 	font-size: 1em;
 	font-family: 'Noto Sans KR', sans-serif;
-	font-weight: 500;
 	color: rgb(86, 153, 253);
 	cursor: pointer;
 	box-shadow: 0.5em -0.2em 10px 1px rgba(143, 143, 143, 0.2);
+}
+/* 반응형 - PC */
+@media (min-width: 1024px) {
+	.create_cont {
+		overflow: auto;
+		height: 48%;
+	}
+	.course_list {
+		margin: 0 0 2rem;
+	}
+	.arrow_Btn_cont {
+		margin-top: -0.3rem;
+	}
+	.arrow_Btn_cont i {
+		font-size: 1rem;
+	}
+	.store_Btn {
+		margin: 0;
+	}
 }
 </style>

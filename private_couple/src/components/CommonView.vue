@@ -223,8 +223,8 @@ export default {
 .list_cont {
 	list-style: none;
 	text-align: center;
-	height: 2rem;
-	line-height: 2rem;
+	height: 2.5rem;
+	line-height: 2.5rem;
 	margin: 1rem 0;
 	padding: 0 1rem;
 	font-family: 'Dongle', sans-serif;
@@ -280,6 +280,9 @@ export default {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
+		height: 22.5%;
+		overflow: auto;
+		padding: 0.3rem;
 	}
 	.list_cont {
 		display: flex;
