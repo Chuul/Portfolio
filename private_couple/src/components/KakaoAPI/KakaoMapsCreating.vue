@@ -16,7 +16,6 @@
 
 <script>
 export default {
-	name: 'KakaoMap',
 	data() {
 		return {
 			map: null,

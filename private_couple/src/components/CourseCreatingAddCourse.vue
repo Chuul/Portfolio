@@ -22,7 +22,7 @@
 				</div>
 			</li>
 		</draggable>
-		<button v-if="showBtn" class="store_Btn" @click="storeCourse">
+		<button v-if="showBtn" class="store_Btn" @click="addCourse">
 			코스 저장
 		</button>
 		<!-- Modal -->
@@ -40,7 +40,7 @@
 
 <script>
 import draggable from 'vuedraggable';
-import Modal from '@/components/common/ModalView.vue';
+import Modal from '@/components/common/SetModal.vue';
 
 export default {
 	components: {
@@ -95,16 +95,23 @@ export default {
 			});
 			return course;
 		},
-		async storeCourse() {
+		async addCourse() {
 			let list = this.localCheckedList;
 			if (list.length === 0) {
 				this.showFail = true;
 			} else {
 				let obj = this.setupCourse(list);
-				await this.$store.dispatch('STORE_COURSE', obj);
-				this.localCheckedList = [];
-				this.showBtn = false;
-				this.showSuccess = true;
+				// eslint-disable-next-line prettier/prettier
+				await this.$store.dispatch('ADD_COURSE', obj)
+					.then(response => {
+						console.log(response);
+						this.localCheckedList = [];
+						this.showBtn = false;
+						this.showSuccess = true;
+					})
+					.catch(error => {
+						console.log(error);
+					});
 			}
 		},
 		closeCheck() {

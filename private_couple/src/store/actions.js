@@ -1,5 +1,5 @@
 import * as index from '@/api/index.js';
-import * as item from '@/api/item.js';
+import * as item from '@/api/creating.js';
 import * as list from '@/api/list.js';
 import * as start from '@/api/start.js';
 import * as last from '@/api/last.js';
@@ -18,7 +18,7 @@ const LOGIN = async ({ commit }, userData) => {
 const FETCH_ITEM_LIST = async context => {
 	try {
 		const userData = {
-			email: context.state.email,
+			username: context.state.username,
 		};
 		const { data } = await item.getItemList(userData);
 		context.commit('SET_ITEM_LIST', data);
@@ -30,7 +30,7 @@ const FETCH_ITEM_LIST = async context => {
 };
 const ADD_ITEM = async (context, payload) => {
 	const obj = {
-		createdBy: context.state.email,
+		createdBy: context.state.username,
 		category: payload.category,
 		name: payload.name,
 		checked: false,
@@ -43,7 +43,7 @@ const ADD_ITEM = async (context, payload) => {
 		context.dispatch('FETCH_ITEM_LIST');
 		return response;
 	} catch (error) {
-		console.log('error: ', error.response.data.message);
+		console.log(error.response.data.message);
 		return error.response.data.message;
 	}
 };
@@ -78,13 +78,19 @@ const DELETE_ITEM = async ({ commit }, id) => {
 		return error;
 	}
 };
-const STORE_COURSE = (context, data) => {
+const ADD_COURSE = async (context, data) => {
+	console.log('data: ', data);
 	const obj = {
-		createdBy: context.state.email,
+		createdBy: context.state.username,
 		course: data,
 	};
-	list.postCourse(obj);
-	context.commit('SET_ITEM_FALSE', data);
+	try {
+		const response = await list.postCourse(obj);
+		context.commit('SET_ITEM_FALSE', data);
+		return response;
+	} catch (error) {
+		console.log(error);
+	}
 };
 // ListView
 const FETCH_COURSE_LIST = async context => {
@@ -109,7 +115,7 @@ const DELETE_COURSE = async (context, item) => {
 };
 const START_COURSE = async (context, list) => {
 	const userData = {
-		createdBy: context.state.email,
+		createdBy: context.state.username,
 		course: list.course,
 	};
 	context.commit('SET_START_COURSE', list.course);
@@ -118,7 +124,7 @@ const START_COURSE = async (context, list) => {
 // StartView
 const FETCH_START_LIST = async context => {
 	const userData = {
-		createdBy: context.state.email,
+		createdBy: context.state.username,
 	};
 	try {
 		const { data } = await start.getStartList(userData);
@@ -151,7 +157,7 @@ const PATCH_ITEM_COMMENT = async (context, item) => {
 	delete item.completed;
 	delete item._id;
 	const userData = {
-		createdBy: context.state.email,
+		createdBy: context.state.username,
 		item: item,
 	};
 	await last.patchLastItem(userData);
@@ -171,7 +177,7 @@ const PATCH_START_POS = ({ commit }, obj) => {
 };
 const STORE_START = (context, comment) => {
 	const obj = {
-		createdBy: context.state.email,
+		createdBy: context.state.username,
 		course: {
 			list: context.state.startList,
 			comment: comment,
@@ -183,7 +189,7 @@ const STORE_START = (context, comment) => {
 const FETCH_LAST_LIST = async context => {
 	try {
 		const userData = {
-			createdBy: context.state.email,
+			createdBy: context.state.username,
 		};
 		const { data } = await last.getLastList(userData);
 		context.commit('SET_LAST_LIST', data);
@@ -199,7 +205,7 @@ export {
 	PATCH_ITEM_URL,
 	PATCH_ITEM_POS,
 	DELETE_ITEM,
-	STORE_COURSE,
+	ADD_COURSE,
 	FETCH_COURSE_LIST,
 	DELETE_COURSE,
 	START_COURSE,

@@ -1,7 +1,7 @@
 <template>
 	<section class="addItem_cont">
 		<div class="select_cont">
-			<select v-model="selected">
+			<select class="select_box" v-model="selected">
 				<option disabled value="">--카테고리--</option>
 				<option v-for="option in options" :key="option.text">
 					{{ option.text }}
@@ -31,20 +31,21 @@ export default {
 					category: this.selected,
 					name: this.newItem,
 				};
-				this.$store
-					.dispatch('ADD_ITEM', payload)
+				// eslint-disable-next-line prettier/prettier
+				await this.$store.dispatch('ADD_ITEM', payload)
 					.then(response => {
+						// response가 string이면 '에러메시지'가 전달된 것
 						if (typeof response === 'string') {
 							this.newItem = response;
 							setTimeout(() => {
 								this.newItem = '';
-							}, 1500);
+							}, 1200);
 						} else {
 							this.newItem = '';
 						}
 					})
 					.catch(error => {
-						console.log(error);
+						console.log('error in CourseCreatingAddItem: ', error);
 					});
 			}
 		},
@@ -54,10 +55,7 @@ export default {
 
 <style scoped>
 .addItem_cont {
-	margin: 0;
-	justify-content: space-between;
 	text-align: center;
-	align-items: center;
 	height: 50px;
 	line-height: 50px;
 	border-radius: 0.5em;
@@ -69,17 +67,17 @@ export default {
 	float: left;
 	margin-left: 1em;
 }
-select {
+.select_box {
 	height: 60%;
-	text-align: center;
+	font-family: 'Dongle', sans-serif;
+	font-weight: 300;
+	font-size: 1.5em;
 	border-style: none;
 	border-radius: 0.5em;
-	font-family: 'Dongle', sans-serif;
-	font-size: 1.5em;
-	font-weight: 300;
 }
-.addItem_cont input {
+.addItem_cont > input {
 	text-align: center;
+	width: 50%;
 	height: 60%;
 	font-family: 'Dongle', sans-serif;
 	font-weight: 300;
@@ -89,7 +87,6 @@ select {
 	cursor: text;
 }
 .btn_cont {
-	display: block;
 	float: right;
 	background: linear-gradient(to right, #6478fb, #8763fb);
 	width: 3em;
@@ -98,11 +95,5 @@ select {
 }
 .addBtn {
 	color: white;
-}
-/* 반응형 - PC */
-@media (min-width: 1024px) {
-	.addItem_cont input {
-		width: 55%;
-	}
 }
 </style>

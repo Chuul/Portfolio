@@ -4,18 +4,18 @@
 		<transition name="fade">
 			<router-view></router-view>
 		</transition>
-		<InfoView></InfoView>
+		<PageInfo></PageInfo>
 	</main>
 </template>
 
 <script>
 import HeaderView from '@/components/common/HeaderView.vue';
-import InfoView from './components/InfoView.vue';
+import PageInfo from '@/components/common/PageInfo.vue';
 
 export default {
 	components: {
 		HeaderView,
-		InfoView,
+		PageInfo,
 	},
 };
 </script>

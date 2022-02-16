@@ -17,7 +17,7 @@
 
 <script>
 import ToolBar from '@/components/common/ToolBar.vue';
-import Modal from '@/components/common/ModalView.vue';
+import Modal from '@/components/common/SetModal.vue';
 
 export default {
 	components: {

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
-const itemSchema = new Schema({
+const creatingSchema = new Schema({
   createdBy: {
     type: String,
     required: true
@@ -28,4 +28,4 @@ const itemSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('item', itemSchema);
+module.exports = mongoose.model('creating', creatingSchema);

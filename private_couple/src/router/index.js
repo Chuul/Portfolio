@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import LoginView from '@/components/LoginView';
-import NotFoundView from '@/components/NotFoundView.vue';
+import NotFound from '@/components/common/NotFound.vue';
 
 Vue.use(VueRouter);
 
@@ -18,28 +18,28 @@ export const router = new VueRouter({
 			name: 'login',
 		},
 		{
-			path: '/item',
-			component: () => import('@/components/CreateView'),
-			name: 'item',
+			path: '/creating',
+			component: () => import('@/components/CourseCreating'),
+			name: 'creating',
 		},
 		{
 			path: '/list',
-			component: () => import('@/components/ListView'),
+			component: () => import('@/components/CourseList'),
 			name: 'list',
 		},
 		{
 			path: '/last',
-			component: () => import('@/components/LastView'),
+			component: () => import('@/components/CourseLast'),
 			name: 'last',
 		},
 		{
 			path: '/start',
-			component: () => import('@/components/StartView'),
+			component: () => import('@/components/CourseStart'),
 			name: 'start',
 		},
 		{
 			path: '*',
-			component: NotFoundView,
+			component: NotFound,
 		},
 	],
 });

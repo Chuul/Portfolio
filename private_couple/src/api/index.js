@@ -8,8 +8,8 @@ function createInstance(url) {
 }
 
 const login = createInstance('login');
-const item = createInstance('item');
-const list = createInstance('course');
+const creating = createInstance('creating');
+const list = createInstance('list');
 const start = createInstance('start');
 const last = createInstance('last');
 
@@ -18,4 +18,4 @@ function loginUser(userData) {
 	return login.post('/', userData);
 }
 
-export { login, item, list, start, last, loginUser };
+export { login, creating, list, start, last, loginUser };

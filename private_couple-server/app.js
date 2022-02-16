@@ -5,11 +5,11 @@ const morgan = require('morgan');
 
 const connect = require('./schemas/connect');
 const indexRouter = require('./routes/index')
-const itemRouter = require('./routes/item');
-const courseRouter = require('./routes/course');
+const loginRouter = require('./routes/login');
+const creatingRouter = require('./routes/creating');
+const listRouter = require('./routes/list');
 const startRouter = require('./routes/start');
 const lastRouter = require('./routes/last');
-const loginRouter = require('./routes/login');
 
 const app = express();
 
@@ -24,8 +24,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
-app.use('/item', itemRouter);
-app.use('/course', courseRouter);
+app.use('/creating', creatingRouter);
+app.use('/list', listRouter);
 app.use('/start', startRouter);
 app.use('/last', lastRouter);
 
@@ -36,7 +36,7 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  res.locals.message = err.message;
+  res.locals.message = '알 수 없는 오류 (오류문의 "bethejs30@gmail.com")';
   res.locals.error = process.env.NODE_ENV !== 'production' ? err : {};
   res.status(err.status || 500);
   res.render('error');

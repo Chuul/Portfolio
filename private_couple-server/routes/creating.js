@@ -1,27 +1,25 @@
 const express= require('express');
-const item = require('../schemas/itemSchema');
+const creating = require('../schemas/creatingSchema');
 
 const router = express.Router();
 
 router.post('/', async(req, res, next) => {
   try {
-    const items = await item.find({
-      createdBy: req.body.email
+    const result = await creating.find({
+      createdBy: req.body.username
     });
-    if (!items) {
-      return res.status(400).json({ message: '데이터를 찾을 수 없습니다' });
-    }
-    res.json(items);
+    res.json(result);
   } catch (err) {
     console.log(err);
-    return res.status(500).json({
-      message: '알 수 없는 오류 (오류문의 "bethejs30@gmail.com")', err
-    })
+    if (error.code === 11000) {
+      return res.status(400).json({ message: '데이터를 찾을 수 없습니다' });
+    }
+    next(err);
   }
 })
 router.post('/insert', async(req, res, next) => {
   try {
-    const items = await item.create({
+    const result = await creating.create({
       createdBy: req.body.createdBy,
       category: req.body.category,
       name: req.body.name,
@@ -31,7 +29,7 @@ router.post('/insert', async(req, res, next) => {
       pos: req.body.pos,
       pos_latlng: req.body.pos_latlng
     });
-    res.status(201).json(items);
+    res.status(201).json(result);
   } catch (err) {
     console.log(err);
     if(err.code === 11000) {
@@ -42,9 +40,8 @@ router.post('/insert', async(req, res, next) => {
 })
 router.delete('/:id', async(req, res, next) => {
   try {
-    const result = await item.deleteOne({_id: req.params.id});
+    const result = await creating.deleteOne({_id: req.params.id});
     if (!result) {
-      console.log('여기');
       return res.status(400).json({ message: 'DB에서 데이터를 삭제할 수 없습니다' });
     }
     res.json(result);
@@ -55,7 +52,7 @@ router.delete('/:id', async(req, res, next) => {
 })
 router.patch('/url/:id', async(req, res, next) => {
   try {
-    const result = await item.updateOne({
+    const result = await creating.updateOne({
       _id: req.params.id
     }, {
       url: req.body.data.urlText
@@ -71,7 +68,7 @@ router.patch('/url/:id', async(req, res, next) => {
 })
 router.patch('/pos/:id', async(req, res, next) => {
   try {
-    const result = await item.updateOne({
+    const result = await creating.updateOne({
       _id: req.params.id
     }, {
       pos: req.body.data.posText
@@ -87,7 +84,7 @@ router.patch('/pos/:id', async(req, res, next) => {
 })
 router.get('/list', async(req, res, next) => {
   try {
-    const list = await item.find({checked: true});
+    const list = await creating.find({checked: true});
     if (!list) {
       return res.status(400).json({ message: '데이터를 찾을 수 없습니다' });
     }

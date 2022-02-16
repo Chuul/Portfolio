@@ -1,10 +1,9 @@
 <template>
-	<div id="map" style="width: 100%"></div>
+	<div id="map_start"></div>
 </template>
 
 <script>
 export default {
-	name: 'KakaoMap',
 	data() {
 		return {
 			startList: [],
@@ -20,7 +19,7 @@ export default {
 	},
 	methods: {
 		initMap() {
-			var mapContainer = document.getElementById('map'); // 지도를 표시할 div
+			var mapContainer = document.getElementById('map_start'); // 지도를 표시할 div
 
 			var firstLatLng = {};
 			for (let i = 0; i < this.startList[i].length; i++) {
@@ -85,20 +84,25 @@ export default {
 </script>
 
 <style scoped>
-#map * {
+#map_start * {
 	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
-	border-radius: 0.5rem;
 }
-#map {
+#map_start {
 	height: 0;
+	border-radius: 0.5rem;
 	padding-bottom: 40%;
+}
+/* 반응형 - PC */
+@media (min-width: 1024px) {
+	#map_start {
+		width: 47%;
+		height: inherit;
+	}
 }
 /* 반응형 - 모바일 */
 @media (max-width: 430px) {
-	#map {
-		font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
-		border-radius: 0.5rem;
-		padding-bottom: 100%;
+	#map_start {
+		padding-bottom: 120%;
 	}
 }
 </style>

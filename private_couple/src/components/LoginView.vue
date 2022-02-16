@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import kakaoLogin from '@/components/common/API/KakaoLogin';
+import kakaoLogin from '@/components/KakaoAPI/KakaoLogin';
 
 export default {
 	components: {

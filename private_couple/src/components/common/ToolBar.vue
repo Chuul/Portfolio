@@ -1,6 +1,6 @@
 <template>
 	<nav class="router_cont">
-		<router-link to="/item">코스생성</router-link>
+		<router-link to="/creating">코스생성</router-link>
 		<router-link to="/list">코스목록</router-link>
 		<router-link to="/last">이전코스</router-link>
 	</nav>

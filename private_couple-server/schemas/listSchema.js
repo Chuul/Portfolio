@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
-const courseSchema = new Schema({
+const listSchema = new Schema({
   name: {
     type: Number,
     required: true
@@ -16,4 +16,4 @@ const courseSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('course', courseSchema);
+module.exports = mongoose.model('list', listSchema);

@@ -14,11 +14,9 @@
 			<router-link to="/start">
 				<i class="fas fa-heart-square" @click="startOneCourse(list)"></i>
 			</router-link>
-			<!-- // -->
 			<span class="remove_cont" @click="deleteOneCourse(list)">
 				<i class="far fa-trash-alt"></i>
 			</span>
-			<!-- </div> -->
 		</li>
 	</section>
 </template>
@@ -54,19 +52,22 @@ export default {
 	list-style: none;
 	text-align: center;
 	margin: 15px;
-	padding: 1rem;
+	padding: 1rem 1rem 1.5rem 1rem;
 	background: rgba(124, 198, 255, 0.247);
 	border-radius: 0.5em;
 	box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
 }
+.item_cont li:last-child .arrow_cont {
+	display: none;
+}
+/* .name_cont:nth-last-child(2) .arrow_cont {
+	display: none;
+} */
 .fa-heart-square {
 	float: left;
 	color: rgba(124, 198, 255, 0.8);
 	cursor: pointer;
 }
-/* .name_cont:nth-last-child(2) .arrow_cont {
-	display: none;
-} */
 .arrow_cont {
 	margin: 0.5em;
 }
