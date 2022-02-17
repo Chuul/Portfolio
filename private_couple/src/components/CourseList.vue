@@ -1,22 +1,25 @@
 <template>
 	<section class="list_cont">
 		<li class="course_cont" v-for="list in CourseList" :key="list.course">
-			<!-- <div class="item_cont"> -->
-			<div class="item_cont">
+			<router-link
+				to="/start"
+				@click="startOneCourse(list)"
+				class="start_btn_cont"
+			>
+				<i class="start_btn fas fa-heart-square"></i>
+			</router-link>
+			<section class="item_cont">
 				<li class="name_cont" v-for="item in list.course" :key="item.name">
 					{{ item.name }}
 					<div class="arrow_cont">
 						<i class="fas fa-arrow-down"></i>
 					</div>
 				</li>
-			</div>
-			<!-- StartView 진입 -->
-			<router-link to="/start">
-				<i class="fas fa-heart-square" @click="startOneCourse(list)"></i>
-			</router-link>
-			<span class="remove_cont" @click="deleteOneCourse(list)">
-				<i class="far fa-trash-alt"></i>
+			</section>
+			<span class="delete_btn_cont" @click="deleteOneCourse(list)">
+				<i class="delete_btn far fa-trash-alt"></i>
 			</span>
+			<!-- StartView 진입 -->
 		</li>
 	</section>
 </template>
@@ -49,31 +52,40 @@ export default {
 	overflow: auto;
 }
 .course_cont {
+	display: flex;
+	justify-content: space-between;
+	height: 20%;
 	list-style: none;
 	text-align: center;
 	margin: 15px;
-	padding: 1rem 1rem 1.5rem 1rem;
+	padding: 1rem;
 	background: rgba(124, 198, 255, 0.247);
 	border-radius: 0.5em;
 	box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
 }
+.item_cont {
+	width: 80%;
+	overflow: auto;
+}
 .item_cont li:last-child .arrow_cont {
 	display: none;
 }
-/* .name_cont:nth-last-child(2) .arrow_cont {
-	display: none;
-} */
-.fa-heart-square {
+.start_btn_cont,
+.delete_btn_cont {
+	margin: auto 0;
+}
+.start_btn {
 	float: left;
+	font-size: 1.5rem;
 	color: rgba(124, 198, 255, 0.8);
 	cursor: pointer;
 }
 .arrow_cont {
 	margin: 0.5em;
 }
-.fa-trash-alt {
-	width: 1em;
+.delete_btn {
 	float: right;
+	font-size: 1.5rem;
 	color: #62acde;
 	cursor: pointer;
 }
@@ -82,13 +94,10 @@ export default {
 	.list_cont {
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: space-between;
 		align-content: flex-start;
 	}
 	.course_cont {
 		width: 27%;
-		height: 25%;
-		overflow: auto;
 	}
 }
 /* 반응형 - 테블릿 */
@@ -100,10 +109,13 @@ export default {
 		align-content: flex-start;
 	}
 	.course_cont {
-		width: 42%;
-		height: 25%;
-		overflow: auto;
-		margin: 13px;
+		width: 41%;
+	}
+}
+/* 반응형 - 모바일 */
+@media (max-width: 426px) {
+	.course_cont {
+		height: 16%;
 	}
 }
 </style>

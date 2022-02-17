@@ -10,18 +10,14 @@ const LOGOUT_USER = state => {
 };
 // CreateView
 const SET_ITEM_LIST = (state, list) => {
-	if (state.checkedList.length > 0) {
-		for (let i = 0; i < list.length; i++) {
-			for (let j = 0; j < state.checkedList.length; j++) {
-				if (list[i].name === state.checkedList[j].name) {
-					list[i].checked = true;
-				}
-			}
-		}
-		state.itemList = list;
-	} else {
-		state.itemList = list;
-	}
+	console.log('SET_ITEM_LIST의 list: ', list);
+	state.itemList = list;
+	console.log('SET_ITEM_LIST: ', state.itemList);
+};
+const SET_ITEM = (state, item) => {
+	console.log('SET_ITEM의 item: ', item);
+	state.itemList.push(item);
+	console.log('SET_ITEM: ', state.itemList);
 };
 const SET_TOGGLE_ITEM = (state, item) => {
 	let list = state.itemList;
@@ -34,7 +30,6 @@ const SET_TOGGLE_ITEM = (state, item) => {
 				return;
 			}
 		}
-		list.push(item);
 	}
 	// state.itemList에 I/O
 	for (let i = 0; i < list.length; i++) {
@@ -130,6 +125,7 @@ export {
 	LOGOUT_USER,
 	SET_USER_DATA,
 	SET_ITEM_LIST,
+	SET_ITEM,
 	SET_TOGGLE_ITEM,
 	SET_ITEM_URL,
 	SET_ITEM_POS,

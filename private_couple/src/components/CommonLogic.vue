@@ -1,5 +1,5 @@
 <template>
-	<div :class="content_start_cont">
+	<section :class="content_start_cont">
 		<section :class="main_cont">
 			<li
 				class="list_cont"
@@ -40,11 +40,11 @@
 						:class="{ checked_Btn: item.url.length > 0 }"
 					/>
 				</span>
-				<template v-if="!item.createdBy">
+				<!-- <template v-if="!item.createdBy">
 					<div class="arrow_cont">
 						<i class="fas fa-arrow-down"></i>
 					</div>
-				</template>
+				</template> -->
 			</li>
 			<!-- Modal -->
 			<Modal v-if="showUrlModal" @close="closeUrlForm()">
@@ -90,7 +90,7 @@
 				</button>
 			</div>
 		</template>
-	</div>
+	</section>
 </template>
 
 <script>
@@ -154,7 +154,7 @@ export default {
 	},
 	methods: {
 		toggleOneItem(item) {
-			this.$store.dispatch('TOGGLE_ITEM', item);
+			this.$store.commit('SET_TOGGLE_ITEM', item);
 		},
 		// start
 		openForm(item) {
@@ -166,10 +166,10 @@ export default {
 			}
 		},
 		// start
-		patchItemComment() {
+		async patchItemComment() {
 			const item = this.item;
 			item.comment = this.textArea;
-			this.$store.dispatch('PATCH_ITEM_COMMENT', item);
+			await this.$store.dispatch('PATCH_ITEM_COMMENT', item);
 			this.textArea = '';
 			this.showModal = false;
 		},
@@ -189,20 +189,20 @@ export default {
 			return obj;
 		},
 		patchOneUrl() {
-			const obj = this.setObj();
+			const payload = this.setObj();
 			if (this.$route.name === 'creating') {
-				this.$store.dispatch('PATCH_ITEM_URL', obj);
+				this.$store.dispatch('PATCH_ITEM_URL', payload);
 			} else {
-				this.$store.dispatch('PATCH_START_URL', obj);
+				this.$store.dispatch('PATCH_START_URL', payload);
 			}
 			this.showUrlModal = false;
 		},
 		patchOnePos() {
-			const obj = this.setObj();
-			if (this.$route.name === 'item') {
-				this.$store.dispatch('PATCH_ITEM_POS', obj);
+			const payload = this.setObj();
+			if (this.$route.name === 'creating') {
+				this.$store.dispatch('PATCH_ITEM_POS', payload);
 			} else {
-				this.$store.dispatch('PATCH_START_POS', obj);
+				this.$store.dispatch('PATCH_START_POS', payload);
 			}
 			this.showPosModal = false;
 		},
@@ -253,6 +253,10 @@ export default {
 </script>
 
 <style scoped>
+.content_start_cont {
+	display: inline-block;
+	width: 100%;
+}
 .list_cont {
 	list-style: none;
 	text-align: center;
@@ -266,6 +270,10 @@ export default {
 	background: white;
 	border-radius: 0.5rem;
 	box-shadow: 0.5rem -0.3rem 10px 1px rgba(143, 143, 143, 0.2);
+}
+.main_cont_creating {
+	height: 12rem;
+	overflow: auto;
 }
 .linkText {
 	color: #ee27bc;
@@ -323,8 +331,7 @@ export default {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
-		height: 22.5%;
-		overflow: auto;
+		height: 8rem;
 		padding: 0.3rem;
 	}
 	.list_cont {
@@ -334,7 +341,7 @@ export default {
 		margin: 0.35rem 0;
 		padding: 0.3rem 0.2rem;
 		line-height: initial;
-		height: initial;
+		height: 25%;
 	}
 	.list_creating {
 		width: 48%;

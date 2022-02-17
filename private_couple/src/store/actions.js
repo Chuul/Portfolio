@@ -40,30 +40,29 @@ const ADD_ITEM = async (context, payload) => {
 	};
 	try {
 		const response = await item.postItem(obj);
-		context.dispatch('FETCH_ITEM_LIST');
+		context.commit('SET_ITEM', obj);
+		// context.dispatch('FETCH_ITEM_LIST');
 		return response;
 	} catch (error) {
 		console.log(error.response.data.message);
 		return error.response.data.message;
 	}
 };
-const TOGGLE_ITEM = async (context, item) => {
-	context.commit('SET_TOGGLE_ITEM', item);
-	context.dispatch('FETCH_ITEM_LIST');
-};
-const PATCH_ITEM_URL = async ({ commit }, obj) => {
+const PATCH_ITEM_URL = async ({ commit }, payload) => {
 	try {
-		commit('SET_ITEM_URL', obj);
-		item.patchUrl(obj);
+		const response = item.patchUrl(payload);
+		commit('SET_ITEM_URL', payload);
+		return response;
 	} catch (error) {
 		console.log(error);
 		return error;
 	}
 };
-const PATCH_ITEM_POS = async ({ commit }, obj) => {
+const PATCH_ITEM_POS = async ({ commit }, payload) => {
 	try {
-		commit('SET_ITEM_POS', obj);
-		item.patchPos(obj);
+		const response = item.patchPos(payload);
+		commit('SET_ITEM_POS', payload);
+		return response;
 	} catch (error) {
 		console.log(error);
 		return error;
@@ -71,22 +70,22 @@ const PATCH_ITEM_POS = async ({ commit }, obj) => {
 };
 const DELETE_ITEM = async ({ commit }, id) => {
 	try {
+		const response = item.deleteItem(id);
 		commit('SPLICE_ITEM', id);
-		item.deleteItem(id);
+		return response;
 	} catch (error) {
 		console.log(error);
 		return error;
 	}
 };
-const ADD_COURSE = async (context, data) => {
-	console.log('data: ', data);
+const ADD_COURSE = async (context, payload) => {
 	const obj = {
 		createdBy: context.state.username,
-		course: data,
+		course: payload,
 	};
 	try {
 		const response = await list.postCourse(obj);
-		context.commit('SET_ITEM_FALSE', data);
+		context.commit('SET_ITEM_FALSE', payload);
 		return response;
 	} catch (error) {
 		console.log(error);
@@ -147,7 +146,8 @@ const FALSE_ITEM = async ({ dispatch }, id) => {
 	dispatch('FETCH_START_LIST');
 };
 const PATCH_ITEM_COMMENT = async (context, item) => {
-	// "starts" collection에 저장
+	// DB의 "starts" collection에 저장
+	console.log('item: ', item);
 	const obj = {
 		id: item._id,
 		comment: item.comment,
@@ -201,7 +201,6 @@ export {
 	LOGIN,
 	FETCH_ITEM_LIST,
 	ADD_ITEM,
-	TOGGLE_ITEM,
 	PATCH_ITEM_URL,
 	PATCH_ITEM_POS,
 	DELETE_ITEM,

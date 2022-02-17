@@ -32,6 +32,10 @@ main > section,
 div.loginView_cont {
 	min-height: 80vh;
 }
+router-view {
+	overflow: auto;
+}
+/* transition */
 .fade-enter-active,
 .fade-leave-active {
 	transition: opacity 0.5s;
