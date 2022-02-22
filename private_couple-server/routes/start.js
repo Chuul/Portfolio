@@ -27,6 +27,7 @@ router.post('/insert', async(req, res, next) => {
       createdBy: req.body.createdBy,
       course: req.body.course, 
     });
+    console.log('###############:', starts)
     res.status(201).json(starts)
   } catch (err) {
     console.log(err);

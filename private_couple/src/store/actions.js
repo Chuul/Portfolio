@@ -85,6 +85,7 @@ const ADD_COURSE = async (context, payload) => {
 	};
 	try {
 		const response = await list.postCourse(obj);
+		context.dispatch('FETCH_ITEM_LIST');
 		context.commit('SET_ITEM_FALSE', payload);
 		return response;
 	} catch (error) {
@@ -104,10 +105,11 @@ const FETCH_COURSE_LIST = async context => {
 		console.log(error);
 	}
 };
-const DELETE_COURSE = async (context, item) => {
+const DELETE_COURSE = async ({ commit }, name) => {
 	try {
-		list.deleteCourse(item);
-		context.dispatch('FETCH_COURSE_LIST');
+		const response = await list.deleteCourse(name);
+		commit('SPLICE_LIST', name);
+		return response;
 	} catch (error) {
 		console.log(error);
 	}
@@ -117,7 +119,7 @@ const START_COURSE = async (context, list) => {
 		createdBy: context.state.username,
 		course: list.course,
 	};
-	context.commit('SET_START_COURSE', list.course);
+	await context.commit('SET_START_COURSE', list.course);
 	start.replaceStartList(userData);
 };
 // StartView

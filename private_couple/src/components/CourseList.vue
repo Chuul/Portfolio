@@ -1,12 +1,11 @@
 <template>
 	<section class="list_cont">
 		<li class="course_cont" v-for="list in CourseList" :key="list.course">
-			<router-link
-				to="/start"
-				@click="startOneCourse(list)"
-				class="start_btn_cont"
-			>
-				<i class="start_btn fas fa-heart-square"></i>
+			<router-link to="/start" class="start_btn_cont">
+				<i
+					@click="startOneCourse(list)"
+					class="start_btn fas fa-heart-square"
+				></i>
 			</router-link>
 			<section class="item_cont">
 				<li class="name_cont" v-for="item in list.course" :key="item.name">
@@ -33,6 +32,7 @@ export default {
 	},
 	methods: {
 		startOneCourse(list) {
+			console.log('여기');
 			this.$store.dispatch('START_COURSE', list);
 		},
 		deleteOneCourse(list) {

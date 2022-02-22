@@ -85,25 +85,21 @@ export default {
 				this.showCheck = true;
 			} else {
 				this.showCreateBtn = true;
-				this.localCheckedList = [...list];
+				this.localCheckedList = list;
 				// this.transPosition(list);
 			}
 		},
-		resetChecked() {
-			this.$store.commit('SET_ITEM_FALSE', this.localCheckedList);
-			this.localCheckedList = [];
-		},
 		// 코스에 들어가는 아이템 정리하는 함수
-		setupCourse(course) {
-			course.forEach(item => {
+		setupCourse(list) {
+			list.forEach(item => {
+				delete item.createdBy;
 				item.checked = false;
 				item.comment = ' ';
 			});
-			return course;
+			return list;
 		},
 		async addCourse() {
-			let list = this.localCheckedList;
-			let payload = this.setupCourse(list);
+			let payload = this.setupCourse(this.localCheckedList);
 			// eslint-disable-next-line prettier/prettier
 			await this.$store.dispatch('ADD_COURSE', payload)
 				.then(response => {
@@ -115,6 +111,14 @@ export default {
 				.catch(error => {
 					console.log(error);
 				});
+		},
+		async resetChecked() {
+			if (this.localCheckedList.length === 0) {
+				this.$store.commit('SET_ITEM_FALSE', this.$store.state.checkedList);
+			} else {
+				this.$store.commit('SET_ITEM_FALSE', this.localCheckedList);
+				this.localCheckedList = [];
+			}
 		},
 		closeCheck() {
 			this.showCheck = false;

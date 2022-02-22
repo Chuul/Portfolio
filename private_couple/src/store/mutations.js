@@ -10,14 +10,10 @@ const LOGOUT_USER = state => {
 };
 // CreateView
 const SET_ITEM_LIST = (state, list) => {
-	console.log('SET_ITEM_LIST의 list: ', list);
 	state.itemList = list;
-	console.log('SET_ITEM_LIST: ', state.itemList);
 };
 const SET_ITEM = (state, item) => {
-	console.log('SET_ITEM의 item: ', item);
 	state.itemList.push(item);
-	console.log('SET_ITEM: ', state.itemList);
 };
 const SET_TOGGLE_ITEM = (state, item) => {
 	let list = state.itemList;
@@ -82,6 +78,14 @@ const SET_ITEM_FALSE = (state, course) => {
 const SET_COURSE_LIST = (state, list) => {
 	state.courseList = list;
 };
+const SPLICE_LIST = (state, name) => {
+	for (let i = 0; i < state.courseList.length; i++) {
+		if (state.courseList[i].name === name) {
+			state.courseList.splice(i, 1);
+			return;
+		}
+	}
+};
 const SET_START_COURSE = (state, list) => {
 	state.startList = list;
 };
@@ -117,7 +121,6 @@ const SET_LAST_LIST = (state, data) => {
 };
 // Error
 const SET_ERROR = (state, data) => {
-	console.log('data: ', data);
 	state.errorMessage = data;
 };
 
@@ -132,6 +135,7 @@ export {
 	SPLICE_ITEM,
 	SET_ITEM_FALSE,
 	SET_COURSE_LIST,
+	SPLICE_LIST,
 	SET_START_COURSE,
 	SET_START_URL,
 	SET_START_POS,

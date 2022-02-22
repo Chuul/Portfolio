@@ -6,7 +6,7 @@ import * as actions from './actions';
 
 Vue.use(Vuex);
 
-export const store = new Vuex.Store({
+export default new Vuex.Store({
 	state: {
 		email: '',
 		username: '',
@@ -17,6 +17,11 @@ export const store = new Vuex.Store({
 		lastItemList: [],
 		lastCourseList: [],
 		errorMessage: '',
+	},
+	getters: {
+		isLogin(state) {
+			return state.username !== '';
+		},
 	},
 	mutations,
 	actions,
