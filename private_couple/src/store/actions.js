@@ -41,7 +41,7 @@ const ADD_ITEM = async (context, payload) => {
 	try {
 		const response = await item.postItem(obj);
 		context.commit('SET_ITEM', obj);
-		// context.dispatch('FETCH_ITEM_LIST');
+		context.dispatch('FETCH_ITEM_LIST');
 		return response;
 	} catch (error) {
 		console.log(error.response.data.message);

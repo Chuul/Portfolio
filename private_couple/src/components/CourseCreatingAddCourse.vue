@@ -86,7 +86,7 @@ export default {
 			} else {
 				this.showCreateBtn = true;
 				this.localCheckedList = list;
-				// this.transPosition(list);
+				this.transPosition(list);
 			}
 		},
 		// 코스에 들어가는 아이템 정리하는 함수

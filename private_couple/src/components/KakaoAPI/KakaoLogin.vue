@@ -20,7 +20,7 @@ export default {
 	},
 	methods: {
 		kakaoLogin() {
-			window.Kakao.Auth.login({
+			window.Kakao.Auth.loginForm({
 				scope: 'profile_nickname, account_email',
 				success: this.getProfile,
 			});

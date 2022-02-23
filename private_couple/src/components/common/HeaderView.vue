@@ -44,12 +44,12 @@ export default {
 		kakaoLogout() {
 			if (!window.Kakao.Auth.getAccessToken()) {
 				console.log('Not logged in.');
-				return;
+			} else {
+				window.Kakao.Auth.logout();
+				this.$store.commit('LOGOUT_USER');
+				this.$router.push('/login');
+				this.closeModal();
 			}
-			window.Kakao.Auth.logout();
-			this.$store.commit('LOGOUT_USER');
-			this.$router.push('/login');
-			this.closeModal();
 		},
 		openModal() {
 			this.showModal = true;

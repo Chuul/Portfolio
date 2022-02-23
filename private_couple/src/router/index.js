@@ -41,11 +41,6 @@ const router = new VueRouter({
 			component: () => import('@/components/CourseStart'),
 			name: 'start',
 			meta: { auth: true },
-			// beforeEnter(to, from, next) {
-			// 	store.dispatch('FETCH_LIST', to.name)
-			// 		.then(next())
-			// 		.catch()
-			// },
 		},
 		{
 			path: '*',

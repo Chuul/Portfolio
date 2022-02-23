@@ -32,7 +32,6 @@ export default {
 	},
 	methods: {
 		startOneCourse(list) {
-			console.log('여기');
 			this.$store.dispatch('START_COURSE', list);
 		},
 		deleteOneCourse(list) {

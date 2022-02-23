@@ -13,6 +13,7 @@ export default new Vuex.Store({
 		itemList: [],
 		checkedList: [],
 		courseList: [],
+		startItem: [],
 		startList: [],
 		lastItemList: [],
 		lastCourseList: [],

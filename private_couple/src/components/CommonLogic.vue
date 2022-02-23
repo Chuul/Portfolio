@@ -186,6 +186,7 @@ export default {
 				textArea: this.textArea,
 			};
 			this.textArea = '';
+			console.log('obj: ', obj);
 			return obj;
 		},
 		patchOneUrl() {

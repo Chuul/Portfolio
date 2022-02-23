@@ -5,7 +5,6 @@ function getStartList(userData) {
 	return start.post('/', userData);
 }
 function replaceStartList(userData) {
-	console.log('userData: ', userData);
 	return start.post('/insert', userData);
 }
 function patchComment(payload) {
