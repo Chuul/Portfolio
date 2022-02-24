@@ -20,6 +20,11 @@ function toggleFalseItem(id) {
 function deleteStartItem(id) {
 	return start.delete(`/${id}`);
 }
+function editStartItem(payload) {
+	return start.patch(`/name/${payload.id}`, {
+		data: { urlText: payload.textArea },
+	});
+}
 function patchStartUrl(payload) {
 	return start.patch(`/url/${payload.id}`, {
 		data: { urlText: payload.textArea },
@@ -37,6 +42,7 @@ export {
 	patchComment,
 	toggleFalseItem,
 	deleteStartItem,
+	editStartItem,
 	patchStartUrl,
 	patchStartPos,
 };

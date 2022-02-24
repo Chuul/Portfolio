@@ -134,58 +134,76 @@ const FETCH_START_LIST = async context => {
 		console.log(error);
 	}
 };
-const START = async ({ commit }, userData) => {
-	try {
-		const { data } = await start.getStartList(userData);
-		commit('setStartList', data[0]);
-		return data;
-	} catch (error) {
-		console.log(error);
-	}
-};
 const FALSE_ITEM = async ({ dispatch }, id) => {
 	await start.toggleFalseItem(id);
 	dispatch('FETCH_START_LIST');
 };
 const PATCH_ITEM_COMMENT = async (context, item) => {
-	// DB의 "starts" collection에 저장
-	console.log('item: ', item);
-	const obj = {
-		id: item._id,
-		comment: item.comment,
-	};
-	await start.patchComment(obj);
-	// "lasts" collection에 저장
-	delete item.completed;
-	delete item._id;
-	const userData = {
-		createdBy: context.state.username,
-		item: item,
-	};
-	await last.patchLastItem(userData);
-	context.dispatch('FETCH_START_LIST');
+	try {
+		const obj = {
+			id: item._id,
+			comment: item.comment,
+		};
+		await start.patchComment(obj);
+		context.commit('EDIT_START_CHECKED', item._id);
+		context.dispatch('ADD_LAST_ITEM', item);
+	} catch (error) {
+		console.log(error);
+	}
 };
-const DELETE_START = ({ commit }, id) => {
-	commit('SPLICE_START', id);
-	start.deleteStartItem(id);
+const EDIT_START_ITEM = async ({ commit }, id) => {
+	try {
+		await start.editStartItem(id);
+		commit('EDIT_START_NAME', id);
+	} catch (error) {
+		console.log(error);
+	}
 };
-const PATCH_START_URL = ({ commit }, obj) => {
-	commit('SET_START_URL', obj);
-	start.patchStartUrl(obj);
+const PATCH_START_POS = async ({ commit }, obj) => {
+	try {
+		await start.patchStartPos(obj);
+		commit('SET_START_POS', obj);
+	} catch (error) {
+		console.log(error);
+	}
 };
-const PATCH_START_POS = ({ commit }, obj) => {
-	commit('SET_START_POS', obj);
-	start.patchStartPos(obj);
+const PATCH_START_URL = async ({ commit }, obj) => {
+	try {
+		await start.patchStartUrl(obj);
+		commit('SET_START_URL', obj);
+	} catch (error) {
+		console.log(error);
+	}
 };
-const STORE_START = (context, comment) => {
-	const obj = {
-		createdBy: context.state.username,
-		course: {
-			list: context.state.startList,
-			comment: comment,
-		},
-	};
-	last.patchLastList(obj);
+const DELETE_START = async ({ commit }, id) => {
+	try {
+		await start.deleteStartItem(id);
+		commit('SPLICE_START', id);
+	} catch (error) {
+		console.log(error);
+	}
+};
+const STORE_START = async (context, comment) => {
+	try {
+		let list = context.state.startList;
+		let arr = [];
+		for (let i = 0; i < list.length; i++) {
+			if (list[i].checked === true) {
+				arr.push(list[i]);
+			}
+		}
+		const obj = {
+			createdBy: context.state.username,
+			course: {
+				list: arr,
+				comment: comment,
+			},
+		};
+		const response = await last.patchLastList(obj);
+		return response;
+	} catch (error) {
+		console.log(error);
+	}
 };
 // LastView
 const FETCH_LAST_LIST = async context => {
@@ -199,6 +217,16 @@ const FETCH_LAST_LIST = async context => {
 		console.log(error);
 	}
 };
+const ADD_LAST_ITEM = async (context, item) => {
+	delete item.completed;
+	delete item._id;
+	const userData = {
+		createdBy: context.state.username,
+		item: item,
+	};
+	await last.patchLastItem(userData);
+	context.dispatch('FETCH_START_LIST');
+};
 export {
 	LOGIN,
 	FETCH_ITEM_LIST,
@@ -211,9 +239,10 @@ export {
 	DELETE_COURSE,
 	START_COURSE,
 	FETCH_START_LIST,
-	START,
 	FALSE_ITEM,
 	PATCH_ITEM_COMMENT,
+	ADD_LAST_ITEM,
+	EDIT_START_ITEM,
 	PATCH_START_URL,
 	PATCH_START_POS,
 	DELETE_START,

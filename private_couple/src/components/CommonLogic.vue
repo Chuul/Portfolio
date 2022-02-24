@@ -39,6 +39,9 @@
 						@click="openUrlForm(item)"
 						:class="{ checked_Btn: item.url.length > 0 }"
 					/>
+					<template v-if="!item.createdBy">
+						<i class="basic_Btn fas fa-text" @click="openEditForm(item)"></i>
+					</template>
 				</span>
 				<!-- <template v-if="!item.createdBy">
 					<div class="arrow_cont">
@@ -47,6 +50,13 @@
 				</template> -->
 			</li>
 			<!-- Modal -->
+			<Modal v-if="showEditModal" @close="closeEditForm()">
+				<h2 slot="header">아이템 이름 변경</h2>
+				<form slot="body">
+					<input type="text" id="editName" v-model="textArea" />
+					<button @click.prevent="editOneItem()">입력</button>
+				</form>
+			</Modal>
 			<Modal v-if="showUrlModal" @close="closeUrlForm()">
 				<h2 slot="header">URL 입력</h2>
 				<form slot="body">
@@ -146,6 +156,7 @@ export default {
 		return {
 			item: {},
 			textArea: '',
+			showEditModal: false,
 			showUrlModal: false,
 			showPosModal: false,
 			showModal: false,
@@ -186,8 +197,12 @@ export default {
 				textArea: this.textArea,
 			};
 			this.textArea = '';
-			console.log('obj: ', obj);
 			return obj;
+		},
+		editOneItem() {
+			const payload = this.setObj();
+			this.$store.dispatch('EDIT_START_ITEM', payload);
+			this.showEditModal = false;
 		},
 		patchOneUrl() {
 			const payload = this.setObj();
@@ -208,17 +223,27 @@ export default {
 			this.showPosModal = false;
 		},
 		// start
-		endStartCourse() {
-			this.$store.dispatch('STORE_START', this.textArea);
-			this.showCompleteModal = false;
-			this.textArea = '';
-			this.$router.push('/list');
+		async endStartCourse() {
+			// eslint-disable-next-line prettier/prettier
+			await this.$store.dispatch('STORE_START', this.textArea)
+				.then(() => {
+					this.showCompleteModal = false;
+					this.textArea = '';
+					this.$router.push('/list');
+				})
+				.catch(error => {
+					console.log(error);
+				});
 		},
 		// start
 		backStartView() {
 			this.$router.push('/list');
 		},
 		// Modal창 on/off
+		openEditForm(item) {
+			this.showEditModal = true;
+			this.item = item;
+		},
 		openUrlForm(item) {
 			this.showUrlModal = true;
 			this.item = item;
@@ -226,6 +251,10 @@ export default {
 		openPosForm(item) {
 			this.showPosModal = true;
 			this.item = item;
+		},
+		closeEditForm() {
+			this.showEditModal = false;
+			this.textArea = '';
 		},
 		closeUrlForm() {
 			this.showUrlModal = false;

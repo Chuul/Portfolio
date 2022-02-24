@@ -89,6 +89,22 @@ router.delete('/:id', async(req, res, next) => {
   }
 })
 
+router.patch('/name/:id', async(req, res, next) => {
+  try {
+    const result = await start.updateOne({
+      'course._id': req.params.id
+    }, {
+      '$set': {'course.$.name': req.body.data.urlText}
+    });
+    if (!result) {
+      return res.status(400).json({ message: '데이터를 업데이트할 수 없습니다' });
+    }
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+})
 router.patch('/url/:id', async(req, res, next) => {
   try {
     const result = await start.updateOne({

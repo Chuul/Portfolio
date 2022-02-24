@@ -90,6 +90,23 @@ const SET_START_COURSE = (state, list) => {
 	state.startList = list;
 };
 // StartView
+const EDIT_START_CHECKED = (state, id) => {
+	let startList = state.startList;
+	for (let i = 0; i < startList.length; i++) {
+		if (startList[i]._id === id) {
+			startList[i].checked = true;
+			return;
+		}
+	}
+};
+const EDIT_START_NAME = (state, obj) => {
+	for (let i = 0; i < state.startList.length; i++) {
+		if (state.startList[i]._id === obj.id) {
+			state.startList[i].name = obj.textArea;
+			return;
+		}
+	}
+};
 const SET_START_URL = (state, obj) => {
 	for (let i = 0; i < state.startList.length; i++) {
 		if (state.startList[i]._id === obj.id) {
@@ -136,6 +153,8 @@ export {
 	SET_ITEM_FALSE,
 	SET_COURSE_LIST,
 	SPLICE_LIST,
+	EDIT_START_CHECKED,
+	EDIT_START_NAME,
 	SET_START_COURSE,
 	SET_START_URL,
 	SET_START_POS,
