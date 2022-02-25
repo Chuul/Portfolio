@@ -17,7 +17,7 @@
 				<template v-else>
 					<i
 						class="toggle_Btn far fa-check-circle"
-						@click="openForm(item)"
+						@click="openForm(item, '아이템 평가')"
 						:class="{ checked_Btn: item.checked }"
 					/>
 				</template>
@@ -31,62 +31,31 @@
 					<i class="basic_Btn far fa-trash-alt" @click="deleteOneItem(item)" />
 					<i
 						class="basic_Btn fas fa-map-marked-alt"
-						@click="openPosForm(item)"
+						@click="openForm(item, '위치')"
 						:class="{ checked_Btn: item.pos.length > 0 }"
 					/>
 					<i
 						class="basic_Btn far fa-window-restore"
-						@click="openUrlForm(item)"
+						@click="openForm(item, 'URL')"
 						:class="{ checked_Btn: item.url.length > 0 }"
 					/>
 					<template v-if="!item.createdBy">
-						<i class="basic_Btn fas fa-text" @click="openEditForm(item)"></i>
+						<i
+							class="basic_Btn fas fa-text"
+							@click="openForm(item, '아이템 이름 변경')"
+						></i>
 					</template>
 				</span>
-				<!-- <template v-if="!item.createdBy">
-					<div class="arrow_cont">
-						<i class="fas fa-arrow-down"></i>
-					</div>
-				</template> -->
 			</li>
-			<!-- Modal -->
-			<Modal v-if="showEditModal" @close="closeEditForm()">
-				<h2 slot="header">아이템 이름 변경</h2>
+			<Modal v-if="showModal" @close="closeModal()">
+				<h2 slot="header">{{ modalID }}</h2>
 				<form slot="body">
-					<input type="text" id="editName" v-model="textArea" />
-					<button @click.prevent="editOneItem()">입력</button>
-				</form>
-			</Modal>
-			<Modal v-if="showUrlModal" @close="closeUrlForm()">
-				<h2 slot="header">URL 입력</h2>
-				<form slot="body">
-					<input type="text" id="urlInput" v-model="textArea" />
-					<button @click.prevent="patchOneUrl()">입력</button>
-				</form>
-			</Modal>
-			<Modal v-if="showPosModal" @close="closePosForm()">
-				<h2 slot="header">Position 입력</h2>
-				<form slot="body">
-					<input type="text" id="posInput" v-model="textArea" />
-					<button @click.prevent="patchOnePos()">입력</button>
-				</form>
-			</Modal>
-			<Modal v-if="showModal" @close="closeForm()">
-				<h2 slot="header">코스 평가</h2>
-				<form slot="body">
-					<label for="comment">한줄평 </label>
-					<input type="text" id="comment" v-model="textArea" />
-					<button @click.prevent="patchItemComment()">평가완료</button>
-				</form>
-			</Modal>
-			<Modal v-if="showCompleteModal" @close="closeCompleteForm()">
-				<h2 slot="header">코스 평점</h2>
-				<form slot="body">
-					<input type="text" id="completeInput" v-model="textArea" />
-					<button @click.prevent="endStartCourse()">완료</button>
+					<input type="text" v-model="textArea" />
+					<button @click.prevent="patchOneData()">입력</button>
 				</form>
 			</Modal>
 		</section>
+		<!-- 코스 시작 페이지 버튼 -->
 		<template v-if="this.$route.name == 'start'">
 			<div class="start_basic_btn">
 				<span class="back_btn_cont">
@@ -95,7 +64,7 @@
 						@click="backStartView()"
 					/>
 				</span>
-				<button class="complete_Btn" @click="openCompleteForm()">
+				<button class="complete_Btn" @click="openForm(null, '코스 평가')">
 					코스 완료
 				</button>
 			</div>
@@ -104,9 +73,20 @@
 </template>
 
 <script>
-import Modal from '@/components/common/SetModal.vue';
+import Modal from '@/components/common/ModalPrototype.vue';
 
 export default {
+	data() {
+		return {
+			item: {},
+			textArea: '',
+			modalID: '',
+			showModal: false,
+		};
+	},
+	components: {
+		Modal,
+	},
 	computed: {
 		content_start_cont() {
 			if (this.$route.name === 'start') {
@@ -149,40 +129,9 @@ export default {
 			}
 		}
 	},
-	components: {
-		Modal,
-	},
-	data() {
-		return {
-			item: {},
-			textArea: '',
-			showEditModal: false,
-			showUrlModal: false,
-			showPosModal: false,
-			showModal: false,
-			showCompleteModal: false,
-		};
-	},
 	methods: {
 		toggleOneItem(item) {
 			this.$store.commit('SET_TOGGLE_ITEM', item);
-		},
-		// start
-		openForm(item) {
-			if (item.checked === true) {
-				this.$store.dispatch('FALSE_ITEM', item._id);
-			} else {
-				this.showModal = true;
-				this.item = item;
-			}
-		},
-		// start
-		async patchItemComment() {
-			const item = this.item;
-			item.comment = this.textArea;
-			await this.$store.dispatch('PATCH_ITEM_COMMENT', item);
-			this.textArea = '';
-			this.showModal = false;
 		},
 		deleteOneItem(item) {
 			if (this.$route.name === 'creating') {
@@ -191,92 +140,67 @@ export default {
 				this.$store.dispatch('DELETE_START', item._id);
 			}
 		},
+		backStartView() {
+			this.$router.push('/list');
+		},
+		// Modal 관련 method
 		setObj() {
 			const obj = {
 				id: this.item._id,
 				textArea: this.textArea,
 			};
-			this.textArea = '';
 			return obj;
 		},
-		editOneItem() {
-			const payload = this.setObj();
-			this.$store.dispatch('EDIT_START_ITEM', payload);
-			this.showEditModal = false;
-		},
-		patchOneUrl() {
-			const payload = this.setObj();
-			if (this.$route.name === 'creating') {
-				this.$store.dispatch('PATCH_ITEM_URL', payload);
-			} else {
-				this.$store.dispatch('PATCH_START_URL', payload);
+		async patchOneData() {
+			let payload = {};
+			if (this.modalID !== '코스 평가') {
+				payload = this.setObj();
 			}
-			this.showUrlModal = false;
-		},
-		patchOnePos() {
-			const payload = this.setObj();
 			if (this.$route.name === 'creating') {
-				this.$store.dispatch('PATCH_ITEM_POS', payload);
+				if (this.modalID === 'URL') {
+					this.$store.dispatch('PATCH_ITEM_URL', payload);
+				} else if (this.modalID === '위치') {
+					this.$store.dispatch('PATCH_ITEM_POS', payload);
+				}
 			} else {
-				this.$store.dispatch('PATCH_START_POS', payload);
+				if (this.modalID === '아이템 이름 변경') {
+					this.$store.dispatch('EDIT_START_ITEM', payload);
+				} else if (this.modalID === 'URL') {
+					this.$store.dispatch('PATCH_START_URL', payload);
+				} else if (this.modalID === '위치') {
+					this.$store.dispatch('PATCH_START_POS', payload);
+				} else if (this.modalID === '아이템 평가') {
+					const item = this.item;
+					item.comment = this.textArea;
+					this.$store.dispatch('PATCH_ITEM_COMMENT', item);
+				} else if (this.modalID === '코스 평가') {
+					// eslint-disable-next-line prettier/prettier
+					await this.$store.dispatch('STORE_START', this.textArea)
+						.then(() => {
+							this.$router.push('/list');
+						})
+						.catch(error => {
+							console.log(error);
+						});
+				}
 			}
-			this.showPosModal = false;
-		},
-		// start
-		async endStartCourse() {
-			// eslint-disable-next-line prettier/prettier
-			await this.$store.dispatch('STORE_START', this.textArea)
-				.then(() => {
-					this.showCompleteModal = false;
-					this.textArea = '';
-					this.$router.push('/list');
-				})
-				.catch(error => {
-					console.log(error);
-				});
-		},
-		// start
-		backStartView() {
-			this.$router.push('/list');
-		},
-		// Modal창 on/off
-		openEditForm(item) {
-			this.showEditModal = true;
-			this.item = item;
-		},
-		openUrlForm(item) {
-			this.showUrlModal = true;
-			this.item = item;
-		},
-		openPosForm(item) {
-			this.showPosModal = true;
-			this.item = item;
-		},
-		closeEditForm() {
-			this.showEditModal = false;
 			this.textArea = '';
-		},
-		closeUrlForm() {
-			this.showUrlModal = false;
-			this.textArea = '';
-		},
-		closePosForm() {
-			this.showPosModal = false;
-			this.textArea = '';
-		},
-		// start
-		openCompleteForm() {
-			this.showCompleteModal = true;
-		},
-		// start
-		closeForm() {
 			this.showModal = false;
-			this.item = '';
 		},
-		// start
-		closeCompleteForm() {
-			this.showCompleteModal = false;
-			this.item = '';
+		openForm(item, name) {
+			if (name === '아이템 평가') {
+				if (item.checked === true) {
+					this.$store.dispatch('FALSE_ITEM', item._id);
+					return;
+				}
+			}
+			this.showModal = true;
+			this.modalID = name;
+			this.item = item;
+		},
+		closeModal() {
+			this.showModal = false;
+			this.textArea = '';
 		},
 	},
 };

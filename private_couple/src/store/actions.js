@@ -151,10 +151,10 @@ const PATCH_ITEM_COMMENT = async (context, item) => {
 		console.log(error);
 	}
 };
-const EDIT_START_ITEM = async ({ commit }, id) => {
+const EDIT_START_ITEM = async ({ commit }, obj) => {
 	try {
-		await start.editStartItem(id);
-		commit('EDIT_START_NAME', id);
+		await start.editStartItem(obj);
+		commit('EDIT_START_NAME', obj);
 	} catch (error) {
 		console.log(error);
 	}
