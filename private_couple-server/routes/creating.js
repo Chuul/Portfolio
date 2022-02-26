@@ -17,6 +17,21 @@ router.post('/', async(req, res, next) => {
     next(err);
   }
 })
+router.post('/filter', async(req, res, next) => {
+  try {
+    const result = await creating.find({
+      createdBy: req.body.username,
+      category: req.body.category
+    });
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    if (error.code === 11000) {
+      return res.status(400).json({ message: '데이터를 찾을 수 없습니다' });
+    }
+    next(err);
+  }
+})
 router.post('/insert', async(req, res, next) => {
   try {
     const result = await creating.create({

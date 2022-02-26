@@ -4,6 +4,9 @@ import { creating } from './index.js';
 function getItemList(userData) {
 	return creating.post('/', userData);
 }
+function filterItemList(userData) {
+	return creating.post('/filter', userData);
+}
 function postItem(userData) {
 	return creating.post('/insert', userData);
 }
@@ -26,6 +29,7 @@ function getCheckedItemList() {
 
 export {
 	getItemList,
+	filterItemList,
 	postItem,
 	deleteItem,
 	patchUrl,

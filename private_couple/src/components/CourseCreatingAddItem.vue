@@ -19,7 +19,7 @@
 export default {
 	data() {
 		return {
-			options: [{ text: '음식점' }, { text: '카페' }, { text: '즐길거리' }],
+			options: [{ text: '맛집' }, { text: '카페' }, { text: '놀거리' }],
 			selected: '',
 			newItem: '',
 		};
@@ -69,11 +69,12 @@ export default {
 }
 .select_box {
 	height: 60%;
+	text-align: center;
+	border-style: none;
+	border-radius: 0.5em;
 	font-family: 'Dongle', sans-serif;
 	font-weight: 300;
 	font-size: 1.5em;
-	border-style: none;
-	border-radius: 0.5em;
 }
 .addItem_cont > input {
 	text-align: center;

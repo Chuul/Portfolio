@@ -1,5 +1,19 @@
 <template>
 	<section :class="content_start_cont">
+		<div v-if="this.$route.name === 'creating'" class="select_cont">
+			<a @click="filterItem('전체')" class="select_option">
+				<span>전체</span>
+			</a>
+			<a @click="filterItem('맛집')" class="select_option">
+				<span>맛집</span>
+			</a>
+			<a @click="filterItem('카페')" class="select_option">
+				<span>카페</span>
+			</a>
+			<a @click="filterItem('놀거리')" class="select_option">
+				<span>놀거리</span>
+			</a>
+		</div>
 		<section :class="main_cont">
 			<li
 				class="list_cont"
@@ -47,28 +61,14 @@
 					</template>
 				</span>
 			</li>
-			<Modal v-if="showModal" @close="closeModal()">
-				<h2 slot="header">{{ modalID }}</h2>
-				<form slot="body">
-					<input type="text" v-model="textArea" />
-					<button @click.prevent="patchOneData()">입력</button>
-				</form>
-			</Modal>
 		</section>
-		<!-- 코스 시작 페이지 버튼 -->
-		<template v-if="this.$route.name == 'start'">
-			<div class="start_basic_btn">
-				<span class="back_btn_cont">
-					<i
-						class="back_btn fas fa-arrow-circle-left"
-						@click="backStartView()"
-					/>
-				</span>
-				<button class="complete_Btn" @click="openForm(null, '코스 평가')">
-					코스 완료
-				</button>
-			</div>
-		</template>
+		<Modal v-if="showModal" @close="closeModal()">
+			<h2 slot="header">{{ modalID }}</h2>
+			<form slot="body">
+				<input type="text" v-model="textArea" />
+				<button @click.prevent="patchOneData()">입력</button>
+			</form>
+		</Modal>
 	</section>
 </template>
 
@@ -76,6 +76,18 @@
 import Modal from '@/components/common/ModalPrototype.vue';
 
 export default {
+	created() {
+		const name = this.$route.name;
+		if (name === 'creating') {
+			this.$store.dispatch('FETCH_ITEM_LIST');
+		} else if (name === 'start') {
+			if (this.$store.state.startList.length > 0) {
+				return;
+			} else {
+				this.$store.dispatch('FETCH_START_LIST');
+			}
+		}
+	},
 	data() {
 		return {
 			item: {},
@@ -117,19 +129,18 @@ export default {
 			}
 		},
 	},
-	created() {
-		const name = this.$route.name;
-		if (name === 'creating') {
-			this.$store.dispatch('FETCH_ITEM_LIST');
-		} else if (name === 'start') {
-			if (this.$store.state.startList.length > 0) {
-				return;
-			} else {
-				this.$store.dispatch('FETCH_START_LIST');
-			}
-		}
-	},
 	methods: {
+		filterItem(name) {
+			let arr = document.getElementsByClassName('select_option');
+			for (let i = 0; i < arr.length; i++) {
+				if (arr[i].innerText === name) {
+					arr[i].style = 'color: rgba(124, 198, 255, 1.0); font-weight: bold;';
+				} else {
+					arr[i].style = 'color: ""; font-weight: normal;';
+				}
+			}
+			this.$store.dispatch('FILTER_ITEM', name);
+		},
 		toggleOneItem(item) {
 			this.$store.commit('SET_TOGGLE_ITEM', item);
 		},
@@ -210,6 +221,28 @@ export default {
 .content_start_cont {
 	display: inline-block;
 	width: 100%;
+}
+.select_cont {
+	text-align: center;
+	margin: 0.6rem;
+}
+.select_option::after {
+	display: inline-block;
+	content: '';
+	width: 1px;
+	height: 0.6rem;
+	margin: 0 0.6em;
+	background: black;
+}
+.select_option:last-child:after {
+	display: none;
+}
+.select_option:hover {
+	cursor: pointer;
+	color: rgba(124, 198, 255, 0.8);
+}
+.select_option:active {
+	color: rgba(124, 198, 255, 0.8);
 }
 .list_cont {
 	list-style: none;

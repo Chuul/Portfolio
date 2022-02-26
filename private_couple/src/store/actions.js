@@ -28,6 +28,23 @@ const FETCH_ITEM_LIST = async context => {
 		return error.response.data.message;
 	}
 };
+const FILTER_ITEM = async (context, name) => {
+	try {
+		if (name === '전체') {
+			return context.dispatch('FETCH_ITEM_LIST');
+		}
+		const userData = {
+			username: context.state.username,
+			category: name,
+		};
+		const { data } = await item.filterItemList(userData);
+		context.commit('SET_ITEM_LIST', data);
+		return data;
+	} catch (error) {
+		context.commit('SET_ERROR', error.response.data.message);
+		return error.response.data.message;
+	}
+};
 const ADD_ITEM = async (context, payload) => {
 	const obj = {
 		createdBy: context.state.username,
@@ -230,6 +247,7 @@ const ADD_LAST_ITEM = async (context, item) => {
 export {
 	LOGIN,
 	FETCH_ITEM_LIST,
+	FILTER_ITEM,
 	ADD_ITEM,
 	PATCH_ITEM_URL,
 	PATCH_ITEM_POS,
