@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import persistedstate from 'vuex-persistedstate';
+import * as getters from './getters';
 import * as mutations from './mutations';
 import * as actions from './actions';
 
@@ -13,17 +14,12 @@ export default new Vuex.Store({
 		itemList: [],
 		checkedList: [],
 		courseList: [],
-		startItem: [],
 		startList: [],
 		lastItemList: [],
 		lastCourseList: [],
 		errorMessage: '',
 	},
-	getters: {
-		isLogin(state) {
-			return state.username !== '';
-		},
-	},
+	getters,
 	mutations,
 	actions,
 	plugins: [

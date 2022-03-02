@@ -1,5 +1,5 @@
 <template>
-	<section class="startView_cont">
+	<section class="start_cont">
 		<KakaoMapsStart></KakaoMapsStart>
 		<CommonLogic></CommonLogic>
 	</section>
@@ -25,7 +25,7 @@ h2 {
 	font-weight: 700;
 	margin: 0;
 }
-.startView_cont {
+.start_cont {
 	margin: 1rem;
 	padding: 1.3rem;
 	border-radius: 0.5em;
@@ -34,7 +34,7 @@ h2 {
 	box-shadow: 0.5em -0.2em 10px 1px rgba(143, 143, 143, 0.2);
 }
 @media (min-width: 1024px) {
-	.startView_cont {
+	.start_cont {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;

@@ -1,6 +1,6 @@
 <template>
-	<div id="map_main">
-		<div id="menu_wrap" class="bg_white">
+	<section id="map_creating_cont">
+		<article id="menu_cont" class="bg_white">
 			<div class="option">
 				<form>
 					<input type="text" id="keyword" size="15" placeholder="키워드" />
@@ -10,8 +10,8 @@
 			<hr />
 			<ul id="placesList"></ul>
 			<div id="pagination"></div>
-		</div>
-	</div>
+		</article>
+	</section>
 </template>
 
 <script>
@@ -29,7 +29,7 @@ export default {
 	methods: {
 		// 지도를 띄우는 function
 		initMap() {
-			let container = document.getElementById('map_main');
+			let container = document.getElementById('map_creating_cont');
 			let options = {
 				center: new kakao.maps.LatLng(37.53343, 126.981279),
 				level: 8,
@@ -75,7 +75,7 @@ export default {
 			// 검색 결과 목록과 마커를 표출하는 함수입니다
 			function displayPlaces(places) {
 				var listEl = document.getElementById('placesList'),
-					menuEl = document.getElementById('menu_wrap'),
+					menuEl = document.getElementById('menu_cont'),
 					fragment = document.createDocumentFragment(),
 					bounds = new kakao.maps.LatLngBounds();
 				// listStr = '';
@@ -230,11 +230,11 @@ export default {
 </script>
 
 <style scoped>
-#map_main * {
+#map_creating_cont * {
 	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
 	font-size: 12px;
 }
-#map_main {
+#map_creating_cont {
 	height: 0;
 	padding-bottom: 30%;
 	position: relative;
@@ -249,7 +249,7 @@ export default {
 	padding: 0;
 	margin-top: 0;
 }
-#menu_wrap {
+#menu_cont {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -279,7 +279,7 @@ button {
 .bg_white {
 	background: #fff;
 }
-#menu_wrap hr {
+#menu_cont hr {
 	display: block;
 	height: 1px;
 	border: 0;
@@ -307,7 +307,7 @@ button {
 	}
 }
 @media (min-width: 1024px) {
-	#map_main {
+	#map_creating_cont {
 		width: 47%;
 		height: inherit;
 	}
@@ -318,10 +318,10 @@ button {
 }
 /* 반응형 - 모바일 */
 @media (max-width: 430px) {
-	#map_main {
+	#map_creating_cont {
 		padding-bottom: 120%;
 	}
-	#menu_wrap {
+	#menu_cont {
 		bottom: 65%;
 		width: 90%;
 		margin: 10px;

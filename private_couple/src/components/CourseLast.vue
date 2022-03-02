@@ -1,6 +1,6 @@
 <template>
 	<section class="last_cont">
-		<div class="item_cont">
+		<article class="item_cont">
 			<h3>이벤트</h3>
 			<li v-for="item in ItemList" :key="item">
 				<span class="item_name">
@@ -9,13 +9,14 @@
 				<span v-if="item.comment !== ''">
 					{{ item.comment }}
 				</span>
+				<span v-else> 평가가 없습니다... </span>
 			</li>
-		</div>
-		<div class="course_cont">
+		</article>
+		<article class="course_cont">
 			<h3>코스</h3>
 			<li v-for="course in CourseList" :key="course.list">
 				<div class="course_item_cont">
-					<li v-for="item in course.list" class="course_item" :key="item.name">
+					<li v-for="item in course.list" class="course_name" :key="item.name">
 						{{ item.name }}
 						<i class="fas fa-arrow-right" />
 					</li>
@@ -24,7 +25,7 @@
 					{{ course.comment }}
 				</span>
 			</li>
-		</div>
+		</article>
 	</section>
 </template>
 
@@ -32,10 +33,10 @@
 export default {
 	computed: {
 		ItemList() {
-			return this.$store.state.lastItemList;
+			return this.$store.getters.getLastItemList;
 		},
 		CourseList() {
-			return this.$store.state.lastCourseList;
+			return this.$store.getters.getLastCourseList;
 		},
 	},
 	created() {
@@ -84,7 +85,7 @@ h3 {
 .course_item_cont li:last-child i {
 	display: none;
 }
-.course_item {
+.course_name {
 	display: inline;
 }
 </style>

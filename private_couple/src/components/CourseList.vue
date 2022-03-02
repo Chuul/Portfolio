@@ -8,7 +8,7 @@
 				></i>
 			</router-link>
 			<section class="item_cont">
-				<li class="name_cont" v-for="item in list.course" :key="item.name">
+				<li class="item_name" v-for="item in list.course" :key="item.name">
 					{{ item.name }}
 					<div class="arrow_cont">
 						<i class="fas fa-arrow-down"></i>
@@ -18,7 +18,6 @@
 			<span class="delete_btn_cont" @click="deleteOneCourse(list)">
 				<i class="delete_btn far fa-trash-alt"></i>
 			</span>
-			<!-- StartView 진입 -->
 		</li>
 	</section>
 </template>
@@ -27,7 +26,7 @@
 export default {
 	computed: {
 		CourseList() {
-			return this.$store.state.courseList;
+			return this.$store.getters.getCourseList;
 		},
 	},
 	methods: {

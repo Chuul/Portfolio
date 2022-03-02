@@ -1,6 +1,6 @@
 <template>
 	<section :class="content_start_cont">
-		<div v-if="this.$route.name === 'creating'" class="select_cont">
+		<div v-if="filter_cont" class="select_cont">
 			<a @click="filterItem('전체')" class="select_option">
 				<span>전체</span>
 			</a>
@@ -41,8 +41,7 @@
 				<a v-else>
 					{{ item.name }}
 				</a>
-				<span class="btn_cont">
-					<i class="basic_Btn far fa-trash-alt" @click="deleteOneItem(item)" />
+				<div class="btn_cont">
 					<i
 						class="basic_Btn fas fa-map-marked-alt"
 						@click="openForm(item, '위치')"
@@ -59,7 +58,8 @@
 							@click="openForm(item, '아이템 이름 변경')"
 						></i>
 					</template>
-				</span>
+					<i class="basic_Btn far fa-trash-alt" @click="deleteOneItem(item)" />
+				</div>
 			</li>
 		</section>
 		<Modal v-if="showModal" @close="closeModal()">
@@ -69,6 +69,19 @@
 				<button @click.prevent="patchOneData()">입력</button>
 			</form>
 		</Modal>
+		<template v-if="this.$route.name == 'start'">
+			<div class="start_basic_btn">
+				<span class="back_btn_cont">
+					<i
+						class="back_btn fas fa-arrow-circle-left"
+						@click="backStartView()"
+					/>
+				</span>
+				<button class="complete_Btn" @click="openForm(null, '코스 완료')">
+					코스 완료
+				</button>
+			</div>
+		</template>
 	</section>
 </template>
 
@@ -81,7 +94,7 @@ export default {
 		if (name === 'creating') {
 			this.$store.dispatch('FETCH_ITEM_LIST');
 		} else if (name === 'start') {
-			if (this.$store.state.startList.length > 0) {
+			if (this.$store.getters.getStartList.length > 0) {
 				return;
 			} else {
 				this.$store.dispatch('FETCH_START_LIST');
@@ -114,6 +127,9 @@ export default {
 				return 'main_cont_creating';
 			}
 		},
+		filter_cont() {
+			return this.$route.name === 'creating' ? true : false;
+		},
 		list_page() {
 			if (this.$route.name === 'start') {
 				return 'list_start';
@@ -123,9 +139,9 @@ export default {
 		},
 		CommonList() {
 			if (this.$route.name === 'creating') {
-				return this.$store.state.itemList;
+				return this.$store.getters.getItemList;
 			} else {
-				return this.$store.state.startList;
+				return this.$store.getters.getStartList;
 			}
 		},
 	},
@@ -164,7 +180,7 @@ export default {
 		},
 		async patchOneData() {
 			let payload = {};
-			if (this.modalID !== '코스 평가') {
+			if (this.modalID !== '코스 완료') {
 				payload = this.setObj();
 			}
 			if (this.$route.name === 'creating') {
@@ -184,7 +200,7 @@ export default {
 					const item = this.item;
 					item.comment = this.textArea;
 					this.$store.dispatch('PATCH_ITEM_COMMENT', item);
-				} else if (this.modalID === '코스 평가') {
+				} else if (this.modalID === '코스 완료') {
 					// eslint-disable-next-line prettier/prettier
 					await this.$store.dispatch('STORE_START', this.textArea)
 						.then(() => {
@@ -245,6 +261,9 @@ export default {
 	color: rgba(124, 198, 255, 0.8);
 }
 .list_cont {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	list-style: none;
 	text-align: center;
 	height: 2.5rem;
@@ -267,13 +286,11 @@ export default {
 	font-weight: bold;
 }
 .toggle_Btn {
-	float: left;
 	margin: 0.5rem;
 	color: rgba(124, 198, 255, 0.8);
 	cursor: pointer;
 }
 .basic_Btn {
-	float: right;
 	margin: 0.5rem;
 	color: rgba(124, 198, 255, 0.8);
 	cursor: pointer;
@@ -322,9 +339,6 @@ export default {
 		padding: 0.3rem;
 	}
 	.list_cont {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
 		margin: 0.35rem 0;
 		padding: 0.3rem 0.2rem;
 		line-height: initial;

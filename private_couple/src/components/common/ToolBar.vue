@@ -1,5 +1,5 @@
 <template>
-	<nav class="router_cont">
+	<nav class="toolbar_cont">
 		<router-link to="/creating">코스생성</router-link>
 		<router-link to="/list">코스목록</router-link>
 		<router-link to="/last">이전코스</router-link>
@@ -14,12 +14,12 @@ export default {};
 router-link {
 	display: block;
 }
-.router_cont {
+.toolbar_cont {
 	display: flex;
 	justify-content: center;
 	margin: auto;
 }
-.router_cont .router-link-exact-active {
+.toolbar_cont .router-link-exact-active {
 	color: rgb(31, 152, 245);
 }
 a {

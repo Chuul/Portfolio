@@ -1,5 +1,5 @@
 <template>
-	<div id="map_start"></div>
+	<section id="map_start_cont"></section>
 </template>
 
 <script>
@@ -12,14 +12,14 @@ export default {
 		};
 	},
 	created() {
-		this.startList = this.$store.state.startList;
+		this.startList = this.$store.getters.getStartList;
 	},
 	mounted() {
 		this.initMap();
 	},
 	methods: {
 		initMap() {
-			var mapContainer = document.getElementById('map_start'); // 지도를 표시할 div
+			var mapContainer = document.getElementById('map_start_cont'); // 지도를 표시할 div
 
 			var firstLatLng = {};
 			for (let i = 0; i < this.startList[i].length; i++) {
@@ -39,7 +39,6 @@ export default {
 
 			// 마커를 표시할 위치입니다
 			var positions = [];
-			// let list = this.$store.state.startList;
 			for (let i = 0; i < this.startList.length; i++) {
 				if (this.startList[i].pos_latlang !== '') {
 					let xPos = Number(this.startList[i].pos_latlng.x);
@@ -84,24 +83,24 @@ export default {
 </script>
 
 <style scoped>
-#map_start * {
+#map_start_cont * {
 	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
 }
-#map_start {
+#map_start_cont {
 	height: 0;
 	border-radius: 0.5rem;
 	padding-bottom: 40%;
 }
 /* 반응형 - PC */
 @media (min-width: 1024px) {
-	#map_start {
+	#map_start_cont {
 		width: 47%;
 		height: inherit;
 	}
 }
 /* 반응형 - 모바일 */
 @media (max-width: 430px) {
-	#map_start {
+	#map_start_cont {
 		padding-bottom: 120%;
 	}
 }

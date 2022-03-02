@@ -2,20 +2,17 @@
 	<main>
 		<HeaderView></HeaderView>
 		<router-view></router-view>
-		<!-- <Modal></Modal> -->
 		<PageInfo></PageInfo>
 	</main>
 </template>
 
 <script>
 import HeaderView from '@/components/common/HeaderView.vue';
-// import Modal from '@/components/common/ModalView';
 import PageInfo from '@/components/common/PageInfo.vue';
 
 export default {
 	components: {
 		HeaderView,
-		// Modal,
 		PageInfo,
 	},
 };

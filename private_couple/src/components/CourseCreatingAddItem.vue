@@ -1,5 +1,5 @@
 <template>
-	<section class="addItem_cont">
+	<section class="add_item_cont">
 		<div class="select_cont">
 			<select class="select_box" v-model="selected">
 				<option disabled value="">--카테고리--</option>
@@ -10,7 +10,7 @@
 		</div>
 		<input type="text" v-model="newItem" @keyup.enter="addItem" />
 		<div class="btn_cont" @click="addItem">
-			<i class="addBtn fas fa-plus"></i>
+			<i class="add_btn fas fa-plus"></i>
 		</div>
 	</section>
 </template>
@@ -54,7 +54,7 @@ export default {
 </script>
 
 <style scoped>
-.addItem_cont {
+.add_item_cont {
 	text-align: center;
 	height: 50px;
 	line-height: 50px;
@@ -76,7 +76,7 @@ export default {
 	font-weight: 300;
 	font-size: 1.5em;
 }
-.addItem_cont > input {
+.add_item_cont > input {
 	text-align: center;
 	width: 50%;
 	height: 60%;
@@ -94,7 +94,7 @@ export default {
 	border-radius: 0 0.5em 0.5em 0;
 	cursor: pointer;
 }
-.addBtn {
+.add_btn {
 	color: white;
 }
 </style>

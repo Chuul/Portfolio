@@ -1,5 +1,5 @@
 <template>
-	<footer class="info_cont">
+	<footer class="page_info_cont">
 		<strong class="app_title">Private Course</strong>
 		<dl class="info_list">
 			<dt>제작</dt>
@@ -22,7 +22,7 @@ export default {};
 </script>
 
 <style scoped>
-.info_cont {
+.page_info_cont {
 	overflow: hidden;
 	background: rgba(124, 198, 255, 0.247);
 }

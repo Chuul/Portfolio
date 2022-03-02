@@ -1,18 +1,24 @@
 <template>
-	<div :class="isLogin">
-		<div class="header_cont">
-			<i class="start_Btn fas fa-play-circle" @click="goStartView"></i>
+	<header :class="checkLogin">
+		<section class="header_cont">
+			<i
+				:class="checkStartList"
+				class="start_Btn fas fa-play-circle"
+				@click="goStartView"
+			></i>
 			<ToolBar></ToolBar>
 			<span class="logout_cont">
-				<span class="user_cont">{{ fetchName }}님</span>
+				<template v-if="checkLogin_Name">
+					<span class="username_cont">{{ fetchName }}님</span>
+				</template>
 				<i class="logout_btn fas fa-sign-out-alt" @click="openModal" />
 			</span>
-		</div>
+		</section>
 		<Modal v-if="showModal" @close="closeModal()">
 			<h2 slot="header">로그아웃 하시겠습니까?</h2>
 			<button slot="body" @click.prevent="kakaoLogout()">확인</button>
 		</Modal>
-	</div>
+	</header>
 </template>
 
 <script>
@@ -30,11 +36,17 @@ export default {
 		};
 	},
 	computed: {
-		isLogin() {
-			return this.$store.state.email === '' ? 'login_cont' : null;
+		checkLogin() {
+			return this.$store.getters.checkLogin;
+		},
+		checkStartList() {
+			return this.$store.getters.checkStartList;
 		},
 		fetchName() {
-			return this.$store.state.username;
+			return this.$store.getters.fetchName;
+		},
+		checkLogin_Name() {
+			return this.$store.getters.checkLogin_Name;
 		},
 	},
 	methods: {
@@ -68,15 +80,20 @@ export default {
 	margin: 0.5rem;
 	padding-top: 0.5rem;
 }
+.proceeding_start {
+	color: #8763fb;
+}
+.before_start {
+	color: rgba(124, 198, 255, 0.8);
+}
 .start_Btn {
 	font-size: 2rem;
-	color: rgba(124, 198, 255, 0.8);
 	cursor: pointer;
 }
 .login_cont {
 	display: none;
 }
-.user_cont {
+.username_cont {
 	margin-right: 1rem;
 }
 .logout_btn {

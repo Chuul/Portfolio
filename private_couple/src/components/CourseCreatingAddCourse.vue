@@ -1,8 +1,8 @@
 <template>
-	<section class="create_cont">
+	<section class="creating_add_course_cont">
 		<button class="create_Btn" @click="getCheckedItems">코스생성</button>
 		<button class="reset_Btn" @click="resetChecked">초기화</button>
-		<ul class="create_list_cont">
+		<ul v-if="showCreateBtn" class="main_cont">
 			<draggable
 				:list="localCheckedList"
 				:disabled="!enabled"
@@ -11,25 +11,25 @@
 			>
 				<li
 					v-for="item in localCheckedList"
-					class="course_list"
+					class="course_cont"
 					:key="item.name"
 				>
-					<a v-if="item.url" :href="item.url" class="linkText" target="_blank">
+					<a v-if="item.url" :href="item.url" class="item_name" target="_blank">
 						{{ item.name }}
 					</a>
 					<a v-else>
 						{{ item.name }}
 					</a>
-					<span class="move_Btn_cont">
+					<span class="move_btn_cont">
 						<i class="fas fa-bars"></i>
 					</span>
-					<div class="arrow_Btn_cont">
+					<div class="arrow_btn_cont">
 						<i class="fal fa-arrow-alt-down"></i>
 					</div>
 				</li>
 			</draggable>
 		</ul>
-		<button v-if="showCreateBtn" class="store_Btn" @click="addCourse">
+		<button v-if="showCreateBtn" class="store_btn" @click="addCourse">
 			코스 저장
 		</button>
 		<!-- Modal -->
@@ -80,7 +80,7 @@ export default {
 			this.localCheckedList = list;
 		},
 		getCheckedItems() {
-			let list = this.$store.state.checkedList;
+			let list = this.$store.getters.getCheckedList;
 			if (list.length === 0) {
 				this.showCheck = true;
 			} else {
@@ -114,7 +114,10 @@ export default {
 		},
 		async resetChecked() {
 			if (this.localCheckedList.length === 0) {
-				this.$store.commit('SET_ITEM_FALSE', this.$store.state.checkedList);
+				this.$store.commit(
+					'SET_ITEM_FALSE',
+					this.$store.getters.getCheckedList,
+				);
 			} else {
 				this.$store.commit('SET_ITEM_FALSE', this.localCheckedList);
 				this.localCheckedList = [];
@@ -134,7 +137,7 @@ export default {
 </script>
 
 <style scoped>
-.create_cont {
+.creating_add_course_cont {
 	display: inline-block;
 	width: 100%;
 	text-align: center;
@@ -166,13 +169,13 @@ export default {
 	cursor: pointer;
 	box-shadow: 0.5em -0.2em 10px 1px rgba(143, 143, 143, 0.2);
 }
-.create_list_cont {
+.main_cont {
 	padding: 1rem;
 	overflow: auto;
-	border: solid;
+	border: thick double rgb(59, 137, 255);
 	height: 20rem;
 }
-.course_list {
+.course_cont {
 	margin-bottom: 2.2rem;
 	list-style: none;
 	height: 3rem;
@@ -184,31 +187,31 @@ export default {
 	font-weight: 300;
 	box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
 }
-.linkText {
+.item_name {
 	color: #ee27bc;
 	font-weight: bold;
 }
-.move_Btn_cont {
+.move_btn_cont {
 	float: right;
 	margin-right: 1em;
 }
-.move_Btn_cont i {
+.move_btn_cont i {
 	color: #e1e1fdc5;
 }
-.move_Btn_cont i:hover {
+.move_btn_cont i:hover {
 	color: #8763fb;
 	cursor: pointer;
 }
-.arrow_Btn_cont {
+.arrow_btn_cont {
 	text-align: center;
 }
-.arrow_Btn_cont i {
+.arrow_btn_cont i {
 	color: rgb(86, 153, 253);
 }
-li:last-child .arrow_Btn_cont {
+li:last-child .arrow_btn_cont {
 	display: none;
 }
-.store_Btn {
+.store_btn {
 	margin: 1em 0;
 	background: rgba(124, 198, 255, 0.247);
 	border-style: none;
@@ -222,13 +225,13 @@ li:last-child .arrow_Btn_cont {
 }
 /* 반응형 - PC */
 @media (min-width: 1024px) {
-	.course_list {
+	.course_cont {
 		margin: 0 0 2rem;
 	}
-	.arrow_Btn_cont {
+	.arrow_btn_cont {
 		margin-top: -0.3rem;
 	}
-	.arrow_Btn_cont i {
+	.arrow_btn_cont i {
 		font-size: 1rem;
 	}
 }

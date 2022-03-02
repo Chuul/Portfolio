@@ -1,7 +1,7 @@
 <template>
-	<section class="createView_cont">
+	<section class="creating_cont">
 		<KakaoMapsCreating></KakaoMapsCreating>
-		<div class="content_item_cont">
+		<div class="main_cont">
 			<CourseCreatingAddItem></CourseCreatingAddItem>
 			<CourseCreatingList></CourseCreatingList>
 			<CourseCreatingAddCourse></CourseCreatingAddCourse>
@@ -26,17 +26,17 @@ export default {
 </script>
 
 <style scoped>
-.createView_cont {
+.creating_cont {
 	margin: 0 1rem;
 }
 /* 반응형 - PC */
 @media (min-width: 1024px) {
-	.createView_cont {
+	.creating_cont {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
 	}
-	.content_item_cont {
+	.main_cont {
 		width: 51%;
 	}
 }
