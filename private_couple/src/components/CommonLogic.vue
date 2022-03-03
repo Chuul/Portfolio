@@ -1,6 +1,6 @@
 <template>
 	<section :class="content_start_cont">
-		<div v-if="filter_cont" class="select_cont">
+		<div v-if="this.$route.name === 'creating'" class="select_cont">
 			<a @click="filterItem('전체')" class="select_option">
 				<span>전체</span>
 			</a>
@@ -18,17 +18,22 @@
 			<li
 				class="list_cont"
 				:class="list_page"
-				v-for="item in CommonList"
+				v-for="(item, index) in CommonList"
 				:key="item.name"
 			>
 				<template v-if="item.createdBy">
 					<i
 						class="toggle_Btn far fa-check-circle"
-						@click="toggleOneItem(item)"
+						@click="openForm(item, '아이템 평가')"
 						:class="{ checked_Btn: item.checked }"
 					/>
 				</template>
 				<template v-else>
+					<div class="index_cont">
+						<span>
+							{{ index + 1 }}
+						</span>
+					</div>
 					<i
 						class="toggle_Btn far fa-check-circle"
 						@click="openForm(item, '아이템 평가')"
@@ -41,7 +46,8 @@
 				<a v-else>
 					{{ item.name }}
 				</a>
-				<div class="btn_cont">
+				<span class="btn_cont">
+					<i class="basic_Btn far fa-trash-alt" @click="deleteOneItem(item)" />
 					<i
 						class="basic_Btn fas fa-map-marked-alt"
 						@click="openForm(item, '위치')"
@@ -58,8 +64,7 @@
 							@click="openForm(item, '아이템 이름 변경')"
 						></i>
 					</template>
-					<i class="basic_Btn far fa-trash-alt" @click="deleteOneItem(item)" />
-				</div>
+				</span>
 			</li>
 		</section>
 		<Modal v-if="showModal" @close="closeModal()">
@@ -69,32 +74,18 @@
 				<button @click.prevent="patchOneData()">입력</button>
 			</form>
 		</Modal>
-		<template v-if="this.$route.name == 'start'">
-			<div class="start_basic_btn">
-				<span class="back_btn_cont">
-					<i
-						class="back_btn fas fa-arrow-circle-left"
-						@click="backStartView()"
-					/>
-				</span>
-				<button class="complete_Btn" @click="openForm(null, '코스 완료')">
-					코스 완료
-				</button>
-			</div>
-		</template>
 	</section>
 </template>
 
 <script>
 import Modal from '@/components/common/ModalPrototype.vue';
-
 export default {
 	created() {
 		const name = this.$route.name;
 		if (name === 'creating') {
 			this.$store.dispatch('FETCH_ITEM_LIST');
 		} else if (name === 'start') {
-			if (this.$store.getters.getStartList.length > 0) {
+			if (this.$store.state.startList.length > 0) {
 				return;
 			} else {
 				this.$store.dispatch('FETCH_START_LIST');
@@ -127,9 +118,6 @@ export default {
 				return 'main_cont_creating';
 			}
 		},
-		filter_cont() {
-			return this.$route.name === 'creating' ? true : false;
-		},
 		list_page() {
 			if (this.$route.name === 'start') {
 				return 'list_start';
@@ -139,9 +127,9 @@ export default {
 		},
 		CommonList() {
 			if (this.$route.name === 'creating') {
-				return this.$store.getters.getItemList;
+				return this.$store.state.itemList;
 			} else {
-				return this.$store.getters.getStartList;
+				return this.$store.state.startList;
 			}
 		},
 	},
@@ -180,7 +168,7 @@ export default {
 		},
 		async patchOneData() {
 			let payload = {};
-			if (this.modalID !== '코스 완료') {
+			if (this.modalID !== '코스 평가') {
 				payload = this.setObj();
 			}
 			if (this.$route.name === 'creating') {
@@ -200,7 +188,7 @@ export default {
 					const item = this.item;
 					item.comment = this.textArea;
 					this.$store.dispatch('PATCH_ITEM_COMMENT', item);
-				} else if (this.modalID === '코스 완료') {
+				} else if (this.modalID === '코스 평가') {
 					// eslint-disable-next-line prettier/prettier
 					await this.$store.dispatch('STORE_START', this.textArea)
 						.then(() => {
@@ -261,15 +249,12 @@ export default {
 	color: rgba(124, 198, 255, 0.8);
 }
 .list_cont {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
 	list-style: none;
 	text-align: center;
 	height: 2.5rem;
 	line-height: 2.5rem;
 	margin: 1rem 0;
-	padding: 0 1rem;
+	padding-right: 1rem;
 	font-family: 'Dongle', sans-serif;
 	font-size: 1.5rem;
 	font-weight: 300;
@@ -285,12 +270,21 @@ export default {
 	color: #ee27bc;
 	font-weight: bold;
 }
+.index_cont {
+	float: left;
+	background: linear-gradient(to left, #5fa4ff, #2e72f1);
+	width: 1em;
+	border-radius: 0.5rem 0 0 0.5rem;
+	color: white;
+}
 .toggle_Btn {
+	float: left;
 	margin: 0.5rem;
 	color: rgba(124, 198, 255, 0.8);
 	cursor: pointer;
 }
 .basic_Btn {
+	float: right;
 	margin: 0.5rem;
 	color: rgba(124, 198, 255, 0.8);
 	cursor: pointer;
@@ -299,9 +293,6 @@ export default {
 	color: #8763fb;
 }
 /* start */
-.start_basic_btn {
-	padding: 1rem 0;
-}
 .back_btn_cont {
 	float: left;
 }
@@ -339,8 +330,11 @@ export default {
 		padding: 0.3rem;
 	}
 	.list_cont {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		margin: 0.35rem 0;
-		padding: 0.3rem 0.2rem;
+		padding-right: 0.3rem;
 		line-height: initial;
 		height: 25%;
 	}

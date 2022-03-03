@@ -1,5 +1,5 @@
 <template>
-	<section class="login_cont">
+	<section class="kakao_login_cont">
 		<a id="custom_login_btn">
 			<img
 				src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
@@ -45,7 +45,7 @@ export default {
 </script>
 
 <style scoped>
-.login_cont img {
+.kakao_login_cont img {
 	cursor: pointer;
 	padding: 1em;
 }

@@ -1,5 +1,5 @@
 <template>
-	<section id="map_start_cont"></section>
+	<section id="kakao_start_cont"></section>
 </template>
 
 <script>
@@ -19,7 +19,7 @@ export default {
 	},
 	methods: {
 		initMap() {
-			var mapContainer = document.getElementById('map_start_cont'); // 지도를 표시할 div
+			var mapContainer = document.getElementById('kakao_start_cont'); // 지도를 표시할 div
 
 			var firstLatLng = {};
 			for (let i = 0; i < this.startList[i].length; i++) {
@@ -83,24 +83,24 @@ export default {
 </script>
 
 <style scoped>
-#map_start_cont * {
+#kakao_start_cont * {
 	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
 }
-#map_start_cont {
+#kakao_start_cont {
 	height: 0;
 	border-radius: 0.5rem;
 	padding-bottom: 40%;
 }
 /* 반응형 - PC */
 @media (min-width: 1024px) {
-	#map_start_cont {
+	#kakao_start_cont {
 		width: 47%;
 		height: inherit;
 	}
 }
 /* 반응형 - 모바일 */
 @media (max-width: 430px) {
-	#map_start_cont {
+	#kakao_start_cont {
 		padding-bottom: 120%;
 	}
 }

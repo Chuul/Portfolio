@@ -77,7 +77,7 @@ export default {
 					geocoder.addressSearch(list[i].pos, callback);
 				}
 			}
-			this.localCheckedList = list;
+			this.localCheckedList = [...list];
 		},
 		getCheckedItems() {
 			let list = this.$store.getters.getCheckedList;
@@ -85,7 +85,6 @@ export default {
 				this.showCheck = true;
 			} else {
 				this.showCreateBtn = true;
-				this.localCheckedList = list;
 				this.transPosition(list);
 			}
 		},

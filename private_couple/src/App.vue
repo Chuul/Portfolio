@@ -27,7 +27,7 @@ a {
 	text-decoration: none;
 }
 main > section,
-div.loginView_cont {
+main.login_cont {
 	min-height: 80vh;
 }
 router-view {
