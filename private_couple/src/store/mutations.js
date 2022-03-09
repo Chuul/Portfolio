@@ -131,6 +131,9 @@ const SPLICE_START = (state, id) => {
 		}
 	}
 };
+const RESET_START_COURSE = state => {
+	state.startList = [];
+};
 // LastView
 const SET_LAST_LIST = (state, data) => {
 	state.lastItemList = data[0].item;
@@ -159,6 +162,7 @@ export {
 	SET_START_URL,
 	SET_START_POS,
 	SPLICE_START,
+	RESET_START_COURSE,
 	SET_LAST_LIST,
 	SET_ERROR,
 };

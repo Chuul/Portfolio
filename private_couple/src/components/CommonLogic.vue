@@ -14,6 +14,7 @@
 				<span>놀거리</span>
 			</a>
 		</div>
+		<h1 v-if="this.$route.name === 'start'">코스 진행중...</h1>
 		<section :class="main_cont">
 			<li
 				class="list_cont"
@@ -74,6 +75,17 @@
 				<button @click.prevent="patchOneData()">입력</button>
 			</form>
 		</Modal>
+		<template v-if="this.$route.name === 'start'">
+			<div class="start_basic_btn">
+				<span class="back_btn_cont" @click="backStartView()">
+					<i class="back_btn fas fa-arrow-circle-left" />
+					그만두기
+				</span>
+				<button class="complete_Btn" @click="openForm(null, '코스 완료')">
+					코스 완료
+				</button>
+			</div>
+		</template>
 	</section>
 </template>
 
@@ -155,7 +167,8 @@ export default {
 				this.$store.dispatch('DELETE_START', item._id);
 			}
 		},
-		backStartView() {
+		async backStartView() {
+			await this.$store.dispatch('RESET_START');
 			this.$router.push('/list');
 		},
 		// Modal 관련 method
@@ -294,15 +307,22 @@ export default {
 }
 /* start */
 .back_btn_cont {
+	background: rgba(124, 198, 255, 0.247);
+	display: flex;
+	align-items: center;
 	float: left;
+	cursor: pointer;
+	padding: 1px 4px;
+	margin-top: 1rem;
+	border-radius: 0.5rem;
+	color: rgb(86, 153, 253);
 }
 .back_btn {
-	font-size: 2rem;
-	color: rgba(124, 198, 255, 0.8);
-	cursor: pointer;
+	font-size: 1rem;
 }
 .complete_Btn {
 	background: rgba(124, 198, 255, 0.247);
+	margin-left: -5rem;
 	border-style: none;
 	border-radius: 0.5rem;
 	padding: 0.6rem 1.5rem;

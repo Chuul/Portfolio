@@ -1,5 +1,5 @@
 <template>
-	<nav class="toolbar_cont">
+	<nav :class="checkRoute">
 		<router-link to="/creating">코스생성</router-link>
 		<router-link to="/list">코스목록</router-link>
 		<router-link to="/last">이전코스</router-link>
@@ -7,14 +7,22 @@
 </template>
 
 <script>
-export default {};
+export default {
+	computed: {
+		checkRoute() {
+			return this.$route.name === 'start'
+				? 'toolbar_cont_start'
+				: 'toolbar_cont';
+		},
+	},
+};
 </script>
 
 <style scoped>
 router-link {
 	display: block;
 }
-.toolbar_cont {
+.toolbar_cont_start {
 	display: flex;
 	justify-content: center;
 	margin: auto;
@@ -29,5 +37,16 @@ a {
 }
 a:hover {
 	color: rgba(124, 198, 255, 0.8);
+}
+/* 반응형 - 테블릿 */
+@media (min-width: 768px) {
+	.toolbar_cont {
+		margin-left: 4rem;
+	}
+}
+@media (max-width: 425px) {
+	.toolbar_cont {
+		margin-left: 3rem;
+	}
 }
 </style>

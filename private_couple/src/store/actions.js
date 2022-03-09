@@ -222,6 +222,14 @@ const STORE_START = async (context, comment) => {
 		console.log(error);
 	}
 };
+const RESET_START = async context => {
+	try {
+		context.commit('RESET_START_COURSE');
+		return;
+	} catch (error) {
+		console.log(error);
+	}
+};
 // LastView
 const FETCH_LAST_LIST = async context => {
 	try {
@@ -260,6 +268,7 @@ export {
 	FALSE_ITEM,
 	PATCH_ITEM_COMMENT,
 	ADD_LAST_ITEM,
+	RESET_START,
 	EDIT_START_ITEM,
 	PATCH_START_URL,
 	PATCH_START_POS,

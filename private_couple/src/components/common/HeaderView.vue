@@ -2,6 +2,7 @@
 	<header :class="checkLogin">
 		<section class="header_cont">
 			<i
+				v-if="this.$route.name !== 'start'"
 				:class="checkStartList"
 				class="start_Btn fas fa-play-circle"
 				@click="goStartView"
@@ -77,14 +78,15 @@ export default {
 .header_cont {
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
 	margin: 0.5rem;
 	padding-top: 0.5rem;
 }
-.proceeding_start {
-	color: #8763fb;
-}
 .before_start {
 	color: rgba(124, 198, 255, 0.8);
+}
+.proceeding_start {
+	color: #8763fb;
 }
 .start_Btn {
 	font-size: 2rem;
@@ -118,7 +120,6 @@ Modal button {
 /* 반응형 - 모바일 */
 @media (max-width: 430px) {
 	.start_Btn {
-		margin-right: auto;
 		font-size: 1.5rem;
 		color: rgba(124, 198, 255, 0.8);
 		cursor: pointer;
