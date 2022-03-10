@@ -3,7 +3,7 @@ const login = require('../schemas/loginSchema');
 
 const router = express.Router();
 
-router.post('', async(req, res) => {
+router.post('/check', async(req, res) => {
   const username = await login.findOne({username:req.body.username})
   if(!username) {
     try {
