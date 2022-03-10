@@ -20,6 +20,7 @@ export default {
 	},
 	methods: {
 		kakaoLogin() {
+			console.log('1');
 			window.Kakao.Auth.loginForm({
 				scope: 'profile_nickname, account_email',
 				success: this.getProfile,
@@ -27,13 +28,16 @@ export default {
 		},
 		// 성공할 경우, 파라미터를 자동으로 받아온다
 		getProfile() {
+			console.log('2');
 			window.Kakao.API.request({
 				url: '/v2/user/me',
 				success: async res => {
+					console.log('3');
 					const userData = {
 						username: res.kakao_account.profile.nickname,
 						email: res.kakao_account.email,
 					};
+					console.log('4');
 					await this.$store.dispatch('LOGIN', userData);
 				},
 			});

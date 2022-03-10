@@ -15,6 +15,7 @@ const last = createInstance('last');
 
 // login
 function loginUser(userData) {
+	console.log('5');
 	return login.post('/', userData);
 }
 
