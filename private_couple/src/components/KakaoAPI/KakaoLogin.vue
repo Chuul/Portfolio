@@ -34,7 +34,6 @@ export default {
 						username: res.kakao_account.profile.nickname,
 						email: res.kakao_account.email,
 					};
-					// await loginUser(userData);
 					await this.$store.dispatch('LOGIN', userData);
 					// this.$router.push('/creating');
 				},

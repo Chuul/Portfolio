@@ -23,7 +23,6 @@ const getStartList = state => {
 	return state.startList;
 };
 const checkStartList = state => {
-	console.log('state.startList: ', state.startList);
 	return state.startList === [] ? 'before_start' : 'proceeding_start';
 };
 const getLastItemList = state => {
