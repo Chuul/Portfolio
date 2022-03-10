@@ -8,6 +8,7 @@ import * as last from '@/api/last.js';
 const LOGIN = async ({ commit }, userData) => {
 	try {
 		const { data } = await index.loginUser(userData);
+		console.log('data: ', data);
 		commit('SET_USER_DATA', data);
 		return data;
 	} catch (error) {
