@@ -15,7 +15,7 @@ const last = createInstance('last');
 
 // login
 function loginUser(userData) {
-	return login.post('/', userData);
+	return login.post('', userData);
 }
 
 export { login, creating, list, start, last, loginUser };
