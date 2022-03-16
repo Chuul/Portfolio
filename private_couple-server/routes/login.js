@@ -4,6 +4,7 @@ const login = require('../schemas/loginSchema');
 const router = express.Router();
 
 router.post('/', async(req, res) => {
+  console.log('여기 일단 들어와')
   const username = await login.findOne({username:req.body.username})
   if(!username) {
     try {
