@@ -34,6 +34,7 @@ router.post('/filter', async(req, res, next) => {
 })
 router.post('/insert', async(req, res, next) => {
   try {
+    console.log('##################3. req.body: ', req.body);
     const result = await creating.create({
       createdBy: req.body.createdBy,
       category: req.body.category,
@@ -44,6 +45,7 @@ router.post('/insert', async(req, res, next) => {
       pos: req.body.pos,
       pos_latlng: req.body.pos_latlng
     });
+    console.log('###################4. res: ', res);
     res.status(201).json(result);
   } catch (err) {
     console.log(err);

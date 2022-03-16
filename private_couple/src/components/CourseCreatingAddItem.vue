@@ -34,14 +34,18 @@ export default {
 				// eslint-disable-next-line prettier/prettier
 				await this.$store.dispatch('ADD_ITEM', payload)
 					.then(response => {
+						console.log('7. response: ', response);
 						// response가 string이면 '에러메시지'가 전달된 것
 						if (typeof response === 'string') {
+							console.log('에러야');
 							this.newItem = response;
 							setTimeout(() => {
 								this.newItem = '';
 							}, 1200);
 						} else {
+							console.log('에러아니야');
 							this.newItem = '';
+							this.$store.dispatch('FETCH_ITEM_LIST');
 						}
 					})
 					.catch(error => {

@@ -3,5 +3,5 @@ module.exports = {
 	devServer: {
 		overlay: false,
 	},
-	// outputDir: '../private_couple-server/public',
+	outputDir: '../private_couple-server/public',
 };

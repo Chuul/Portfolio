@@ -11,4 +11,4 @@ new Vue({
 	store,
 }).$mount('#app');
 
-window.Kakao.init('59950035b359511b00edf96f7c7e9261');
+window.Kakao.init('69d01f6ae97ecb427d72e87a37952804');

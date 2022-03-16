@@ -8,7 +8,6 @@ import * as last from '@/api/last.js';
 const LOGIN = async ({ commit }, userData) => {
 	try {
 		const { data } = await index.loginUser(userData);
-		console.log('6');
 		commit('SET_USER_DATA', data);
 		return data;
 	} catch (error) {
@@ -57,9 +56,10 @@ const ADD_ITEM = async (context, payload) => {
 		pos_latlng: '',
 	};
 	try {
+		console.log('1. obj: ', obj);
 		const response = await item.postItem(obj);
+		console.log('5. response: ', response);
 		context.commit('SET_ITEM', obj);
-		context.dispatch('FETCH_ITEM_LIST');
 		return response;
 	} catch (error) {
 		console.log(error.response.data.message);
