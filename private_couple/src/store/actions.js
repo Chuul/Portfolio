@@ -7,6 +7,7 @@ import * as last from '@/api/last.js';
 // LoginView
 const LOGIN = async ({ commit }, userData) => {
 	try {
+		console.log('1');
 		const { data } = await index.loginUser(userData);
 		commit('SET_USER_DATA', data);
 		return data;
