@@ -25,7 +25,7 @@
 				<template v-if="item.createdBy">
 					<i
 						class="toggle_Btn far fa-check-circle"
-						@click="openForm(item, '아이템 평가')"
+						@click="toggleOneItem(item)"
 						:class="{ checked_Btn: item.checked }"
 					/>
 				</template>
@@ -216,6 +216,7 @@ export default {
 			this.showModal = false;
 		},
 		openForm(item, name) {
+			console.log('item: ', item, 'name: ', name);
 			if (name === '아이템 평가') {
 				if (item.checked === true) {
 					this.$store.dispatch('FALSE_ITEM', item._id);
