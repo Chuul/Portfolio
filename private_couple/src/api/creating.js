@@ -8,7 +8,6 @@ function filterItemList(userData) {
 	return creating.post('/filter', userData);
 }
 function postItem(userData) {
-	console.log('2. api: ', userData);
 	return creating.post('/insert', userData);
 }
 function patchUrl(payload) {

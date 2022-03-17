@@ -13,7 +13,6 @@ const SET_ITEM_LIST = (state, list) => {
 	state.itemList = list;
 };
 const SET_ITEM = (state, item) => {
-	console.log('6. Mutations: ', item);
 	state.itemList.push(item);
 };
 const SET_TOGGLE_ITEM = (state, item) => {

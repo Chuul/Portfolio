@@ -56,9 +56,7 @@ const ADD_ITEM = async (context, payload) => {
 		pos_latlng: '',
 	};
 	try {
-		console.log('1. obj: ', obj);
 		const response = await item.postItem(obj);
-		console.log('5. response: ', response);
 		context.commit('SET_ITEM', obj);
 		return response;
 	} catch (error) {
