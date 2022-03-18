@@ -2,7 +2,6 @@ const express = require('express');
 const history = require('connect-history-api-fallback');
 const path = require('path');
 const morgan = require('morgan');
-const http = require('http');
 
 const connect = require('./schemas/connect');
 const indexRouter = require('./routes/index')
@@ -22,6 +21,11 @@ app.use(express.static(path.join(__dirname, './dist')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+if(process.env.NODE_ENV === 'production') {
+  app.use(morgan('combined'));
+} else {
+  app.use(morgan('dev'));
+}
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/creating', creatingRouter);
