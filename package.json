@@ -7,7 +7,7 @@
     "node": "16.x"
   },
   "scripts": {
-    "client-build" : "cd private_couple && npm install && npm run build && cd ../",
+    "client-build" : "cd private_couple && npm install --dev && npm run build && cd ../",
     "server-build" : "cd private_couple-server && npm install --dev && cd ../",
     "heroku-prebuild": "npm run client-build && npm run server-build && mv ./private_couple/dist ./private_couple-server/dist",
     "start": "cd private_couple-server && npm start",
