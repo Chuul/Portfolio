@@ -1,11 +1,10 @@
 {
   "name": "private_couple-server",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app"
+    "heroku-prebuild": "cd ../private_couple && npm ci && npm run build && mv dist ../private_couple-server",
+    "start" : "npm ci && node app.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,5 +16,6 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
-  }
+  },
+  "description": ""
 }

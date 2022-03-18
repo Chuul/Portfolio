@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/', (req, res, next) => {
   try {
-    res.sendFile(path.join(__dirname, '../../private_couple/dist/index.html'))
+    res.sendFile(path.join(__dirname, '/dist/index.html'))
   } catch (err) {
     console.error(err);
     next(err);
