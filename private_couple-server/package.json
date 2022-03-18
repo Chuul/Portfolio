@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "heroku-prebuild": "cd ../private_couple && npm ci && npm run build && mv dist ../private_couple-server",
-    "start" : "npm ci && node app.js"
+    "start" : "node app.js"
   },
   "author": "",
   "license": "ISC",

@@ -1,0 +1,23 @@
+{
+  "name": "private-course",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "client-build" : "cd private_couple && npm ci && npm run build && cd ../",
+    "server-build" : "cd private_couple-server && npm ci --dev && cd ../",
+    "heroku-prebuild": "npm run client-build && npm run server-build && mv ./private_couple/dist ./private_couple-server/dist",
+    "start": "cd private_couple-server && npm start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chuul/Private-Course.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Chuul/Private-Course/issues"
+  },
+  "homepage": "https://github.com/Chuul/Private-Course#readme"
+}
