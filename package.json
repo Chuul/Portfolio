@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "client-build" : "cd private_couple && npm ci && npm run build && cd ../",
     "server-build" : "cd private_couple-server && npm ci --dev && cd ../",
