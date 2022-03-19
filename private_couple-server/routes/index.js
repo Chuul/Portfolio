@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const router = express.Router();
 const whitelist = ["https://private-course.herokuapp.com"]
+
 const corsOptions = {
   origin: function(origin, callback) {
     if(whitelist.indexOf(origin) !== -1) {
