@@ -2,6 +2,7 @@ const express = require('express');
 const history = require('connect-history-api-fallback');
 const path = require('path');
 const morgan = require('morgan');
+const cors = require('cors');
 
 const connect = require('./schemas/connect');
 const indexRouter = require('./routes/index')
@@ -12,6 +13,13 @@ const startRouter = require('./routes/start');
 const lastRouter = require('./routes/last');
 
 const app = express();
+
+let corsOpt = {
+  origin: 'https://private-course.herokuapp.com',
+  credentials: true
+}
+
+app.use(cors(corsOpt))
 
 app.set('port', process.env.PORT || 8800);
 app.set('view engine', 'html');

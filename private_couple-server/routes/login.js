@@ -1,12 +1,11 @@
 const express= require('express');
 const login = require('../schemas/loginSchema');
-const cors = require('cors');
+// const cors = require('cors');
 
 const router = express.Router();
 
 router.options('/', cors())
 router.post('/', cors(), async(req, res) => {
-  console.log('여기 일단 들어와')
   const username = await login.findOne({username:req.body.username})
   if(!username) {
     try {
