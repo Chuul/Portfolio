@@ -1,11 +1,21 @@
 const express= require('express');
 const login = require('../schemas/loginSchema');
-// const cors = require('cors');
+const cors = require('cors');
+
+let whitelist = ['https://private-course.herokuapp.com']
+let corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
 
 const router = express.Router();
 
-router.options('/', cors())
-router.post('/', cors(), async(req, res) => {
+router.post('/', cors(corsOptions), async(req, res) => {
   const username = await login.findOne({username:req.body.username})
   if(!username) {
     try {
