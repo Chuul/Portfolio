@@ -23,7 +23,7 @@ const getStartList = state => {
 	return state.startList;
 };
 const checkStartList = state => {
-	return state.startList === [] ? 'before_start' : 'proceeding_start';
+	return state.startList.length === 0 ? 'before_start' : 'proceeding_start';
 };
 const getLastItemList = state => {
 	return state.lastItemList;

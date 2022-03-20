@@ -3,6 +3,7 @@
 		<KakaoMapsCreating></KakaoMapsCreating>
 		<div class="main_cont">
 			<CourseCreatingAddItem></CourseCreatingAddItem>
+			<CourseCreatingFilterItem></CourseCreatingFilterItem>
 			<CourseCreatingList></CourseCreatingList>
 			<CourseCreatingAddCourse></CourseCreatingAddCourse>
 		</div>
@@ -12,6 +13,7 @@
 <script>
 import KakaoMapsCreating from '@/components/KakaoAPI/KakaoMapsCreating.vue';
 import CourseCreatingAddItem from './CourseCreatingAddItem.vue';
+import CourseCreatingFilterItem from './CourseCreatingFilterItem.vue';
 import CourseCreatingList from './CourseCreatingList.vue';
 import CourseCreatingAddCourse from './CourseCreatingAddCourse.vue';
 
@@ -19,6 +21,7 @@ export default {
 	components: {
 		KakaoMapsCreating,
 		CourseCreatingAddItem,
+		CourseCreatingFilterItem,
 		CourseCreatingList,
 		CourseCreatingAddCourse,
 	},

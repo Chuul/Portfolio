@@ -27,7 +27,6 @@ router.post('/insert', async(req, res, next) => {
       createdBy: req.body.createdBy,
       course: req.body.course, 
     });
-    console.log('###############:', starts)
     res.status(201).json(starts)
   } catch (err) {
     console.log(err);
@@ -72,7 +71,7 @@ router.patch('/false/:id', async(req, res, next) => {
     next(err);
   }
 })
-router.delete('/:id', async(req, res, next) => {
+router.delete('/item/:id', async(req, res, next) => {
   try {
     const result = await start.updateOne({
       'course._id': req.params.id
@@ -88,7 +87,6 @@ router.delete('/:id', async(req, res, next) => {
     next(err);
   }
 })
-
 router.patch('/name/:id', async(req, res, next) => {
   try {
     const result = await start.updateOne({
@@ -130,6 +128,20 @@ router.patch('/pos/:id', async(req, res, next) => {
     });
     if (!result) {
       return res.status(400).json({ message: '데이터를 업데이트할 수 없습니다' });
+    }
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+})
+router.delete('/exit/:user', async(req, res, next) => {
+  try {
+    const result = await start.deleteOne({
+      createdBy: req.params.user
+    });
+    if (!result) {
+      return res.status(400).json({ message: '데이터를 식제할 수 없습니다' });
     }
     res.json(result);
   } catch (err) {

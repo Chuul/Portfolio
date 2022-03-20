@@ -1,19 +1,5 @@
 <template>
 	<section :class="content_start_cont">
-		<div v-if="this.$route.name === 'creating'" class="select_cont">
-			<a @click="filterItem('전체')" class="select_option">
-				<span>전체</span>
-			</a>
-			<a @click="filterItem('맛집')" class="select_option">
-				<span>맛집</span>
-			</a>
-			<a @click="filterItem('카페')" class="select_option">
-				<span>카페</span>
-			</a>
-			<a @click="filterItem('놀거리')" class="select_option">
-				<span>놀거리</span>
-			</a>
-		</div>
 		<h1 v-if="this.$route.name === 'start'">코스 진행중...</h1>
 		<section :class="main_cont">
 			<li
@@ -77,7 +63,7 @@
 		</Modal>
 		<template v-if="this.$route.name === 'start'">
 			<div class="start_basic_btn">
-				<span class="back_btn_cont" @click="backStartView()">
+				<span class="back_btn_cont" @click="exitStart()">
 					<i class="back_btn fas fa-arrow-circle-left" />
 					그만두기
 				</span>
@@ -146,17 +132,6 @@ export default {
 		},
 	},
 	methods: {
-		filterItem(name) {
-			let arr = document.getElementsByClassName('select_option');
-			for (let i = 0; i < arr.length; i++) {
-				if (arr[i].innerText === name) {
-					arr[i].style = 'color: rgba(124, 198, 255, 1.0); font-weight: bold;';
-				} else {
-					arr[i].style = 'color: ""; font-weight: normal;';
-				}
-			}
-			this.$store.dispatch('FILTER_ITEM', name);
-		},
 		toggleOneItem(item) {
 			this.$store.commit('SET_TOGGLE_ITEM', item);
 		},
@@ -164,11 +139,11 @@ export default {
 			if (this.$route.name === 'creating') {
 				this.$store.dispatch('DELETE_ITEM', item._id);
 			} else {
-				this.$store.dispatch('DELETE_START', item._id);
+				this.$store.dispatch('DELETE_START_ITEM', item._id);
 			}
 		},
-		async backStartView() {
-			await this.$store.dispatch('RESET_START');
+		async exitStart() {
+			await this.$store.dispatch('EXIT_START');
 			this.$router.push('/list');
 		},
 		// Modal 관련 method
@@ -243,24 +218,6 @@ export default {
 .select_cont {
 	text-align: center;
 	margin: 0.6rem;
-}
-.select_option::after {
-	display: inline-block;
-	content: '';
-	width: 1px;
-	height: 0.6rem;
-	margin: 0 0.6em;
-	background: black;
-}
-.select_option:last-child:after {
-	display: none;
-}
-.select_option:hover {
-	cursor: pointer;
-	color: rgba(124, 198, 255, 0.8);
-}
-.select_option:active {
-	color: rgba(124, 198, 255, 0.8);
 }
 .list_cont {
 	list-style: none;

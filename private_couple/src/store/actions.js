@@ -191,7 +191,7 @@ const PATCH_START_URL = async ({ commit }, obj) => {
 		console.log(error);
 	}
 };
-const DELETE_START = async ({ commit }, id) => {
+const DELETE_START_ITEM = async ({ commit }, id) => {
 	try {
 		await start.deleteStartItem(id);
 		commit('SPLICE_START', id);
@@ -221,9 +221,11 @@ const STORE_START = async (context, comment) => {
 		console.log(error);
 	}
 };
-const RESET_START = async context => {
+const EXIT_START = async context => {
+	const user = context.state.username;
 	try {
-		context.commit('RESET_START_COURSE');
+		await start.exitCourse(user);
+		context.commit('EXIT_START_COURSE');
 		return;
 	} catch (error) {
 		console.log(error);
@@ -267,11 +269,11 @@ export {
 	FALSE_ITEM,
 	PATCH_ITEM_COMMENT,
 	ADD_LAST_ITEM,
-	RESET_START,
+	EXIT_START,
 	EDIT_START_ITEM,
 	PATCH_START_URL,
 	PATCH_START_POS,
-	DELETE_START,
+	DELETE_START_ITEM,
 	STORE_START,
 	FETCH_LAST_LIST,
 };

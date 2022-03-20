@@ -2,7 +2,6 @@ const express = require('express');
 const history = require('connect-history-api-fallback');
 const path = require('path');
 const morgan = require('morgan');
-// const cors = require('cors');
 
 const connect = require('./schemas/connect');
 const indexRouter = require('./routes/index')
@@ -14,12 +13,12 @@ const lastRouter = require('./routes/last');
 
 const app = express();
 
-// app.use(cors())
 app.set('port', process.env.PORT || 8800);
 app.set('view engine', 'html');
 app.use(history());
 connect();
-app.use(express.static(path.join(__dirname, './dist')));
+// app.use(express.static(path.join(__dirname, './dist')));
+app.use(express.static(path.join(__dirname, '../private_couple/dist')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

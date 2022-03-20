@@ -83,7 +83,7 @@ export default {
 	padding-top: 0.5rem;
 }
 .before_start {
-	color: rgba(124, 198, 255, 0.8);
+	visibility: hidden;
 }
 .proceeding_start {
 	color: #8763fb;

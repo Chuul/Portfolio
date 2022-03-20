@@ -18,7 +18,7 @@ function toggleFalseItem(id) {
 	});
 }
 function deleteStartItem(id) {
-	return start.delete(`/${id}`);
+	return start.delete(`/item/${id}`);
 }
 function editStartItem(payload) {
 	return start.patch(`/name/${payload.id}`, {
@@ -35,6 +35,9 @@ function patchStartPos(payload) {
 		data: { posText: payload.textArea },
 	});
 }
+function exitCourse(userData) {
+	return start.delete(`/exit/${userData}`);
+}
 
 export {
 	getStartList,
@@ -45,4 +48,5 @@ export {
 	editStartItem,
 	patchStartUrl,
 	patchStartPos,
+	exitCourse,
 };
