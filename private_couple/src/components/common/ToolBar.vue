@@ -12,7 +12,7 @@ export default {};
 
 <style scoped>
 .toolbar_cont {
-	margin-left: 3rem;
+	margin: auto;
 }
 .toolbar_cont .router-link-exact-active {
 	color: rgb(31, 152, 245);

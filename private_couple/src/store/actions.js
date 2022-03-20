@@ -215,7 +215,11 @@ const STORE_START = async (context, comment) => {
 				comment: comment,
 			},
 		};
-		const response = await last.patchLastList(obj);
+		const user = context.state.username;
+		// 코스 평가 DB통신-> stata 비우기 -> 코스 시작 DB통신
+		await last.patchLastList(obj);
+		context.commit('EXIT_START_COURSE');
+		const response = await start.exitCourse(user);
 		return response;
 	} catch (error) {
 		console.log(error);

@@ -52,4 +52,8 @@ export default {
 .select_option:active {
 	color: rgba(124, 198, 255, 0.8);
 }
+.select_cont {
+	text-align: center;
+	margin-top: 1rem;
+}
 </style>

@@ -77,6 +77,7 @@
 
 <script>
 import Modal from '@/components/common/ModalPrototype.vue';
+
 export default {
 	created() {
 		const name = this.$route.name;
@@ -156,7 +157,7 @@ export default {
 		},
 		async patchOneData() {
 			let payload = {};
-			if (this.modalID !== '코스 평가') {
+			if (this.modalID !== '코스 완료') {
 				payload = this.setObj();
 			}
 			if (this.$route.name === 'creating') {
@@ -176,7 +177,7 @@ export default {
 					const item = this.item;
 					item.comment = this.textArea;
 					this.$store.dispatch('PATCH_ITEM_COMMENT', item);
-				} else if (this.modalID === '코스 평가') {
+				} else if (this.modalID === '코스 완료') {
 					// eslint-disable-next-line prettier/prettier
 					await this.$store.dispatch('STORE_START', this.textArea)
 						.then(() => {
@@ -191,7 +192,6 @@ export default {
 			this.showModal = false;
 		},
 		openForm(item, name) {
-			console.log('item: ', item, 'name: ', name);
 			if (name === '아이템 평가') {
 				if (item.checked === true) {
 					this.$store.dispatch('FALSE_ITEM', item._id);
