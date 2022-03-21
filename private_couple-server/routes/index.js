@@ -20,7 +20,7 @@ router.use(cors(corsOptions));
 router.get('/', (req, res, next) => {
   try {
     // 배포용
-    res.sendFile(path.join(__dirname, '/dist/index.html'))
+    res.sendFile(path.join(__dirname, '../dist/index.html'))
     // 개발용
     // res.sendFile(path.join(__dirname, '../../private_couple/dist/index.html'))
   } catch (err) {
