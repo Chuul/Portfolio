@@ -10,7 +10,7 @@
 ## 🌟 주요 기능
 
 ### :couple: 로그인 페이지
-<img width="220px" alt="LoginMainPage" src="https://user-images.githubusercontent.com/86756501/159721605-07ef31af-d04b-478f-ae31-f4ee05905d0b.png">
+<img src="https://user-images.githubusercontent.com/86756501/159721605-07ef31af-d04b-478f-ae31-f4ee05905d0b.png">
 
 * OAuth인증 기반의 '카카오 로그인' API로 로그인을 합니다.
 * '카카오 로그인'의 사용자 정보 가져오기 API를 통해 사용자의 정보를 가져옵니다. 
