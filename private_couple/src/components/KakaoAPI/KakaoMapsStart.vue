@@ -22,16 +22,19 @@ export default {
 			var mapContainer = document.getElementById('kakao_start_cont'); // 지도를 표시할 div
 
 			var firstLatLng = {};
-			for (let i = 0; i < this.startList[i].length; i++) {
-				if (this.startList[i].pos_latlang !== '') {
-					this.firstLatLng = this.startList[i].pos_latlang;
-					return;
+			for (let i = 0; i < this.startList.length; i++) {
+				if (this.startList[i].pos_latlng !== '') {
+					this.firstLatLng = this.startList[i].pos_latlng;
+					console.log('this.firstLatLng: ', this.firstLatLng);
+					break;
 				}
 			}
-			if (firstLatLng === {}) firstLatLng = { x: 37.533017, y: 126.981094 };
+			if (firstLatLng === {}) {
+				firstLatLng = { x: 37.533017, y: 126.981094 };
+			}
 
 			var mapOption = {
-				center: new kakao.maps.LatLng(37.533017, 126.981094), // 지도의 중심좌표
+				center: new kakao.maps.LatLng(this.firstLatLng.y, this.firstLatLng.x), // 지도의 중심좌표
 				level: 8, // 지도의 확대 레벨
 			};
 
@@ -40,7 +43,7 @@ export default {
 			// 마커를 표시할 위치입니다
 			var positions = [];
 			for (let i = 0; i < this.startList.length; i++) {
-				if (this.startList[i].pos_latlang !== '') {
+				if (this.startList[i].pos_latlng !== '') {
 					let xPos = Number(this.startList[i].pos_latlng.x);
 					let yPos = Number(this.startList[i].pos_latlng.y);
 					const obj = {
@@ -66,6 +69,9 @@ export default {
 				// 마커에 이벤트를 등록하는 함수 만들고 즉시 호출하여 클로저를 만듭니다
 				// 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
 				(function (marker, infowindow) {
+					kakao.maps.event.addListener(marker, 'click', function () {
+						infowindow.open(map, marker);
+					});
 					// 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다
 					kakao.maps.event.addListener(marker, 'mouseover', function () {
 						infowindow.open(map, marker);

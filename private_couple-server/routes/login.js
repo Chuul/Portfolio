@@ -15,6 +15,8 @@ let corsOptions = {
 
 const router = express.Router();
 
+// 배포 시에 
+// cors(corsOptions) - 두 번째 인자로 넣어주기
 router.post('/', cors(corsOptions), async(req, res) => {
   const username = await login.findOne({username:req.body.username})
   if(!username) {

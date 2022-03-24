@@ -130,7 +130,7 @@ export default {
 						'</h5>';
 				if (places.road_address_name) {
 					itemStr +=
-						'    <span style="display:blockpadding-bottom: 2px;">' +
+						'    <span style="display:block; padding-bottom: 2px;">' +
 						places.road_address_name +
 						'</span>';
 				} else {
@@ -208,7 +208,7 @@ export default {
 				// 지도보기: link/map/장소ID 혹은 /link/map/위도,경도
 				// 길찾기: '/link/to/이름,위도,경도' 혹은 '/link/to/장소ID'
 				var content =
-					'<div style="padding:5px;z-index:1;">' +
+					'<div style="padding:5px;z-index:1; ">' +
 					places.place_name +
 					'</div><br><a href="https://place.map.kakao.com/' +
 					places.id +

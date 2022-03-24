@@ -17,6 +17,12 @@
 
 <script>
 export default {
+	created() {
+		console.log('addItem creating');
+	},
+	mounted() {
+		console.log('addItem mounted');
+	},
 	data() {
 		return {
 			options: [{ text: '맛집' }, { text: '카페' }, { text: '놀거리' }],

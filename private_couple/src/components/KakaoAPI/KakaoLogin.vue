@@ -35,7 +35,7 @@ export default {
 						email: res.kakao_account.email,
 					};
 					await this.$store.dispatch('LOGIN', userData);
-					this.$router.push('/creating');
+					// this.$router.push('/creating');
 				},
 			});
 		},
