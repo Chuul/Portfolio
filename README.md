@@ -88,10 +88,11 @@
 
 #### :point_up: 아이템 수정, 삭제 및 아이템 정보 추가
 
-* 아이템의 이름을 수정하고, 코스 생성 페이지와 마찬가지로 URL과 위치 정보를 추가 가능합니다.
+* 코스 생성 페이지와 마찬가지로 모달창을 사용해 URL과 위치 정보를 추가 가능합니다.
+* 아이템 이름을 변경할 수 있습니다.
 * 마음에 들지 않는 아이템은 삭제할 수 있습니다.
 
-<img width="1000"   src="https://user-images.githubusercontent.com/86756501/160094912-f7699df8-5536-4874-a326-ede895111b68.png">
+<img width="1000" src="https://user-images.githubusercontent.com/86756501/160094912-f7699df8-5536-4874-a326-ede895111b68.png">
 
 #### :point_up: 아이템 및 코스 평가
 
