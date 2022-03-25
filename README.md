@@ -63,11 +63,13 @@
 
 ### :couple: 코스 목록 페이지
 
+<img width="800" src="https://user-images.githubusercontent.com/86756501/160099217-941d63e5-1704-4336-a78f-72f661008244.png">
+
 코스 생성 페이지에서 저장한 코스들을 보여주며, 코스 진행을 시작하는 기능을 가지고 있습니다. 
 
 #### :point_up: 코스 시작 및 삭제
 
-<img width="800" src="https://user-images.githubusercontent.com/86756501/160095943-c3f1c0a9-c0c2-409a-8211-38ef4411fd89.png">
+<img width="800" src="https://user-images.githubusercontent.com/86756501/160099618-da936fa9-c945-4786-a99a-3736be22a3f7.png">
 
 * 코스의 왼쪽 하트를 누르면, 해당 코스를 진행시킬 수 있습니다.
 * 마음에 들지 않는 코스는 삭제할 수 있습니다.
