@@ -114,7 +114,7 @@ export default {
 		async resetChecked() {
 			if (this.localCheckedList.length === 0) {
 				this.$store.commit(
-					'SET_ITEM_FALSE',
+					'SET_ITEM_FrdfALSE',
 					this.$store.getters.getCheckedList,
 				);
 			} else {

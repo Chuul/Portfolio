@@ -148,17 +148,14 @@ export default {
 			this.$router.push('/list');
 		},
 		// Modal 관련 method
-		setObj() {
-			const obj = {
-				id: this.item._id,
-				textArea: this.textArea,
-			};
-			return obj;
-		},
 		async patchOneData() {
 			let payload = {};
 			if (this.modalID !== '코스 완료') {
-				payload = this.setObj();
+				const obj = {
+					id: this.item._id,
+					textArea: this.textArea,
+				};
+				payload = obj;
 			}
 			if (this.$route.name === 'creating') {
 				if (this.modalID === 'URL') {
