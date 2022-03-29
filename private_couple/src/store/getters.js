@@ -10,21 +10,21 @@ const checkLogin_Name = state => {
 const fetchName = state => {
 	return state.username;
 };
-const getItemList = state => {
-	return state.itemList;
-};
-const getCheckedList = state => {
-	return state.checkedList;
-};
-const getCourseList = state => {
-	return state.courseList;
-};
-const getStartList = state => {
-	return state.startList;
-};
-const checkStartList = state => {
-	return state.startList.length === 0 ? 'before_start' : 'proceeding_start';
-};
+// const getItemList = state => {
+// 	return state.itemList;
+// };
+// const getCheckedList = state => {
+// 	return state.checkedList;
+// };
+// const getCourseList = state => {
+// 	return state.courseList;
+// };
+// const getStartList = state => {
+// 	return state.startList;
+// };
+// const checkStartList = state => {
+// 	return state.startList.length === 0 ? 'before_start' : 'proceeding_start';
+// };
 const getLastItemList = state => {
 	return state.lastItemList;
 };
@@ -37,11 +37,11 @@ export {
 	checkLogin,
 	checkLogin_Name,
 	fetchName,
-	getItemList,
-	getCheckedList,
-	getCourseList,
-	getStartList,
-	checkStartList,
+	// getItemList,
+	// getCheckedList,
+	// getCourseList,
+	// getStartList,
+	// checkStartList,
 	getLastItemList,
 	getLastCourseList,
 };

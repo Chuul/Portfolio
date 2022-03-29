@@ -126,9 +126,9 @@ export default {
 		},
 		CommonList() {
 			if (this.$route.name === 'creating') {
-				return this.$store.state.itemList;
+				return this.$store.getters.getItemList;
 			} else {
-				return this.$store.state.startList;
+				return this.$store.getters.getStartList;
 			}
 		},
 	},
