@@ -1,17 +1,17 @@
 <template>
 	<section class="start_cont">
-		<!-- <KakaoMapsStart></KakaoMapsStart> -->
+		<KakaoMapsStart></KakaoMapsStart>
 		<CommonLogic></CommonLogic>
 	</section>
 </template>
 
 <script>
-// import KakaoMapsStart from '@/components/KakaoAPI/KakaoMapsStart.vue';
+import KakaoMapsStart from '@/components/KakaoAPI/KakaoMapsStart.vue';
 import CommonLogic from './CommonLogic.vue';
 
 export default {
 	components: {
-		// KakaoMapsStart,
+		KakaoMapsStart,
 		CommonLogic,
 	},
 };

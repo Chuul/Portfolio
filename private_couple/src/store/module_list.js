@@ -1,5 +1,4 @@
 import * as list from '@/api/list.js';
-import * as start from '@/api/start.js';
 
 const state = {
 	courseList: [],
@@ -29,7 +28,7 @@ const actions = {
 	FETCH_COURSE_LIST: async context => {
 		const userData = {
 			email: context.rootState.email,
-			username: context.rootState.username,
+			username: context.rootState.module_login.username,
 		};
 		try {
 			const { data } = await list.getCourseList(userData);
@@ -46,14 +45,6 @@ const actions = {
 		} catch (error) {
 			console.log(error);
 		}
-	},
-	START_COURSE: async (context, list) => {
-		const userData = {
-			createdBy: context.rootState.username,
-			course: list.course,
-		};
-		context.rootState.module_start.startList = list.course;
-		start.replaceStartList(userData);
 	},
 };
 

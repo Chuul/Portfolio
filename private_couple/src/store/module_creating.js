@@ -87,7 +87,7 @@ const actions = {
 	FETCH_ITEM_LIST: async context => {
 		try {
 			const userData = {
-				username: context.rootState.username,
+				username: context.rootState.module_login.username,
 			};
 			const { data } = await item.getItemList(userData);
 			context.commit('SET_ITEM_LIST', data);
@@ -103,7 +103,7 @@ const actions = {
 				return context.dispatch('FETCH_ITEM_LIST');
 			}
 			const userData = {
-				username: context.rootState.username,
+				username: context.rootState.module_login.username,
 				category: name,
 			};
 			const { data } = await item.filterItemList(userData);
@@ -116,7 +116,7 @@ const actions = {
 	},
 	ADD_ITEM: async (context, payload) => {
 		const obj = {
-			createdBy: context.rootState.username,
+			createdBy: context.rootState.module_login.username,
 			category: payload.category,
 			name: payload.name,
 			checked: false,
@@ -165,7 +165,7 @@ const actions = {
 	},
 	ADD_COURSE: async (context, payload) => {
 		const obj = {
-			createdBy: context.rootState.username,
+			createdBy: context.rootState.module_login.username,
 			course: payload,
 		};
 		try {

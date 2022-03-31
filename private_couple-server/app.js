@@ -18,7 +18,6 @@ app.set('view engine', 'html');
 app.use(history());
 connect();
 app.use(express.static(path.join(__dirname, './dist')));
-// app.use(express.static(path.join(__dirname, '../private_couple/dist')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

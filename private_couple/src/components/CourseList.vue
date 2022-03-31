@@ -1,12 +1,10 @@
 <template>
 	<section class="list_cont">
 		<li class="course_cont" v-for="list in CourseList" :key="list.course">
-			<router-link to="/start" class="start_btn_cont">
-				<i
-					@click="startOneCourse(list)"
-					class="start_btn fas fa-heart-square"
-				></i>
-			</router-link>
+			<i
+				class="start_btn fas fa-heart-square"
+				@click="startOneCourse(list)"
+			></i>
 			<section class="item_cont">
 				<li class="item_name" v-for="item in list.course" :key="item.name">
 					{{ item.name }}
@@ -30,8 +28,9 @@ export default {
 		},
 	},
 	methods: {
-		startOneCourse(list) {
-			this.$store.dispatch('START_COURSE', list);
+		async startOneCourse(list) {
+			await this.$store.dispatch('START_COURSE', list);
+			this.$router.push('/start');
 		},
 		deleteOneCourse(list) {
 			this.$store.dispatch('DELETE_COURSE', list.name);
@@ -68,15 +67,14 @@ export default {
 .item_cont li:last-child .arrow_cont {
 	display: none;
 }
-.start_btn_cont,
-.delete_btn_cont {
-	margin: auto 0;
-}
 .start_btn {
 	float: left;
 	font-size: 1.5rem;
 	color: rgba(124, 198, 255, 0.8);
 	cursor: pointer;
+}
+.delete_btn_cont {
+	margin: auto 0;
 }
 .arrow_cont {
 	margin: 0.5em;

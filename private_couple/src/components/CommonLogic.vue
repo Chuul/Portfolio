@@ -84,7 +84,7 @@ export default {
 		if (name === 'creating') {
 			this.$store.dispatch('FETCH_ITEM_LIST');
 		} else if (name === 'start') {
-			if (this.$store.state.startList.length > 0) {
+			if (this.$store.getters.getStartList.length > 0) {
 				return;
 			} else {
 				this.$store.dispatch('FETCH_START_LIST');
@@ -211,10 +211,6 @@ export default {
 .content_start_cont {
 	display: inline-block;
 	width: 100%;
-}
-.select_cont {
-	text-align: center;
-	margin: 0.6rem;
 }
 .list_cont {
 	list-style: none;

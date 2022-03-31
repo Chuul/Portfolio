@@ -15,6 +15,9 @@ const getters = {
 };
 
 const mutations = {
+	SET_START_COURSE: (state, course) => {
+		state.startList = course;
+	},
 	EDIT_START_CHECKED: (state, id) => {
 		let startList = state.startList;
 		for (let i = 0; i < startList.length; i++) {
@@ -62,9 +65,18 @@ const mutations = {
 };
 
 const actions = {
+	START_COURSE: async (context, list) => {
+		const userData = {
+			createdBy: context.rootState.module_login.username,
+			course: list.course,
+		};
+		context.commit('SET_START_COURSE', list.course);
+		const { data } = await start.replaceStartList(userData);
+		return data;
+	},
 	FETCH_START_LIST: async context => {
 		const userData = {
-			createdBy: context.rootState.username,
+			createdBy: context.rootState.module_login.username,
 		};
 		try {
 			const { data } = await start.getStartList(userData);
@@ -132,13 +144,13 @@ const actions = {
 				}
 			}
 			const obj = {
-				createdBy: context.rootState.username,
+				createdBy: context.rootState.module_login.username,
 				course: {
 					list: arr,
 					comment: comment,
 				},
 			};
-			const user = context.rootState.username;
+			const user = context.rootState.module_login.username;
 			// 코스 평가 DB통신-> stata 비우기 -> 코스 시작 DB통신
 			await last.patchLastList(obj);
 			context.commit('EXIT_START_COURSE');
@@ -149,7 +161,7 @@ const actions = {
 		}
 	},
 	EXIT_START: async context => {
-		const user = context.rootState.username;
+		const user = context.rootState.module_login.username;
 		try {
 			await start.exitCourse(user);
 			context.commit('EXIT_START_COURSE');

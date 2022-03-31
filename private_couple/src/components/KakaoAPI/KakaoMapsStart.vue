@@ -21,19 +21,15 @@ export default {
 		initMap() {
 			var mapContainer = document.getElementById('kakao_start_cont'); // 지도를 표시할 div
 
-			var firstLatLng = {};
+			var firstLatLng = { y: 37.533017, x: 126.981094 };
 			for (let i = 0; i < this.startList.length; i++) {
 				if (this.startList[i].pos_latlng !== '') {
-					this.firstLatLng = this.startList[i].pos_latlng;
+					firstLatLng = this.startList[i].pos_latlng;
 					break;
 				}
 			}
-			if (firstLatLng === {}) {
-				firstLatLng = { x: 37.533017, y: 126.981094 };
-			}
-
 			var mapOption = {
-				center: new kakao.maps.LatLng(this.firstLatLng.y, this.firstLatLng.x), // 지도의 중심좌표
+				center: new kakao.maps.LatLng(firstLatLng.y, firstLatLng.x), // 지도의 중심좌표
 				level: 8, // 지도의 확대 레벨
 			};
 
