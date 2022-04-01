@@ -1,21 +1,21 @@
 const express = require('express');
 const path = require('path');
-const cors = require('cors');
+// const cors = require('cors');
 
 const router = express.Router();
-const whitelist = ["https://private-course.herokuapp.com"]
+// const whitelist = ["https://private-course.herokuapp.com"]
 
-const corsOptions = {
-  origin: function(origin, callback) {
-    if(whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not Allowed Origin!"));
-    }
-  }
-}
+// const corsOptions = {
+//   origin: function(origin, callback) {
+//     if(whitelist.indexOf(origin) !== -1) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not Allowed Origin!"));
+//     }
+//   }
+// }
 
-router.use(cors(corsOptions));
+// router.use(cors(corsOptions));
 
 router.get('/', (req, res, next) => {
   try {

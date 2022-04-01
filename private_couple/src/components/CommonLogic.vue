@@ -67,7 +67,11 @@
 					<i class="back_btn fas fa-arrow-circle-left" />
 					그만두기
 				</span>
-				<button class="complete_Btn" @click="openForm(null, '코스 완료')">
+				<button
+					class="complete_Btn"
+					:class="check_complete_Btn"
+					@click="openForm(null, '코스 완료')"
+				>
 					코스 완료
 				</button>
 			</div>
@@ -131,6 +135,15 @@ export default {
 				return this.$store.getters.getStartList;
 			}
 		},
+		check_complete_Btn() {
+			let list = this.$store.getters.getStartList;
+			for (let i = 0; i < list.length; i++) {
+				if (list[i].checked === true) {
+					return false;
+				}
+			}
+			return 'uncomplete_Btn';
+		},
 	},
 	methods: {
 		toggleOneItem(item) {
@@ -177,12 +190,8 @@ export default {
 				} else if (this.modalID === '코스 완료') {
 					// eslint-disable-next-line prettier/prettier
 					await this.$store.dispatch('STORE_START', this.textArea)
-						.then(() => {
-							this.$router.push('/list');
-						})
-						.catch(error => {
-							console.log(error);
-						});
+						.then(() => this.$router.push('/list'))
+						.catch(error => console.log(error));
 				}
 			}
 			this.textArea = '';
@@ -283,6 +292,9 @@ export default {
 	color: rgb(86, 153, 253);
 	cursor: pointer;
 	box-shadow: 0.5rem -0.2rem 10px 1px rgba(143, 143, 143, 0.2);
+}
+.uncomplete_Btn {
+	visibility: hidden;
 }
 /* 반응형 - PC */
 @media (min-width: 1024px) {
