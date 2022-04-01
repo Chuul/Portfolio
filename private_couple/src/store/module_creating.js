@@ -42,7 +42,7 @@ const mutations = {
 					toggleChecked(list[i].name);
 				} else {
 					list[i].checked = true;
-					state.checkedList.push(item);
+					state.checkedList.push({ ...item });
 				}
 			}
 		}
