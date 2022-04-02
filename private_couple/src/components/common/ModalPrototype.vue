@@ -1,24 +1,24 @@
 <template>
 	<transition name="modal">
-		<div class="modal-mask">
-			<div class="modal-wrapper">
-				<div class="modal-container">
-					<div class="modal-header">
+		<div class="modal_mask">
+			<div class="modal_wrapper">
+				<div class="modal_container">
+					<div class="modal_header">
 						<slot name="header">
 							<!-- 내용 입력 -->
 						</slot>
 					</div>
 
-					<div class="modal-body">
+					<div class="modal_body">
 						<slot name="body">
 							<!-- 내용 입력 -->
 						</slot>
 					</div>
 
-					<div class="modal-footer">
+					<div class="modal_footer">
 						<slot name="footer">
 							<button
-								class="modal-default-button"
+								class="modal_default_button"
 								@click="$emit('close')"
 								v-on:keyup.enter="$emit('close')"
 							>
@@ -37,7 +37,7 @@ export default {};
 </script>
 
 <style scoped>
-.modal-mask {
+.modal_mask {
 	position: fixed;
 	z-index: 9998;
 	top: 0;
@@ -49,12 +49,12 @@ export default {};
 	transition: opacity 0.3s ease;
 }
 
-.modal-wrapper {
+.modal_wrapper {
 	display: table-cell;
 	vertical-align: middle;
 }
 
-.modal-container {
+.modal_container {
 	width: 10rem;
 	margin: 0px auto;
 	padding: 2%;
@@ -66,24 +66,25 @@ export default {};
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
-.modal-header {
+.modal_header {
 	margin-top: 0;
 	font-weight: 500;
 	color: rgba(124, 198, 255, 0.8);
 }
 
-.modal-body {
+.modal_body {
 	margin: 20px 0;
 	font-weight: 300;
 }
 
-.modal-footer {
+.modal_footer {
 	text-align: center;
 }
 
-.modal-default-button {
+.modal_default_button {
 	border-style: none;
 	border-radius: 5px;
+	cursor: pointer;
 }
 .modal-enter {
 	opacity: 0;
@@ -93,8 +94,8 @@ export default {};
 	opacity: 0;
 }
 
-.modal-enter .modal-container,
-.modal-leave-active .modal-container {
+.modal-enter .modal_container,
+.modal-leave-active .modal_container {
 	-webkit-transform: scale(1.1);
 	transform: scale(1.1);
 }

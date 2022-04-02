@@ -57,8 +57,10 @@
 		<Modal v-if="showModal" @close="closeModal()">
 			<h2 slot="header">{{ modalID }}</h2>
 			<form slot="body">
-				<input type="text" v-model="textArea" />
-				<button @click.prevent="patchOneData()">입력</button>
+				<input class="modal_input" type="text" v-model="textArea" />
+				<button class="modal_input_button" @click.prevent="patchOneData()">
+					입력
+				</button>
 			</form>
 		</Modal>
 		<template v-if="this.$route.name === 'start'">
@@ -260,6 +262,17 @@ export default {
 	float: right;
 	margin: 0.5rem;
 	color: rgba(124, 198, 255, 0.8);
+	cursor: pointer;
+}
+.modal_input {
+	width: 95%;
+}
+.modal_input_button {
+	width: 40%;
+	margin-top: 10%;
+	padding: 3px;
+	border-style: none;
+	border-radius: 0.5em;
 	cursor: pointer;
 }
 .checked_Btn {
