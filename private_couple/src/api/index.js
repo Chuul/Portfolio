@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-// 경로에 따른 인스턴스를 생성해주는 함수
 function createInstance(url) {
 	return axios.create({
 		baseURL: `https://private-course.herokuapp.com/${url}`,

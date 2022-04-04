@@ -24,7 +24,7 @@ export default {
 				if (arr[i].innerText === name) {
 					arr[i].style = 'color: rgba(124, 198, 255, 1.0); font-weight: bold;';
 				} else {
-					arr[i].style = 'color: ""; font-weight: normal;';
+					arr[i].style = 'color: " "; font-weight: normal;';
 				}
 			}
 			this.$store.dispatch('FILTER_ITEM', name);

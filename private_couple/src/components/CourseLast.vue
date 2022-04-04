@@ -10,7 +10,7 @@
 					<span class="item_comment" v-if="item.comment !== ''">
 						{{ item.comment }}
 					</span>
-					<span class="item_comment" v-else> 평가가 없습니다... </span>
+					<span class="item_comment" v-else>평가가 없습니다... </span>
 				</li>
 			</article>
 		</article>

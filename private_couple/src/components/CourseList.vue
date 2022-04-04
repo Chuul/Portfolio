@@ -1,28 +1,38 @@
 <template>
 	<section class="list_cont">
-		<li class="course_cont" v-for="list in CourseList" :key="list.course">
-			<i
-				class="start_btn fas fa-heart-square"
-				@click="startOneCourse(list)"
-			></i>
-			<section class="item_cont">
-				<li class="item_name" v-for="item in list.course" :key="item.name">
-					{{ item.name }}
-					<div class="arrow_cont">
-						<i class="fas fa-arrow-down"></i>
-					</div>
-				</li>
-			</section>
-			<span class="delete_btn_cont" @click="deleteOneCourse(list)">
-				<i class="delete_btn far fa-trash-alt"></i>
-			</span>
-		</li>
+		<template v-if="list_check">
+			<li class="course_cont" v-for="list in CourseList" :key="list.course">
+				<i
+					class="start_btn fas fa-heart-square"
+					@click="startOneCourse(list)"
+				></i>
+				<section class="item_cont">
+					<li class="item_name" v-for="item in list.course" :key="item.name">
+						{{ item.name }}
+						<div class="arrow_cont">
+							<i class="fas fa-arrow-down"></i>
+						</div>
+					</li>
+				</section>
+				<span class="delete_btn_cont" @click="deleteOneCourse(list)">
+					<i class="delete_btn far fa-trash-alt"></i>
+				</span>
+			</li>
+		</template>
+		<template v-else>
+			<div class="empty_list">
+				아직 생성된 리스트가 없습니다. 코스생성 페이지에서 추가해주세요.
+			</div>
+		</template>
 	</section>
 </template>
 
 <script>
 export default {
 	computed: {
+		list_check() {
+			return this.$store.getters.getCourseList.length > 0 ? true : false;
+		},
 		CourseList() {
 			return this.$store.getters.getCourseList;
 		},
@@ -59,6 +69,14 @@ export default {
 	background: rgba(124, 198, 255, 0.247);
 	border-radius: 0.5em;
 	box-shadow: 0.5em -0.3em 10px 1px rgba(143, 143, 143, 0.2);
+}
+.empty_list {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	height: 80vh;
+	width: 100%;
 }
 .item_cont {
 	width: 80%;

@@ -15,12 +15,14 @@
 						:class="{ checked_Btn: item.checked }"
 					/>
 				</template>
+
 				<template v-else>
 					<div class="index_cont">
 						<span>
 							{{ index + 1 }}
 						</span>
 					</div>
+
 					<i
 						class="toggle_Btn far fa-check-circle"
 						@click="openForm(item, '아이템 평가')"
@@ -129,6 +131,9 @@ export default {
 			} else {
 				return 'list_creating';
 			}
+		},
+		filter_item() {
+			return true;
 		},
 		CommonList() {
 			if (this.$route.name === 'creating') {
