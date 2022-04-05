@@ -2,59 +2,68 @@
 	<section :class="content_start_cont">
 		<h1 v-if="this.$route.name === 'start'">코스 진행중...</h1>
 		<section :class="main_cont">
-			<li
-				class="list_cont"
-				:class="list_page"
-				v-for="(item, index) in CommonList"
-				:key="item.name"
-			>
-				<template v-if="item.createdBy">
-					<i
-						class="toggle_Btn far fa-check-circle"
-						@click="toggleOneItem(item)"
-						:class="{ checked_Btn: item.checked }"
-					/>
-				</template>
-
-				<template v-else>
-					<div class="index_cont">
-						<span>
-							{{ index + 1 }}
-						</span>
-					</div>
-
-					<i
-						class="toggle_Btn far fa-check-circle"
-						@click="openForm(item, '아이템 평가')"
-						:class="{ checked_Btn: item.checked }"
-					/>
-				</template>
-				<a v-if="item.url" :href="item.url" class="linkText" target="_blank">
-					{{ item.name }}
-				</a>
-				<a v-else>
-					{{ item.name }}
-				</a>
-				<span class="btn_cont">
-					<i class="basic_Btn far fa-trash-alt" @click="deleteOneItem(item)" />
-					<i
-						class="basic_Btn fas fa-map-marked-alt"
-						@click="openForm(item, '위치')"
-						:class="{ checked_Btn: item.pos.length > 0 }"
-					/>
-					<i
-						class="basic_Btn far fa-window-restore"
-						@click="openForm(item, 'URL')"
-						:class="{ checked_Btn: item.url.length > 0 }"
-					/>
-					<template v-if="!item.createdBy">
+			<template v-if="list_check">
+				<li
+					class="list_cont"
+					:class="list_page"
+					v-for="(item, index) in CommonList"
+					:key="item.name"
+				>
+					<template v-if="item.createdBy">
 						<i
-							class="basic_Btn fas fa-text"
-							@click="openForm(item, '아이템 이름 변경')"
-						></i>
+							class="toggle_Btn far fa-check-circle"
+							@click="toggleOneItem(item)"
+							:class="{ checked_Btn: item.checked }"
+						/>
 					</template>
-				</span>
-			</li>
+					<template v-else>
+						<div class="index_cont">
+							<span>
+								{{ index + 1 }}
+							</span>
+						</div>
+
+						<i
+							class="toggle_Btn far fa-check-circle"
+							@click="openForm(item, '아이템 평가')"
+							:class="{ checked_Btn: item.checked }"
+						/>
+					</template>
+					<a v-if="item.url" :href="item.url" class="linkText" target="_blank">
+						{{ item.name }}
+					</a>
+					<a v-else>
+						{{ item.name }}
+					</a>
+					<span class="btn_cont">
+						<i
+							class="basic_Btn far fa-trash-alt"
+							@click="deleteOneItem(item)"
+						/>
+						<i
+							class="basic_Btn fas fa-map-marked-alt"
+							@click="openForm(item, '위치')"
+							:class="{ checked_Btn: item.pos.length > 0 }"
+						/>
+						<i
+							class="basic_Btn far fa-window-restore"
+							@click="openForm(item, 'URL')"
+							:class="{ checked_Btn: item.url.length > 0 }"
+						/>
+						<template v-if="!item.createdBy">
+							<i
+								class="basic_Btn fas fa-text"
+								@click="openForm(item, '아이템 이름 변경')"
+							></i>
+						</template>
+					</span>
+				</li>
+			</template>
+			<template v-else>
+				<div class="empty_list">
+					생성된 아이템이 없습니다. 아이템을 추가해주세요 ^^
+				</div>
+			</template>
 		</section>
 		<Modal v-if="showModal" @close="closeModal()">
 			<h2 slot="header">{{ modalID }}</h2>
@@ -111,6 +120,9 @@ export default {
 		Modal,
 	},
 	computed: {
+		list_check() {
+			return this.$store.getters.getItemList.length > 0 ? true : false;
+		},
 		content_start_cont() {
 			if (this.$route.name === 'start') {
 				return 'content_start_cont';
@@ -313,6 +325,15 @@ export default {
 }
 .uncomplete_Btn {
 	visibility: hidden;
+}
+.empty_list {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	height: 100%;
+	width: 100%;
+	color: rgba(124, 198, 255, 0.8);
 }
 /* 반응형 - PC */
 @media (min-width: 1024px) {
