@@ -47,6 +47,9 @@ const mutations = {
 			}
 		}
 	},
+	CLEAR_CHECKEDLIST: state => {
+		state.checkedList = [];
+	},
 	SET_ITEM_URL: (state, obj) => {
 		for (let i = 0; i < state.itemList.length; i++) {
 			if (state.itemList[i]._id === obj.id) {

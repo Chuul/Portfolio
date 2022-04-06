@@ -309,7 +309,7 @@ button {
 @media (min-width: 1024px) {
 	#map_creating_cont {
 		width: 47%;
-		height: inherit;
+		height: 40vh;
 	}
 	.option input {
 		text-align: center;

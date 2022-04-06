@@ -47,6 +47,9 @@ import draggable from 'vuedraggable';
 import Modal from '@/components/common/ModalPrototype.vue';
 
 export default {
+	created() {
+		this.$store.commit('CLEAR_CHECKEDLIST');
+	},
 	components: {
 		draggable,
 		Modal,
@@ -172,7 +175,7 @@ export default {
 	padding: 1rem;
 	overflow: auto;
 	border: thick double rgb(59, 137, 255);
-	height: 20rem;
+	height: 33vh;
 }
 .course_cont {
 	margin-bottom: 2.2rem;
