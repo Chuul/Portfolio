@@ -102,6 +102,10 @@ export default {
 			this.$store.dispatch('FETCH_ITEM_LIST');
 		} else if (name === 'start') {
 			if (this.$store.getters.getStartList.length > 0) {
+				console.log(
+					'this.$store.getters.getStartList: ',
+					this.$store.getters.getStartList,
+				);
 				return;
 			} else {
 				this.$store.dispatch('FETCH_START_LIST');
@@ -121,7 +125,11 @@ export default {
 	},
 	computed: {
 		list_check() {
-			return this.$store.getters.getItemList.length > 0 ? true : false;
+			if (this.$route.name === 'start') {
+				return true;
+			} else {
+				return this.$store.getters.getItemList.length > 0 ? true : false;
+			}
 		},
 		content_start_cont() {
 			if (this.$route.name === 'start') {
