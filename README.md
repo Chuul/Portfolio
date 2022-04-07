@@ -17,24 +17,20 @@
 * '카카오 로그인'의 사용자 정보 가져오기 API를 통해 사용자의 정보를 가져옵니다. 
 * 가져온 사용자 정보를 기반으로 MongoDB 리소스에 접근합니다. 
 
-1. 카카오 소셜로그인 인증 및 로그인
-
-2. 가져온 사용자 정보로 MongoDB 리소스에 접근
-
 ### :couple: 코스생성 페이지 
 
-아이템(1개의 코스)을 검색, 추가, 수정하고, 아이템을 선택해 코스를 만드는 페이지입니다.
+코스를 구성할 아이템을 검색, 추가, 수정하고, 아이템을 선택해 코스를 만드는 페이지입니다.
 
-<img width="1000"src="https://user-images.githubusercontent.com/86756501/162169003-65a0f02b-881d-4586-8ec9-aa7e3c2dfe09.png">
+<img width="1000" src="https://user-images.githubusercontent.com/86756501/162172216-fa522119-d2ba-4abe-92f9-1e2d866090c6.png">
 
 #### :point_up: 카카오 맵을 사용한 키워드 검색
 
-* 카카오 맵 API와 맵의 키워드 검색 기능을 사용해 코스 관련 정보를 얻을 수 있습니다.
+* 카카오 맵 API의 키워드 검색 기능을 사용해 코스 관련 정보를 얻을 수 있습니다.
 
 <img width="1000" src="https://user-images.githubusercontent.com/86756501/162169050-78ab09d6-1bbd-4d1e-a73d-da17cf2a78bb.png">
 
 #### :point_up: 카테고리별로 아이템 추가
-  
+
 <img width="1000" src="https://user-images.githubusercontent.com/86756501/162169054-04949560-2bd1-4f92-94c9-2c6399a16519.png">
 
 #### :point_up: 아이템 정보 추가 및 아이템 삭제
@@ -45,10 +41,10 @@
 
 * 각 데이터 추가 시 모달창을 활용합니다.
 
-<img width="1000" src="https://user-images.githubusercontent.com/86756501/160094137-836ef3b4-392e-49ec-8b14-af395128caf7.png">
+<img width="1000" src="https://user-images.githubusercontent.com/86756501/162177365-fecdfa06-91c9-495f-b6b2-2c8b4e69a8a4.png">
 
 * URL 추가 시, 아이템 이름의 색상이 바뀌며, 이름 클릭시 해당 링크로 연결됩니다.
-* 위치는 추후 코스 시작 시, 지도에 위치를 표시해줍니다.
+* 위치는 추후 코스 시작 시, 지도에 위치를 표시해줄 때 사용합니다.
 * 마음에 들지 않는 아이템은 삭제할 수 있습니다.
 
 <img width="1000" src="https://user-images.githubusercontent.com/86756501/160096869-602e07db-ee23-452d-81bf-9b162ee1410a.png">
@@ -84,7 +80,7 @@
 
 * 코스 생성 페이지에서 위치를 추가한 아이템의 위치를 표시해줍니다.
 
-<img width="1000" src="https://user-images.githubusercontent.com/86756501/160094901-7d65afc2-1e43-4be3-8a77-9c6f0e07b9c0.png">
+<img width="1440" src="https://user-images.githubusercontent.com/86756501/162177596-192766a4-68f9-4529-8ae4-eb75cf0e716b.png">
 
 #### :point_up: 아이템 수정, 삭제 및 아이템 정보 추가
 
@@ -98,18 +94,21 @@
 
 * 아이템의 체크버튼을 누르면, 아이템을 평가할 수 있습니다. 평가는 이전 코스 페이지에 추가됩니다.
 
-<img width="1000" src="https://user-images.githubusercontent.com/86756501/160095258-54e525b2-f450-4a2b-ab08-d29d7bb87a5d.png">
+<img width="1000" src="https://user-images.githubusercontent.com/86756501/162178375-58e93ffc-e35c-4c87-8d18-931e2978aa8f.png">
 
-* 코스 완료 버튼을 누르면, 코스를 평가할 수 있습니다. 평가와 더불어, 완료한 아이템만 이전 코스 페이지에 추가됩니다.
+* 마찬가지로 코스 완료 버튼을 누르면, 코스를 평가할 수 있습니다.
 
-<img width="1000" src="https://user-images.githubusercontent.com/86756501/160095269-be3c3ab8-e7dc-49ea-a9b8-c7b193dceedd.png">
+<img width="310" src="https://user-images.githubusercontent.com/86756501/162178508-1684e122-59e4-40fb-bd34-cc9f12eff37e.png">
 
 #### :point_up: 코스 진행 페이지 돌아가기 및 그만두기
 
 * 코스 진행 페이지에서 다른 페이지로 이동하면, 왼쪽 상단에 코스 진행 페이지로 돌아갈 수 있는 버튼이 생깁니다.
+
+<img width="700" src="https://user-images.githubusercontent.com/86756501/162179396-fbcbdeac-4221-41dd-9965-3e910a69c29c.png">
+
 * 그만두기 버튼을 누르면, 해당 코스의 진행 상황은 사라지고, 코스 목록 페이지로 돌아갑니다.
 
-<img width="1000" src="https://user-images.githubusercontent.com/86756501/160095415-b8037169-a4c6-4f65-abcf-86e6d13749ae.png">
+<img width="577" src="https://user-images.githubusercontent.com/86756501/162179389-a280b884-f601-47a5-99e7-add5a04543d6.png">
 
 ### :couple: 이전 코스 페이지
 
