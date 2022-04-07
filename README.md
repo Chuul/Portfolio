@@ -35,6 +35,10 @@
 
 #### :point_up: 아이템 정보 추가 및 아이템 삭제
 
+<p align="center">
+<img src="https://user-images.githubusercontent.com/86756501/162185286-46d3e076-e1ec-4921-866c-6b5070b3036c.gif">   
+</p>
+
 * 아이템과 관련되 URL, 위치를 추가할 수 있습니다.
 
 <img width="1000" src="https://user-images.githubusercontent.com/86756501/160096546-93a62610-fe7b-4e16-9f4e-2ce3f56916b6.png">
@@ -51,8 +55,15 @@
 
 #### :point_up: 코스 생성
 
+<p align="center">
+<img src="https://user-images.githubusercontent.com/86756501/162185834-0e89284f-b5a3-4c7a-909c-236f4298a39d.gif">   
+</p>
+
 * 아이템의 체크버튼을 누른 후, '코스생성' 버튼을 누르면 하단에 코스가 생성됩니다.
 * Draggable Node Package를 사용하여 코스 순서를 변경합니다. 
+<p align="center">
+<img src="https://user-images.githubusercontent.com/86756501/162185571-e14d68f6-294f-4b7f-b20b-8f67c96a8434.gif">   
+</p>
 * 코스 저장 버튼을 누르면, 코스 목록 페이지에 코스가 추가됩니다.
 
 <img width="1000" src="https://user-images.githubusercontent.com/86756501/162169729-8b12d5bf-e2e3-4aa8-9169-bd81681168a8.png">
