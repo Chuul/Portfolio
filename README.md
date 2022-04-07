@@ -25,17 +25,17 @@
 
 아이템(1개의 코스)을 검색, 추가, 수정하고, 아이템을 선택해 코스를 만드는 페이지입니다.
 
-<img width="1000" src="https://user-images.githubusercontent.com/86756501/160093679-f305c3b6-3f7b-4aaa-bc23-f18d1c69f1db.png">
+<img width="1000"src="https://user-images.githubusercontent.com/86756501/162169003-65a0f02b-881d-4586-8ec9-aa7e3c2dfe09.png">
 
 #### :point_up: 카카오 맵을 사용한 키워드 검색
 
 * 카카오 맵 API와 맵의 키워드 검색 기능을 사용해 코스 관련 정보를 얻을 수 있습니다.
 
-<img width="1000" src="https://user-images.githubusercontent.com/86756501/160096277-569d3cf1-79d2-4bb1-a2e7-60410ff8d272.png">
+<img width="1000" src="https://user-images.githubusercontent.com/86756501/162169050-78ab09d6-1bbd-4d1e-a73d-da17cf2a78bb.png">
 
 #### :point_up: 카테고리별로 아이템 추가
   
-<img width="1000" src="https://user-images.githubusercontent.com/86756501/160094000-3bae01e6-825d-4b82-b19f-91871049380f.png">
+<img width="1000" src="https://user-images.githubusercontent.com/86756501/162169054-04949560-2bd1-4f92-94c9-2c6399a16519.png">
 
 #### :point_up: 아이템 정보 추가 및 아이템 삭제
 
@@ -59,7 +59,7 @@
 * Draggable Node Package를 사용하여 코스 순서를 변경합니다. 
 * 코스 저장 버튼을 누르면, 코스 목록 페이지에 코스가 추가됩니다.
 
-<img width="1000" src="https://user-images.githubusercontent.com/86756501/160094159-897e38a0-62ef-4e88-a39d-e98b2bd54757.png">
+<img width="1000" src="https://user-images.githubusercontent.com/86756501/162169729-8b12d5bf-e2e3-4aa8-9169-bd81681168a8.png">
 
 ### :couple: 코스 목록 페이지
 
