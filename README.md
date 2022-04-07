@@ -58,19 +58,15 @@
 #### :point_up: 코스 생성
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/86756501/162185834-0e89284f-b5a3-4c7a-909c-236f4298a39d.gif">   
+<img src="https://user-images.githubusercontent.com/86756501/162192934-21d076b0-d75f-4d13-9124-a945af4561c7.gif">   
 </p>
 
 * 아이템의 체크버튼을 누른 후, '코스생성' 버튼을 누르면 하단에 코스가 생성됩니다.
-* 코스 순서를 변경할 . 
+* 코스 순서를 변경할 수 있습니다. 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/86756501/162185571-e14d68f6-294f-4b7f-b20b-8f67c96a8434.gif">   
 </p>
 * 코스 저장 버튼을 누르면, 코스 목록 페이지에 코스가 추가됩니다.
-
-<p align="center">
-<img width="1000" src="https://user-images.githubusercontent.com/86756501/162169729-8b12d5bf-e2e3-4aa8-9169-bd81681168a8.png">
-</p>
 
 ### :couple: 코스 목록 페이지
 
