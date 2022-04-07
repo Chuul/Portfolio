@@ -51,23 +51,9 @@
 </p>
 
 * 아이템과 관련되 URL, 위치를 추가할 수 있습니다.
-
-<p align="center">
-<img width="1000" src="https://user-images.githubusercontent.com/86756501/160096546-93a62610-fe7b-4e16-9f4e-2ce3f56916b6.png">
-</p>
-
-* 각 데이터 추가 시 모달창을 활용합니다.
-
-<p align="center">
-<img width="1000" src="https://user-images.githubusercontent.com/86756501/162177365-fecdfa06-91c9-495f-b6b2-2c8b4e69a8a4.png">
-</p>
-
 * URL 추가 시, 아이템 이름의 색상이 바뀌며, 이름 클릭시 해당 링크로 연결됩니다.
 * 위치는 추후 코스 시작 시, 지도에 위치를 표시해줄 때 사용합니다.
 * 마음에 들지 않는 아이템은 삭제할 수 있습니다.
-
-<p align="center">
-<img width="1000" src="https://user-images.githubusercontent.com/86756501/160096869-602e07db-ee23-452d-81bf-9b162ee1410a.png">
 
 #### :point_up: 코스 생성
 
@@ -76,7 +62,7 @@
 </p>
 
 * 아이템의 체크버튼을 누른 후, '코스생성' 버튼을 누르면 하단에 코스가 생성됩니다.
-* Draggable Node Package를 사용하여 코스 순서를 변경합니다. 
+* 코스 순서를 변경할 . 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/86756501/162185571-e14d68f6-294f-4b7f-b20b-8f67c96a8434.gif">   
 </p>
