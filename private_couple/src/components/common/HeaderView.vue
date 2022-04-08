@@ -113,9 +113,6 @@ Modal button {
 		padding-top: 0.2rem;
 		font-size: 1rem;
 	}
-	.start_Btn {
-		font-size: 1rem;
-	}
 }
 /* 반응형 - 모바일 */
 @media (max-width: 430px) {

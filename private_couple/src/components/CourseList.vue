@@ -90,6 +90,7 @@ export default {
 	font-size: 1.5rem;
 	color: rgba(124, 198, 255, 0.8);
 	cursor: pointer;
+	margin: auto 0;
 }
 .delete_btn_cont {
 	margin: auto 0;

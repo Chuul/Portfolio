@@ -19,10 +19,12 @@ router.post('/', async(req, res, next) => {
 })
 router.post('/insert', async(req, res, next) => {
   try {
-    const result = await start.deleteOne({
+    const start_delete = await start.deleteOne({
       createdBy: req.body.createdBy
-    })
-    res.json(result);
+    });
+    if(!start_delete) {
+      return res.status(400).json({ message: '데이터를 삭제할 수 없습니다' });
+    }
     const starts = await start.create({
       createdBy: req.body.createdBy,
       course: req.body.course, 

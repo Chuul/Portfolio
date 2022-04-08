@@ -21,11 +21,12 @@ app.use(express.static(path.join(__dirname, './dist')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-if(process.env.NODE_ENV === 'production') {
-  app.use(morgan('combined'));
-} else {
-  app.use(morgan('dev'));
-}
+// if(process.env.NODE_ENV === 'production') {
+//   app.use(morgan('combined'));
+// } else {
+//   app.use(morgan('dev'));
+// }
+
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/creating', creatingRouter);

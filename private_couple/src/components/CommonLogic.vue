@@ -97,19 +97,8 @@ import Modal from '@/components/common/ModalPrototype.vue';
 
 export default {
 	created() {
-		const name = this.$route.name;
-		if (name === 'creating') {
+		if (this.$route.name === 'creating') {
 			this.$store.dispatch('FETCH_ITEM_LIST');
-		} else if (name === 'start') {
-			if (this.$store.getters.getStartList.length > 0) {
-				console.log(
-					'this.$store.getters.getStartList: ',
-					this.$store.getters.getStartList,
-				);
-				return;
-			} else {
-				this.$store.dispatch('FETCH_START_LIST');
-			}
 		}
 	},
 	data() {
@@ -358,6 +347,7 @@ export default {
 		justify-content: space-between;
 		height: 8rem;
 		padding: 0.3rem;
+		align-content: flex-start;
 	}
 	.list_cont {
 		display: flex;
