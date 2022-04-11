@@ -94,11 +94,22 @@
 
 <script>
 import Modal from '@/components/common/ModalPrototype.vue';
+import bus from '../utils/bus.js';
 
 export default {
 	created() {
+		bus.$emit('start:spinner');
 		if (this.$route.name === 'creating') {
-			this.$store.dispatch('FETCH_ITEM_LIST');
+			// eslint-disable-next-line prettier/prettier
+        this.$store.dispatch('FETCH_ITEM_LIST')
+				.then(() => {
+					bus.$emit('end:spinner');
+				})
+				.catch(error => {
+					console.log(error);
+				});
+		} else {
+			bus.$emit('end:spinner');
 		}
 	},
 	data() {

@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import bus from '../utils/bus.js';
+
 export default {
 	computed: {
 		ItemList() {
@@ -49,7 +51,15 @@ export default {
 		},
 	},
 	created() {
-		this.$store.dispatch('FETCH_LAST_LIST');
+		bus.$emit('start:spinner');
+		// eslint-disable-next-line prettier/prettier
+        this.$store.dispatch('FETCH_LAST_LIST')
+			.then(() => {
+				bus.$emit('end:spinner');
+			})
+			.catch(error => {
+				console.log(error);
+			});
 	},
 };
 </script>

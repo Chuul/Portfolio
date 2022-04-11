@@ -28,7 +28,20 @@
 </template>
 
 <script>
+import bus from '../utils/bus.js';
+
 export default {
+	created() {
+		bus.$emit('start:spinner');
+		// eslint-disable-next-line prettier/prettier
+			this.$store.dispatch('FETCH_COURSE_LIST')
+			.then(() => {
+				bus.$emit('end:spinner');
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	},
 	computed: {
 		list_check() {
 			return this.$store.getters.getCourseList.length > 0 ? true : false;
@@ -45,9 +58,6 @@ export default {
 		deleteOneCourse(list) {
 			this.$store.dispatch('DELETE_COURSE', list.name);
 		},
-	},
-	created() {
-		this.$store.dispatch('FETCH_COURSE_LIST');
 	},
 };
 </script>
