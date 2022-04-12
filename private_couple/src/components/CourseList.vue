@@ -34,7 +34,7 @@ export default {
 	created() {
 		bus.$emit('start:spinner');
 		// eslint-disable-next-line prettier/prettier
-			this.$store.dispatch('FETCH_COURSE_LIST')
+		this.$store.dispatch('FETCH_COURSE_LIST')
 			.then(() => {
 				bus.$emit('end:spinner');
 			})
@@ -52,8 +52,16 @@ export default {
 	},
 	methods: {
 		async startOneCourse(list) {
-			await this.$store.dispatch('START_COURSE', list);
-			this.$router.push('/start');
+			bus.$emit('start:spinner');
+			// eslint-disable-next-line prettier/prettier
+			await this.$store.dispatch('START_COURSE', list)
+				.then(() => {
+					bus.$emit('end:spinner');
+					this.$router.push('/start');
+				})
+				.catch(error => {
+					console.log(error);
+				});
 		},
 		deleteOneCourse(list) {
 			this.$store.dispatch('DELETE_COURSE', list.name);

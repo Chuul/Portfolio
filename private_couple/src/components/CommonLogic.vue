@@ -276,7 +276,7 @@ export default {
 }
 .index_cont {
 	float: left;
-	background: linear-gradient(to left, #5fa4ff, #2e72f1);
+	background: linear-gradient(to left, #5fa4ff, rgba(124, 198, 255, 0.8));
 	width: 1em;
 	border-radius: 0.5rem 0 0 0.5rem;
 	color: white;
