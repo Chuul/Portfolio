@@ -97,6 +97,9 @@ import Modal from '@/components/common/ModalPrototype.vue';
 import bus from '../utils/bus.js';
 
 export default {
+	components: {
+		Modal,
+	},
 	created() {
 		bus.$emit('start:spinner');
 		if (this.$route.name === 'creating') {
@@ -120,15 +123,12 @@ export default {
 			showModal: false,
 		};
 	},
-	components: {
-		Modal,
-	},
 	computed: {
 		list_check() {
 			if (this.$route.name === 'start') {
 				return true;
 			} else {
-				return this.$store.getters.getItemList.length > 0 ? true : false;
+				return this.$store.getters.getItemListCheck;
 			}
 		},
 		content_start_cont() {
@@ -215,9 +215,13 @@ export default {
 					item.comment = this.textArea;
 					this.$store.dispatch('PATCH_ITEM_COMMENT', item);
 				} else if (this.modalID === '코스 완료') {
+					bus.$emit('start:spinner');
 					// eslint-disable-next-line prettier/prettier
 					await this.$store.dispatch('STORE_START', this.textArea)
-						.then(() => this.$router.push('/list'))
+						.then(() => {
+							this.$router.push('/list');
+							bus.$emit('end:spinner');
+						})
 						.catch(error => console.log(error));
 				}
 			}

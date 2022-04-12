@@ -70,8 +70,8 @@ const actions = {
 			createdBy: context.rootState.module_login.username,
 			course: list.course,
 		};
-		context.commit('SET_START_COURSE', list.course);
 		const { data } = await start.replaceStartList(userData);
+		context.commit('SET_START_COURSE', list.course);
 		return data;
 	},
 	FETCH_START_LIST: async context => {
@@ -81,6 +81,7 @@ const actions = {
 		try {
 			const { data } = await start.getStartList(userData);
 			context.commit('SET_START_COURSE', data[0].course);
+			return data;
 		} catch (error) {
 			console.log(error);
 		}
@@ -97,7 +98,6 @@ const actions = {
 			};
 			await start.patchComment(obj);
 			context.commit('EDIT_START_CHECKED', item._id);
-			context.dispatch('ADD_LAST_ITEM', item);
 		} catch (error) {
 			console.log(error);
 		}
@@ -151,7 +151,7 @@ const actions = {
 				},
 			};
 			const user = context.rootState.module_login.username;
-			// 코스 평가 DB통신-> stata 비우기 -> 코스 시작 DB통신
+			// 코스 평가 DB통신 -> stata 비우기 -> 코스 시작 DB통신
 			await last.patchLastList(obj);
 			context.commit('EXIT_START_COURSE');
 			const response = await start.exitCourse(user);

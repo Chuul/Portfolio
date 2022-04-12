@@ -44,7 +44,7 @@ export default {
 	},
 	computed: {
 		list_check() {
-			return this.$store.getters.getCourseList.length > 0 ? true : false;
+			return this.$store.getters.getListCheck;
 		},
 		CourseList() {
 			return this.$store.getters.getCourseList;

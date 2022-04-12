@@ -42,6 +42,17 @@
 import bus from '../utils/bus.js';
 
 export default {
+	created() {
+		bus.$emit('start:spinner');
+		// eslint-disable-next-line prettier/prettier
+		this.$store.dispatch('FETCH_LAST_LIST')
+			.then(() => {
+				bus.$emit('end:spinner');
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	},
 	computed: {
 		ItemList() {
 			return this.$store.getters.getLastItemList;
@@ -49,17 +60,6 @@ export default {
 		CourseList() {
 			return this.$store.getters.getLastCourseList;
 		},
-	},
-	created() {
-		bus.$emit('start:spinner');
-		// eslint-disable-next-line prettier/prettier
-        this.$store.dispatch('FETCH_LAST_LIST')
-			.then(() => {
-				bus.$emit('end:spinner');
-			})
-			.catch(error => {
-				console.log(error);
-			});
 	},
 };
 </script>

@@ -47,12 +47,12 @@ import draggable from 'vuedraggable';
 import Modal from '@/components/common/ModalPrototype.vue';
 
 export default {
-	created() {
-		this.$store.commit('CLEAR_CHECKEDLIST');
-	},
 	components: {
 		draggable,
 		Modal,
+	},
+	created() {
+		this.$store.commit('SET_CLEAR_CHECKED_LIST');
 	},
 	data() {
 		return {

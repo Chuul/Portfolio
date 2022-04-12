@@ -4,6 +4,7 @@ import * as list from '@/api/list.js';
 const state = {
 	itemList: [],
 	checkedList: [],
+	errorMessage: '',
 };
 
 const getters = {
@@ -12,6 +13,9 @@ const getters = {
 	},
 	getCheckedList: state => {
 		return state.checkedList;
+	},
+	getItemListCheck: state => {
+		return state.itemList.length > 0 ? true : false;
 	},
 };
 
@@ -40,14 +44,16 @@ const mutations = {
 				if (list[i].checked === true) {
 					list[i].checked = false;
 					toggleChecked(list[i].name);
+					return;
 				} else {
 					list[i].checked = true;
 					state.checkedList.push({ ...item });
+					return;
 				}
 			}
 		}
 	},
-	CLEAR_CHECKEDLIST: state => {
+	SET_CLEAR_CHECKED_LIST: state => {
 		state.checkedList = [];
 	},
 	SET_ITEM_URL: (state, obj) => {
@@ -83,6 +89,9 @@ const mutations = {
 			}
 		}
 		state.checkedList = [];
+	},
+	SET_ERROR: (state, data) => {
+		state.errorMessage = data;
 	},
 };
 
@@ -138,7 +147,7 @@ const actions = {
 	},
 	PATCH_ITEM_URL: async ({ commit }, payload) => {
 		try {
-			const response = item.patchUrl(payload);
+			const response = await item.patchUrl(payload);
 			commit('SET_ITEM_URL', payload);
 			return response;
 		} catch (error) {
@@ -148,7 +157,7 @@ const actions = {
 	},
 	PATCH_ITEM_POS: async ({ commit }, payload) => {
 		try {
-			const response = item.patchPos(payload);
+			const response = await item.patchPos(payload);
 			commit('SET_ITEM_POS', payload);
 			return response;
 		} catch (error) {
@@ -158,7 +167,7 @@ const actions = {
 	},
 	DELETE_ITEM: async ({ commit }, id) => {
 		try {
-			const response = item.deleteItem(id);
+			const response = await item.deleteItem(id);
 			commit('SPLICE_ITEM', id);
 			return response;
 		} catch (error) {

@@ -4,18 +4,18 @@
 
 <script>
 export default {
+	created() {
+		this.startList = this.$store.getters.getStartList;
+	},
+	mounted() {
+		this.initMap();
+	},
 	data() {
 		return {
 			startList: [],
 			map: null,
 			infowindow: null,
 		};
-	},
-	created() {
-		this.startList = this.$store.getters.getStartList;
-	},
-	mounted() {
-		this.initMap();
 	},
 	methods: {
 		initMap() {

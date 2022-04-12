@@ -16,15 +16,15 @@
 
 <script>
 export default {
+	mounted() {
+		this.initMap();
+	},
 	data() {
 		return {
 			map: null,
 			infowindow: null,
 			markers: [],
 		};
-	},
-	mounted() {
-		this.initMap();
 	},
 	methods: {
 		// 지도를 띄우는 function

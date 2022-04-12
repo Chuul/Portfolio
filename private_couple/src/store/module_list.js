@@ -8,6 +8,9 @@ const getters = {
 	getCourseList: state => {
 		return state.courseList;
 	},
+	getListCheck: state => {
+		return state.courseList.length > 0 ? true : false;
+	},
 };
 
 const mutations = {

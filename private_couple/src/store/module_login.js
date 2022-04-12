@@ -13,11 +13,11 @@ const getters = {
 	checkLogin: state => {
 		return state.username === '' ? 'login_cont' : null;
 	},
-	checkLogin_Name: state => {
-		return state.username === '' ? false : true;
-	},
 	fetchName: state => {
 		return state.username;
+	},
+	checkLogin_Name: state => {
+		return state.username === '' ? false : true;
 	},
 };
 
@@ -29,9 +29,6 @@ const mutations = {
 	LOGOUT_USER: state => {
 		state.username = '';
 		state.email = '';
-	},
-	SET_ERROR: (state, data) => {
-		state.errorMessage = data;
 	},
 };
 

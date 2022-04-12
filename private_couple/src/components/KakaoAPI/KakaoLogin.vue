@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import bus from '../utils/bus.js';
+
 export default {
 	data() {
 		return {
@@ -34,8 +36,14 @@ export default {
 						username: res.kakao_account.profile.nickname,
 						email: res.kakao_account.email,
 					};
-					await this.$store.dispatch('LOGIN', userData);
-					this.$router.push('/creating');
+					bus.$emit('start:spinner');
+					// eslint-disable-next-line prettier/prettier
+					await this.$store.dispatch('LOGIN', userData)
+						.then(() => {
+							this.$router.push('/creating');
+							bus.$emit('end:spinner');
+						})
+						.catch(error => console.log(error));
 				},
 			});
 		},

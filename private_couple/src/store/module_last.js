@@ -33,16 +33,6 @@ const actions = {
 			console.log(error);
 		}
 	},
-	ADD_LAST_ITEM: async (context, item) => {
-		delete item.completed;
-		delete item._id;
-		const userData = {
-			createdBy: context.rootState.module_login.username,
-			item: item,
-		};
-		await last.patchLastItem(userData);
-		context.dispatch('FETCH_START_LIST');
-	},
 };
 
 export default {
