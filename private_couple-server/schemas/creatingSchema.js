@@ -23,9 +23,6 @@ const creatingSchema = new Schema({
   pos : {
     type: String,
   },
-  pos_latlng : {
-    type: Object
-  }
 });
 
 module.exports = mongoose.model('creating', creatingSchema);

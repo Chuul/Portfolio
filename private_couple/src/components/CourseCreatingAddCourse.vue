@@ -66,46 +66,19 @@ export default {
 	},
 	methods: {
 		getCheckedItems() {
-			// 지번 주소를 좌표값으로 바꾸는 함수(카카오 API 참조)
-			let transPosition = list => {
-				for (let i = 0; i < list.length; i++) {
-					if (list[i].pos !== '') {
-						var geocoder = new kakao.maps.services.Geocoder();
-
-						var callback = function (result, status) {
-							if (status === kakao.maps.services.Status.OK) {
-								let obj = { y: result[0].y, x: result[0].x };
-								list[i].pos_latlng = obj;
-							}
-						};
-						geocoder.addressSearch(list[i].pos, callback);
-					}
-				}
-				this.localCheckedList = [...list];
-			};
 			let list = this.$store.getters.getCheckedList;
 			if (list.length === 0) {
 				this.showCheck = true;
 			} else {
 				this.showCreateBtn = true;
-				transPosition(list);
+				this.localCheckedList = [...list];
 			}
 		},
 		// 코스에 들어가는 아이템 정리하는 함수
 		async addCourse() {
-			let setupCourse = list => {
-				list.forEach(item => {
-					delete item.createdBy;
-					item.checked = false;
-					item.comment = ' ';
-				});
-				return list;
-			};
-			let payload = setupCourse(this.localCheckedList);
 			// eslint-disable-next-line prettier/prettier
-			await this.$store.dispatch('ADD_COURSE', payload)
-				.then(response => {
-					console.log(response);
+			await this.$store.dispatch('ADD_COURSE', this.localCheckedList)
+				.then(() => {
 					this.localCheckedList = [];
 					this.showCreateBtn = false;
 					this.showSuccess = true;
@@ -117,7 +90,7 @@ export default {
 		async resetChecked() {
 			if (this.localCheckedList.length === 0) {
 				this.$store.commit(
-					'SET_ITEM_FrdfALSE',
+					'SET_ITEM_FALSE',
 					this.$store.getters.getCheckedList,
 				);
 			} else {

@@ -134,7 +134,6 @@ const actions = {
 			checked: false,
 			url: '',
 			pos: '',
-			pos_latlng: '',
 		};
 		try {
 			const response = await item.postItem(obj);
@@ -177,7 +176,7 @@ const actions = {
 	},
 	ADD_COURSE: async (context, payload) => {
 		const obj = {
-			createdBy: context.rootState.module_login.username,
+			createdBy: payload[0].createdBy,
 			course: payload,
 		};
 		try {

@@ -41,8 +41,6 @@ router.post('/insert', async(req, res, next) => {
       checked: req.body.checked,
       url: req.body.url,
       pos: req.body.pos,
-      pos: req.body.pos,
-      pos_latlng: req.body.pos_latlng
     });
     res.status(201).json(result);
   } catch (err) {

@@ -66,6 +66,23 @@ const mutations = {
 
 const actions = {
 	START_COURSE: async (context, list) => {
+		list.course.forEach(item => {
+			if (item.pos !== '') {
+				var geocoder = new kakao.maps.services.Geocoder();
+
+				var callback = function (result, status) {
+					if (status === kakao.maps.services.Status.OK) {
+						let obj = { y: result[0].y, x: result[0].x };
+						item.pos_latlng = obj;
+					}
+				};
+				geocoder.addressSearch(item.pos, callback);
+			}
+			delete item.createdBy;
+			item.checked = false;
+			item.comment = ' ';
+		});
+		console.log('코스 시작하기 전에: ', list);
 		const userData = {
 			createdBy: context.rootState.module_login.username,
 			course: list.course,

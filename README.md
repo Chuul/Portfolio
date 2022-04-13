@@ -82,7 +82,9 @@
 </p>
 
 * 코스의 왼쪽 하트를 누르면, 해당 코스를 진행시킬 수 있습니다.
-<img src="https://user-images.githubusercontent.com/86756501/162940685-56af5674-e47e-4d9e-af1f-2f78737a74ff.gif">
+<p align="center">
+<img src="https://user-images.githubusercontent.com/86756501/162944020-5cf5082b-1c4f-47a6-8329-d9e016975bbe.gif">
+</p>
 
 * 마음에 들지 않는 코스는 삭제할 수 있습니다.
 
@@ -122,7 +124,9 @@
 
 #### :point_up: 코스 진행 페이지 돌아가기 및 그만두기
 
+<p align="center">
 <img width="700" src="https://user-images.githubusercontent.com/86756501/162940699-96183968-49fe-4c16-92d3-0d7a3d3c5807.gif">
+</p>
 
 * 코스 진행 페이지에서 다른 페이지로 이동하면, 왼쪽 상단에 코스 진행 페이지로 돌아갈 수 있는 버튼이 생깁니다.
 <p align="center">
@@ -146,5 +150,5 @@
 
 Heroku를 이용해 앱을 배포하였습니다.
 <p align="center">
-<img width="550" alt="스크린샷 2022-04-08 오후 1 07 06" src="https://user-images.githubusercontent.com/86756501/162942133-7b8505d6-2a57-4539-9569-07b9e15ba7da.png">
+<img width="450" src="https://user-images.githubusercontent.com/86756501/162942133-7b8505d6-2a57-4539-9569-07b9e15ba7da.png">
 </p>
