@@ -8,7 +8,32 @@
 				</form>
 			</div>
 			<hr />
-			<ul id="placesList"></ul>
+			<ul id="placesList">
+				<li class="item" v-for="(item, index) in placeList" :key="item">
+					<span
+						class="markerbg"
+						:style="`background-position: 0 -${10 + index * 46}px;`"
+						:class="`marker_${index + 1}`"
+					></span>
+					<div class="info_cont" @click="showItemInfo(item)">
+						<div class="info">
+							<h5 class="info_item_name">{{ item.place_name }}</h5>
+							<span
+								:style="
+									item.road_address_name
+										? 'display:block; padding-bottom: 2px;'
+										: ''
+								"
+								>{{
+									item.road_address_name
+										? item.road_address_name
+										: item.address_name
+								}}</span
+							>
+						</div>
+					</div>
+				</li>
+			</ul>
 			<div id="pagination"></div>
 		</article>
 	</section>
@@ -24,6 +49,7 @@ export default {
 			map: null,
 			infowindow: null,
 			markers: [],
+			placeList: [],
 		};
 	},
 	methods: {
@@ -74,20 +100,21 @@ export default {
 			}
 			// 검색 결과 목록과 마커를 표출하는 함수입니다
 			function displayPlaces(places) {
-				var listEl = document.getElementById('placesList'),
-					menuEl = document.getElementById('menu_cont'),
-					fragment = document.createDocumentFragment(),
-					bounds = new kakao.maps.LatLngBounds();
+				// var listEl = document.getElementById('placesList'),
+				var menuEl = document.getElementById('menu_cont');
+				// fragment = document.createDocumentFragment(),
+				var bounds = new kakao.maps.LatLngBounds();
 				// listStr = '';
 				// 검색 결과 목록에 추가된 항목들을 제거합니다
-				removeAllChildNods(listEl);
+				// removeAllChildNods(listEl);
+				temp.placeList = [];
 				// 지도에 표시되고 있는 마커를 제거합니다
 				removeMarker();
-				for (var i = 0; i < places.length; i++) {
+				for (let i = 0; i < places.length; i++) {
 					// 마커를 생성하고 지도에 표시합니다
-					var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-						marker = addMarker(placePosition, i),
-						itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+					let placePosition = new kakao.maps.LatLng(places[i].y, places[i].x);
+					let marker = addMarker(placePosition, i);
+					let itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 					// 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
 					// LatLngBounds 객체에 좌표를 추가합니다
 					bounds.extend(placePosition);
@@ -106,45 +133,20 @@ export default {
 							infowindow.close();
 						};
 					})(marker, places[i]);
-					fragment.appendChild(itemEl);
 				}
 				// 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
-				listEl.appendChild(fragment);
 				menuEl.scrollTop = 0;
 				// 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
 				temp.map.setBounds(bounds);
 			}
 			// 검색결과 항목을 Element로 반환하는 함수입니다
 			function getListItem(index, places) {
-				var el = document.createElement('li'),
-					itemStr =
-						'<span style="float:left;position:absolute;width:36px; height:37px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;background-position: 0 -' +
-						(10 + index * 46) +
-						'px;}" class="markerbg marker_' +
-						(index + 1) +
-						'"></span>' +
-						'<div style=""border-bottom:1px solid rgba(53, 53, 53, 0.993);overflow: hidden;min-height: 65px;>' +
-						'<div class="info" style="padding:0 0 10px 35px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;cursor:pointer;">' +
-						'<h5 style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;padding-bottom: 2px;margin:0.4rem 0 0 10px;">' +
-						places.place_name +
-						'</h5>';
-				if (places.road_address_name) {
-					itemStr +=
-						'    <span style="display:block; padding-bottom: 2px;">' +
-						places.road_address_name +
-						'</span>';
-				} else {
-					itemStr += '    <span>' + places.address_name + '</span>';
-				}
-				itemStr += '</div></div>';
-
-				el.innerHTML = itemStr;
-				el.className = 'item';
-				return el;
+				temp.placeList.push(places);
+				return places;
 			}
 			// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 			function addMarker(position, idx) {
-				var imageSrc =
+				let imageSrc =
 						'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
 					imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
 					imgOptions = {
@@ -168,7 +170,7 @@ export default {
 			}
 			// 지도 위에 표시되고 있는 마커를 모두 제거합니다
 			function removeMarker() {
-				for (var i = 0; i < temp.markers.length; i++) {
+				for (let i = 0; i < temp.markers.length; i++) {
 					temp.markers[i].setMap(null);
 				}
 				temp.markers = [];
@@ -176,7 +178,7 @@ export default {
 
 			// 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
 			function displayPagination(pagination) {
-				var paginationEl = document.getElementById('pagination'),
+				let paginationEl = document.getElementById('pagination'),
 					fragment = document.createDocumentFragment(),
 					i;
 				// 기존에 추가된 페이지번호를 삭제합니다
@@ -184,7 +186,7 @@ export default {
 					paginationEl.removeChild(paginationEl.lastChild);
 				}
 				for (i = 1; i <= pagination.last; i++) {
-					var el = document.createElement('a');
+					let el = document.createElement('a');
 					el.href = '#';
 					el.innerHTML = i;
 					el.style = 'display:inline-block;margin-right:10px;';
@@ -218,12 +220,9 @@ export default {
 				infowindow.setContent(content);
 				infowindow.open(temp.map, marker);
 			}
-			// 검색결과 목록의 자식 Element를 제거하는 함수입니다
-			function removeAllChildNods(el) {
-				while (el.hasChildNodes()) {
-					el.removeChild(el.lastChild);
-				}
-			}
+		},
+		showItemInfo(item) {
+			console.log(item);
 		},
 	},
 };
@@ -299,6 +298,35 @@ button {
 	font-weight: bold;
 	cursor: default;
 	color: red;
+}
+/* 아이템 리스트 */
+.markerbg {
+	float: left;
+	position: absolute;
+	width: 36px;
+	height: 37px;
+	margin-top: 0.4rem;
+	background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png)
+		no-repeat;
+}
+.info_cont {
+	border-bottom: 1px solid rgba(53, 53, 53, 0.993);
+	overflow: hidden;
+	min-height: 50px;
+}
+.info {
+	padding: 0 0 10px 35px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	cursor: pointer;
+}
+.info_item_name {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	padding-bottom: 2px;
+	margin: 0.4rem 0 0;
 }
 /* 반응형 - PC */
 @media (min-width: 1260px) {
